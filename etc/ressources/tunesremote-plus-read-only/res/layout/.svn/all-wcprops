@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/93/trunk/res/layout
+END
+act_pairing.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/6/trunk/res/layout/act_pairing.xml
+END
+gen_list_fast.xml
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/6/trunk/res/layout/gen_list_fast.xml
+END
+gen_expanded.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/6/trunk/res/layout/gen_expanded.xml
+END
+item_track.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/72/trunk/res/layout/item_track.xml
+END
+item_artist.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/72/trunk/res/layout/item_artist.xml
+END
+act_wizard.xml
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/6/trunk/res/layout/act_wizard.xml
+END
+item_nowplaying_track.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/6/trunk/res/layout/item_nowplaying_track.xml
+END
+server_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/25/trunk/res/layout/server_row.xml
+END
+dia_text.xml
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/6/trunk/res/layout/dia_text.xml
+END
+server_list.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/25/trunk/res/layout/server_list.xml
+END
+gen_list.xml
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/6/trunk/res/layout/gen_list.xml
+END
+act_gesture.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/6/trunk/res/layout/act_gesture.xml
+END
+item_network.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/6/trunk/res/layout/item_network.xml
+END
+act_control.xml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/93/trunk/res/layout/act_control.xml
+END
+item_fetch.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/17/trunk/res/layout/item_fetch.xml
+END
+item_speaker.xml
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/54/trunk/res/layout/item_speaker.xml
+END
+toa_volume.xml
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/6/trunk/res/layout/toa_volume.xml
+END
+act_nowplaying.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/6/trunk/res/layout/act_nowplaying.xml
+END
+item_album.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/72/trunk/res/layout/item_album.xml
+END
+item_playlist.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/72/trunk/res/layout/item_playlist.xml
+END
+wiz_eula.xml
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/54/trunk/res/layout/wiz_eula.xml
+END

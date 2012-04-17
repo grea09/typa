@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/6/trunk/res/anim
+END
+fade_up.xml
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/6/trunk/res/anim/fade_up.xml
+END
+fade_down.xml
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/6/trunk/res/anim/fade_down.xml
+END
+slide_right.xml
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/6/trunk/res/anim/slide_right.xml
+END

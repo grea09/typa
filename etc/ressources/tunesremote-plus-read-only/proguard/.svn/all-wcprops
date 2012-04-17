@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/96/trunk/proguard
+END
+unused.txt
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/96/trunk/proguard/unused.txt
+END
+seeds.txt
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/44/trunk/proguard/seeds.txt
+END
+config.txt
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/6/trunk/proguard/config.txt
+END
+class_files.txt
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/96/trunk/proguard/class_files.txt
+END
+mapping.txt
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/96/trunk/proguard/mapping.txt
+END
+proguard.jar
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/6/trunk/proguard/proguard.jar
+END

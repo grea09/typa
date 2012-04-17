@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:id="@+id/send"
+		android:title="Partager"
+		android:icon="@drawable/ic_menu_light_social_send_now"
+		android:orderInCategory="0"
+		android:showAsAction="always|withText" 
+		android:menuCategory="system"/>
+</menu>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    TunesRemote+ - http://code.google.com/p/tunesremote-plus/
+    
+    Copyright (C) 2008 Jeffrey Sharkey, http://jsharkey.org/
+    Copyright (C) 2010 TunesRemote+, http://code.google.com/p/tunesremote-plus/
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    The Initial Developer of the Original Code is Jeffrey Sharkey.
+    Portions created by Jeffrey Sharkey are
+    Copyright (C) 2008. Jeffrey Sharkey, http://jsharkey.org/
+    All Rights Reserved. 
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<CheckBoxPreference
+		android:key="@string/pref_background"
+		android:title="Stay connected in background"
+		android:summary="Keep background service running to speed up launch"
+		android:defaultValue="false"/>
+    
+    <EditTextPreference
+                android:summary="The maximum number of search results so not to crash your device on returning too many results from a large search"
+                android:defaultValue="30"
+                android:numeric="integer"
+                android:title="Search Result Maximum"
+                android:key="@string/pref_searchmax" 
+                />
+    
+    <EditTextPreference
+                android:summary="Increase or decrease the volume by this amount when changing volume"
+                android:defaultValue="5"
+                android:numeric="integer"
+                android:title="Volume Change Increment"
+                android:key="@string/pref_volumeincrement"
+                />
+		
+	<CheckBoxPreference
+				android:summary="When calls or made or received have your player automatically pause, and resume after the call."
+                android:defaultValue="false"
+                android:title="Pause music during calls"
+                android:key="@string/pref_autopause"
+                />
+                
+  <PreferenceCategory
+		android:title="Interface settings">
+	
+		<CheckBoxPreference
+			android:key="@string/pref_fade"
+			android:title="Fade track details"
+			android:summary="After 5 seconds, fade the track details and hide them"
+			android:defaultValue="true"
+			/>
+	
+		<CheckBoxPreference
+			android:key="@string/pref_fadeupnew"
+			android:title="Fade up on new track"
+			android:summary="Show new details when track is changed"
+			android:defaultValue="true"
+			android:dependency="@string/pref_fade"
+			/>
+	
+		<CheckBoxPreference
+			android:key="@string/pref_vibrate"
+			android:title="Vibrate on controls"
+			android:summary="Give light vibration feedback when pausing or changing tracks"
+			android:defaultValue="true"
+			/>
+		
+		<CheckBoxPreference
+            android:key="@string/pref_cropimage"
+            android:title="Crop album cover"
+            android:summary="Crop album cover to fill the screen by scaling it"
+            android:defaultValue="true"
+            />
+       <CheckBoxPreference
+            android:key="@string/pref_fullscreen"
+            android:title="Fullscreen"
+            android:summary="Hides the status bar while running"
+            android:defaultValue="true"
+            />
+            
+		
+	</PreferenceCategory>
+
+</PreferenceScreen>
