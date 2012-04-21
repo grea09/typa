@@ -1,9 +1,11 @@
 package fr.utbm.lo52.sodia.logic;
 
+import android.provider.ContactsContract;
+
 public class Link
 {
 	public String alias;
-	public ContactsContract.CommonDataKinds.CommonColumns id;
+	public ContactsContract.Contacts id;
 	public Contact contact;
 	public Account<?> account;
 	

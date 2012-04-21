@@ -4,4 +4,9 @@ public class Message
 {
 	private Mime type;
 	
+	public Message(Mime type)
+	{
+		this.type = type;
+	}
+	
 }

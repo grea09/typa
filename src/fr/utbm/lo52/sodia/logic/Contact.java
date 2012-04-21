@@ -6,7 +6,7 @@ import fr.utbm.lo52.sodia.common.GroupUpdater;
 
 public class Contact implements InterGroup<Group>
 {
-	private String 
+	private String name;
 	private Set<Group> groups;
 	private Set<Link> links;
 	

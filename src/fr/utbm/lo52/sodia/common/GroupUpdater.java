@@ -31,7 +31,8 @@ public final class GroupUpdater
 			{
 				group.getClass().getMethod(operation.prefix(), element.getClass()).invoke(group, element);
 				element.getClass().getMethod(operation.prefix(), group.getClass()).invoke(element, group);
-			} catch (Throwable t)
+			} 
+			catch (Throwable t)
 			{
 				throw new IllegalArgumentException
 				(
