@@ -1,11 +1,14 @@
 package fr.utbm.lo52.sodia.logic;
 
+import android.provider.ContactsContract;
+
 public class Link
 {
 	public String alias;
-	public String id;
-	public Account<?> account;
+	public ContactsContract.Contacts id;
 	public Contact contact;
+	public Account<?> account;
+	
 	
 	@Override
 	public boolean equals(Object o)

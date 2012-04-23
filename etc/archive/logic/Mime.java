@@ -6,8 +6,8 @@ public enum Mime
 	POSITION,
 	TEXT,
 	PICTURE,
-	DOCUMENT,
 	SOUND,
 	VIDEO,
+	ARTICLE,
 	RAW;
 }

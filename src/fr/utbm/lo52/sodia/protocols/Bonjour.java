@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.protocols.bonjour;
+package fr.utbm.lo52.sodia.protocols;
 
 import java.io.IOException;
 
@@ -7,10 +7,11 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import android.accounts.Account;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Discover extends AsyncTask<Void, Void, Void> 
+public class Bonjour extends AsyncTask<Void, Void, Void> implements Protocol
 {
 	
 	private String type = "_presence._tcp.local.";
@@ -74,6 +75,30 @@ public class Discover extends AsyncTask<Void, Void, Void>
 			}
 			jmdns = null;
 		}
+	}
+
+	@Override
+	public void connect(Account account) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void send(Account account, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void presence(Account account, String status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disconnect(Account account) {
+		// TODO Auto-generated method stub
+		
 	}
 
  }
