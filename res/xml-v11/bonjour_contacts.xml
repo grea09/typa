@@ -22,8 +22,8 @@
 >
 
     <ContactsDataKind
-        android:mimeType="vnd.android.cursor.item/vnd.samplesyncadapter.profile"
-        android:icon="@drawable/bonjour"
+        android:mimeType="vnd.android.cursor.item/vnd.apple.bonjour.profile"
+        android:icon="@drawable/ic_protocol_bonjour"
         android:summaryColumn="data2"
         android:detailColumn="data3"
         android:detailSocialSummary="true" />

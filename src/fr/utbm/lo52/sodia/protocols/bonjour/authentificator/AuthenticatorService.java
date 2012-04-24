@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.authentificator;
+package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
 /*
  * Copyright (C) 2010 The Android Open Source Project
  *

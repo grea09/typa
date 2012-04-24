@@ -13,11 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package fr.utbm.lo52.sodia.syncadapter;
-
-import org.apache.http.ParseException;
-import org.apache.http.auth.AuthenticationException;
-import org.json.JSONException;
+package fr.utbm.lo52.sodia.protocols.bonjour.syncadapter;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -62,7 +58,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	public void onPerformSync(Account account, Bundle extras, String authority,
 		ContentProviderClient provider, SyncResult syncResult) {
 
-		try {
+		//try {
 			// see if we already have a sync-state attached to this account. By handing
 			// This value to the server, we can just get the contacts that have
 			// been updated on the server-side since our last sync-up
@@ -99,7 +95,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 			// Update the local contacts database with the changes. updateContacts()
 			// returns a syncState value that indicates the high-water-mark for
 			// the changes we received.
-			Log.d(TAG, "Calling contactManager's sync contacts");
+			//Log.d(getClass().getSimpleName(), "Calling contactManager's sync contacts");
 //			long newSyncState = ContactManager.updateContacts(context,
 //					account.name,
 //					updatedContacts,
@@ -133,10 +129,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 //			if (dirtyContacts.size() > 0) {
 //				ContactManager.clearSyncFlags(context, dirtyContacts);
 //			}
-		} catch (final ParseException e) {
-			Log.e(TAG, "ParseException", e);
-			syncResult.stats.numParseExceptions++;
-		}
+//		} catch (final ParseException e) {
+//			Log.e(TAG, "ParseException", e);
+//			syncResult.stats.numParseExceptions++;
+//		}
 	}
 
 	/**

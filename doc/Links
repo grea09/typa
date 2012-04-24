@@ -1,0 +1,14 @@
+AccountManager
+http://www.finalconcept.com.au/article/view/android-account-manager-step-by-step-2
+http://stackoverflow.com/questions/3238502/how-to-enable-synchronization-of-custom-account-in-android
+ALOT http://developer.android.com/resources/samples/SampleSyncAdapter/index.html
+
+
+Bonjour
+ANTICONFUSION http://stackoverflow.com/questions/7737804/how-to-start-a-conversation-with-bonjour-client-knowing-its-namehostport
+http://android.noisepages.com/2010/02/yes-android-can-do-zeroconfbonjour-jmdns/
+https://developer.apple.com/opensource/
+
+XMPP
+http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
+NICE http://www.igniterealtime.org/builds/smack/docs/3.1.0/javadoc/org/jivesoftware/smack/XMPPConnection.html

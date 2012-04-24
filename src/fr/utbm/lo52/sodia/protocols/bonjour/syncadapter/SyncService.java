@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package fr.utbm.lo52.sodia.syncadapter;
+package fr.utbm.lo52.sodia.protocols.bonjour.syncadapter;
 
 import android.app.Service;
 import android.content.Intent;

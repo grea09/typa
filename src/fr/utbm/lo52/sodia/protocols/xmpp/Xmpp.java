@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.protocols;
+package fr.utbm.lo52.sodia.protocols.xmpp;
 
 import java.io.IOException;
 
@@ -7,11 +7,13 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import fr.utbm.lo52.sodia.protocols.Protocol;
+
 import android.accounts.Account;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Bonjour extends AsyncTask<Void, Void, Void> implements Protocol
+public class Xmpp extends AsyncTask<Void, Void, Void> implements Protocol
 {
 	
 	private String type = "_presence._tcp.local.";

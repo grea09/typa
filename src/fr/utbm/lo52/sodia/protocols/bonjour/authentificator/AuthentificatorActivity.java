@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.authentificator;
+package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -80,7 +80,8 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		setContentView(R.layout.login);
 		getWindow().setFeatureDrawableResource(
-				Window.FEATURE_LEFT_ICON, android.R.drawable.ic_input_get);
+				Window.FEATURE_LEFT_ICON, R.drawable.ic_protocol_bonjour);
+		getWindow().setTitle("Bonjour");
 		message = (TextView) findViewById(R.id.message);
 		usernameEdit = (EditText) findViewById(R.id.username_edit);
 		passwordEdit = (EditText) findViewById(R.id.password_edit);
@@ -111,7 +112,7 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
             //showProgress();
             //authTask = new UserLoginTask();
             //authTask.execute();
-        	final Account account = new Account(username, "bonjour");
+        	final Account account = new Account(username, "com.apple.bonjour");
             if (requestNewAccount) {
                 accountManager.addAccountExplicitly(account, password, null);
                 // Set contacts sync for this account.
@@ -121,7 +122,7 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
             }
             final Intent intent = new Intent();
             intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, username);
-            intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, "bonjour");
+            intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, "com.apple.bonjour");
             setAccountAuthenticatorResult(intent.getExtras());
             setResult(RESULT_OK, intent);
             finish();

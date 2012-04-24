@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.authentificator;
+package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

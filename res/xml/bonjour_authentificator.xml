@@ -22,7 +22,7 @@
 
 <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
     android:accountType="com.apple.bonjour"
-    android:icon="@drawable/bonjour"
-    android:smallIcon="@drawable/bonjour"
+    android:icon="@drawable/ic_protocol_bonjour"
+    android:smallIcon="@drawable/ic_protocol_bonjour"
     android:label="@string/bonjour"
 />
