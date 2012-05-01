@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.ui;
 
-import android.R;
+import fr.utbm.lo52.sodia.*;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
