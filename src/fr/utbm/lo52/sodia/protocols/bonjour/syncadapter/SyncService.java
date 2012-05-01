@@ -15,37 +15,13 @@
  */
 package fr.utbm.lo52.sodia.protocols.bonjour.syncadapter;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import fr.utbm.lo52.sodia.protocols.bonjour.Bonjour;
 
 /**
  * Service to handle Account sync. This is invoked with an intent with action
  * ACTION_AUTHENTICATOR_INTENT. It instantiates the syncadapter and returns its
  * IBinder.
  */
-public class SyncService extends Service
+public class SyncService extends fr.utbm.lo52.sodia.protocols.SyncService<Bonjour>
 {
-
-	private static final Object sSyncAdapterLock = new Object();
-
-	private static SyncAdapter sSyncAdapter = null;
-
-	@Override
-	public void onCreate()
-	{
-		synchronized (sSyncAdapterLock)
-		{
-			if (sSyncAdapter == null)
-			{
-				sSyncAdapter = new SyncAdapter(getApplicationContext(), true);
-			}
-		}
-	}
-
-	@Override
-	public IBinder onBind(Intent intent)
-	{
-		return sSyncAdapter.getSyncAdapterBinder();
-	}
 }

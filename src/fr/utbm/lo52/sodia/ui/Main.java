@@ -21,13 +21,13 @@ public class Main extends Activity
 		// wifiMultiCastLock();
 	}
 
-	private void wifiMultiCastLock()
-	{
-		android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) getSystemService(android.content.Context.WIFI_SERVICE);
-		lock = wifi.createMulticastLock("mylockthereturn");
-		lock.setReferenceCounted(true);
-		lock.acquire();
-	}
+//	private void wifiMultiCastLock()
+//	{
+//		android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) getSystemService(android.content.Context.WIFI_SERVICE);
+//		lock = wifi.createMulticastLock("mylockthereturn");
+//		lock.setReferenceCounted(true);
+//		lock.acquire();
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

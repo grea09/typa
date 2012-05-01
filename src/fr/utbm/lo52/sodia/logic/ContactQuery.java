@@ -1,14 +1,15 @@
 package fr.utbm.lo52.sodia.logic;
 
-import java.util.Set;
-
 import android.accounts.Account;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds.Im;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.RawContacts;
+import android.provider.ContactsContract.RawContacts.Entity;
 import fr.utbm.lo52.sodia.protocols.Protocol;
 import fr.utbm.lo52.sodia.protocols.ProtocolManager;
 
@@ -32,13 +33,19 @@ public class ContactQuery
 	
 	public static Account best(Context context, long contact)
 	{
-		Set<String> types = ProtocolManager.getAccountTypes();
-		final Cursor cursor = context.getContentResolver().query(Data.CONTENT_URI,
-			new String[] {Data._ID, },
-			registeredProtocolsSelection() + " AND " + Data.CONTACT_ID + "=?",
-			new String[] {String.valueOf(contact)}, null);
-		while (cursor.moveToNext()) {
-			
+		final ContentResolver resolver = context.getContentResolver();
+		final Cursor rawContacts = resolver.query(RawContacts.CONTENT_URI,
+		          new String[]{RawContacts._ID},
+		          RawContacts.CONTACT_ID + "=? AND " + registeredProtocolsSelection(),
+		          new String[]{String.valueOf(contact)}, null);
+		while(rawContacts.moveToNext())
+		{
+			final long rawContactId = rawContacts.getLong(0);
+			Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawContactId);
+			Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
+			Cursor rawContact = resolver.query(entityUri,
+			          new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
+			          null, null, null);
 		}
 		return null;
 	}

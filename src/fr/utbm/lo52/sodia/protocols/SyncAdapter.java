@@ -15,7 +15,7 @@ import android.os.Bundle;
  * update the contacts' status messages, which would be useful for a messaging
  * or social networking client.
  */
-public class SyncAdapter extends AbstractThreadedSyncAdapter
+public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 {
 	private final AccountManager accountManager;
 

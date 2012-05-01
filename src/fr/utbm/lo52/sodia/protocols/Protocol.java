@@ -11,6 +11,7 @@ import android.accounts.Account;
 public abstract class Protocol
 {
 	public static final Class<? extends Protocol> CLASS = Protocol.class;
+	public static final String NAME = ""; //eg Bonjour
 	public static final String ACCOUNT_TYPE = ""; // com.apple.bonjour
 	public static final boolean HAS_PASSWORD = true;
 	protected Account account;

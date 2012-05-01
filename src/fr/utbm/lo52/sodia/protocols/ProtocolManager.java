@@ -46,6 +46,11 @@ public class ProtocolManager
 		}
 		return value;
 	}
+	
+	public static Protocol getProtocol(Account account)
+	{
+		return accounts.get(account);
+	}
 
 	public static void register(Protocol protocol)
 			throws ProtocolAlreadyRegisteredException

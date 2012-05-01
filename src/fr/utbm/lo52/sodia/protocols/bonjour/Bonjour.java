@@ -1,100 +1,48 @@
 package fr.utbm.lo52.sodia.protocols.bonjour;
 
-import java.io.IOException;
-
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
-import fr.utbm.lo52.sodia.protocols.Protocol;
-
 import android.accounts.Account;
-import android.os.AsyncTask;
-import android.util.Log;
+import fr.utbm.lo52.sodia.logic.Message;
+import fr.utbm.lo52.sodia.protocols.Protocol;
+import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
 
-public class Bonjour extends AsyncTask<Void, Void, Void>
+public class Bonjour extends Protocol
 {
 
-	private String type = "_presence._tcp.local.";
-	private String create = "_presence._tcp.local.";
-
-	private JmDNS jmdns = null;
-	private ServiceListener listener = null;
-	private ServiceInfo serviceInfo;
+	public Bonjour(Account account) throws IllegalArgumentException,
+			ProtocolAlreadyRegisteredException
+	{
+		super(account);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
-	protected Void doInBackground(Void... voids)
+	public void connect()
 	{
-		try
-		{
-			jmdns = JmDNS.create();
-			jmdns.addServiceListener(type, listener = new ServiceListener()
-				{
-
-					public void serviceResolved(ServiceEvent event)
-					{
-						Log.i("Bonjour Discover", "Service resolved: "
-								+ event.getInfo().getQualifiedName() + " port:"
-								+ event.getInfo().getPort());
-					}
-
-					public void serviceRemoved(ServiceEvent ev)
-					{
-						Log.i("Bonjour Discover",
-								"Service removed: " + ev.getName());
-					}
-
-					public void serviceAdded(ServiceEvent event)
-					{
-						// Required to force serviceResolved to be called again
-						// (after the first search)
-						jmdns.requestServiceInfo(event.getType(),
-								event.getName(), 1);
-						Log.i("Bonjour Discover",
-								"Service added: " + event.getName());
-					}
-				});
-			serviceInfo = ServiceInfo.create(create, "antoine@HTCEVO3D", 0,
-					"plain test service from android");
-			jmdns.registerService(serviceInfo);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
+		// TODO Auto-generated method stub
+		
 	}
 
-	/*
-	 * protected void onProgressUpdate() {
-	 * 
-	 * }
-	 * 
-	 * protected void onPostExecute() {
-	 * 
-	 * }
-	 */
-
-	public void onCancelled()
+	@Override
+	public void send(Message message, String contact)
 	{
-		if (jmdns != null)
-		{
-			if (listener != null)
-			{
-				jmdns.removeServiceListener(type, listener);
-				listener = null;
-			}
-			jmdns.unregisterAllServices();
-			try
-			{
-				jmdns.close();
-			} catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			jmdns = null;
-		}
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void presence(long status)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disconnect()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }
