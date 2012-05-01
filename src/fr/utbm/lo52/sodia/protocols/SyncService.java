@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package fr.utbm.lo52.sodia.protocols.xmpp.syncadapter;
+package fr.utbm.lo52.sodia.protocols;
 
 import android.app.Service;
 import android.content.Intent;
@@ -24,23 +24,28 @@ import android.os.IBinder;
  * ACTION_AUTHENTICATOR_INTENT. It instantiates the syncadapter and returns its
  * IBinder.
  */
-public class SyncService extends Service {
+public class SyncService extends Service
+{
 
 	private static final Object sSyncAdapterLock = new Object();
 
 	private static SyncAdapter sSyncAdapter = null;
 
 	@Override
-	public void onCreate() {
-		synchronized (sSyncAdapterLock) {
-			if (sSyncAdapter == null) {
+	public void onCreate()
+	{
+		synchronized (sSyncAdapterLock)
+		{
+			if (sSyncAdapter == null)
+			{
 				sSyncAdapter = new SyncAdapter(getApplicationContext(), true);
 			}
 		}
 	}
 
 	@Override
-	public IBinder onBind(Intent intent) {
+	public IBinder onBind(Intent intent)
+	{
 		return sSyncAdapter.getSyncAdapterBinder();
 	}
 }

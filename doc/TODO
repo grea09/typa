@@ -1,0 +1,26 @@
+Faire le Protocol manager
+	L'UI rataché peut etre une liste des comptes avec leur état
+
+Faire le synchronisation manager à l'aide du protocol (création du protocol (thread) uniquement dans le service)
+	gérer les protocols asynchrone
+	Synchro que des contacts + presence (y compris la notre)
+		Recevoir la liste des contact
+		Changement de status des autres
+		Suppression de contact
+	Synchro des message
+		Depuis un content provider de message
+	Appeler les listener sur les changements
+
+Réussir une implémentation de base
+	Puis XMPP
+	Puis Bonjour
+
+Tester
+	Compatibilité 2.1
+	
+
+Ajouter des goodies
+	Agrégation
+	Solidité du code
+	API pour interface graphique
+	Helper pour selectionner seulement les comptes rataché

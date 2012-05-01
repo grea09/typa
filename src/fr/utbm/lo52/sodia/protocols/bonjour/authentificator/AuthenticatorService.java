@@ -1,4 +1,5 @@
 package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
+
 /*
  * Copyright (C) 2010 The Android Open Source Project
  *
@@ -24,18 +25,18 @@ import android.util.Log;
  * Service to handle Account authentication. It instantiates the authenticator
  * and returns its IBinder.
  */
-public class AuthenticatorService extends Service 
+public class AuthenticatorService extends Service
 {
 
 	private Authenticator authenticator;
 
 	@Override
-	public void onCreate() 
+	public void onCreate()
 	{
-		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE)) 
+		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE))
 		{
 			Log.v(getClass().getSimpleName(), "Authentication Service started.");
-			for(StackTraceElement element : (new Exception()).getStackTrace())
+			for (StackTraceElement element : (new Exception()).getStackTrace())
 			{
 				Log.v(getClass().getSimpleName(), element.toString());
 			}
@@ -44,20 +45,22 @@ public class AuthenticatorService extends Service
 	}
 
 	@Override
-	public void onDestroy() 
+	public void onDestroy()
 	{
-		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE)) 
+		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE))
 		{
 			Log.v(getClass().getSimpleName(), "Authentication Service stopped.");
 		}
 	}
 
 	@Override
-	public IBinder onBind(Intent intent) {
-		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE)) 
+	public IBinder onBind(Intent intent)
+	{
+		if (Log.isLoggable(getClass().getSimpleName(), Log.VERBOSE))
 		{
-			Log.v(getClass().getSimpleName(), "getBinder()...  returning the AccountAuthenticator binder for intent "
-					+ intent);
+			Log.v(getClass().getSimpleName(),
+					"getBinder()...  returning the AccountAuthenticator binder for intent "
+							+ intent);
 		}
 		return authenticator.getIBinder();
 	}

@@ -9,18 +9,18 @@ import fr.utbm.lo52.sodia.R;
 
 public class Main extends Activity
 {
-	
+
 	android.net.wifi.WifiManager.MulticastLock lock;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.draw();
-		//wifiMultiCastLock();
+		// wifiMultiCastLock();
 	}
-	
+
 	private void wifiMultiCastLock()
 	{
 		android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) getSystemService(android.content.Context.WIFI_SERVICE);
@@ -28,7 +28,7 @@ public class Main extends Activity
 		lock.setReferenceCounted(true);
 		lock.acquire();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -47,11 +47,12 @@ public class Main extends Activity
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.main);
 	}
-	
+
 	@Override
-	protected void onStop() {
-		//lock.release();
+	protected void onStop()
+	{
+		// lock.release();
 		super.onStop();
 	}
-	
+
 }

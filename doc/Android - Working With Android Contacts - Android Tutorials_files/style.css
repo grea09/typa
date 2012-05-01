@@ -1,0 +1,487 @@
+.logo {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 310px;
+	height: 68px;
+}
+
+.hrOneLine {
+	border-top: 1px solid #000000;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+.topBar {
+	position: absolute;
+	left: 310px;
+	top: 0px;
+	width:460px;
+	height: 68px;
+	background-color: #c2c2c2;
+	text-align: center;
+}
+
+.leftNav {
+	position: absolute;
+	left: 0px;
+	top: 68px;
+	height: 240px;
+	width: 140px;
+	border-top: 1px solid #000000;
+}
+
+.leftNavAdsense {
+	position: absolute;
+	left: 10px;
+	top: 264px;
+	height: 48px;
+	width: 140px;
+}
+
+.leftNavContentList {
+	position: absolute;
+	left: 0px;
+	top: 364px;
+	height: 48px;
+	width: 140px;
+}
+
+.navBarOff {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-align: left;
+	background-color: #c2c2c2;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	padding: 1px;
+}
+
+.navBarOn {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-align: left;
+	background-color: #ffffff;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	padding: 1px;
+}
+
+.featuredArticleBox {
+	position: absolute;
+	left: 150px;
+	top: 78px;
+	width: 240px;
+	border: 1px solid #000000;
+}
+
+.featuredArticleBoxTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+	text-align: center;
+	color: #ffffff;
+	border-bottom: 1px solid #000000;
+	background-color: #055890;
+}
+
+.featuredArticleBoxName {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+}
+
+.featuredArticleBoxDesc {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+	width: 220px;
+	word-wrap: break-word;
+}
+
+.featuredArticleBoxAuthor {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 11px;
+}
+
+.featuredArticleBoxDate {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+}
+
+.quickLinksBox {
+	position: absolute;
+	left: 400px;
+	top: 78px;
+	width: 240px;
+	height: 100px;
+	border: 1px solid #000000;
+}
+
+.quickLinksBoxTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+	text-align: center;
+	color: #ffffff;
+	border-bottom: 1px solid #000000;
+	background-color: #900000;
+}
+
+.quickLinksBoxText {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+a.quickLinksBoxLink, a.quickLinksBoxLink:visited {
+	text-decoration: none;
+}
+
+a.quickLinksBoxLink:hover {
+	text-decoration: underline;
+	color: red;
+}
+
+.rightColumn {
+	position: absolute;
+	left: 645px;
+	top: 68px;
+	width: 122px;
+	height: 460px;
+	margin-left: 2px;
+}
+
+.newContentBox {
+	position: relative;
+	margin-left: 10px;
+	margin-top: 10px;
+	left: 0px;
+	top: 10px;
+	width: 120px;
+	border: 1px solid #900000;
+	margin: 0px;
+}
+
+.redTitleBox {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	width: 120px;
+	background-color: #900000;
+	color: white;
+	text-align: center;
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	margin: 0px;
+}
+
+.newContentList {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+}
+
+a.newContentLink, a.newContentLink:visited {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	color: blue;
+}
+
+a.newContentLink:hover {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+	text-decoration: underline;
+	color: #900000;
+}
+
+.categorySmallTitleBox {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	width: 130px;
+	background-color: #900000;
+	color: white;
+	text-align: center;
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	margin: 0px;
+}
+
+.categorySmallContentList {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+}
+
+a.categorySmallContentLink, a.categorySmallContentLink:visited {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	color: blue;
+}
+
+a.categorySmallContentLink:hover {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+	text-decoration: underline;
+	color: #900000;
+}
+
+.amazonBookBox {
+	position: relative;
+	top: 30px;
+	left: 0px;
+	width: 110px;
+	margin: 0px;
+}
+
+.tutorialBox {
+	
+}
+
+.newTutorialBox {
+	position: absolute;
+	left: 150px;
+	top: 78px;
+	width: 240px;
+	height: 100px;
+	border: 1px solid #055890;
+}
+
+.newTutorialBoxTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	color: #ffffff;
+	border-bottom: 1px solid #000000;
+	background-color: #055890;
+}
+
+.newTutorialBoxName {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+}
+
+.newTutorialBoxDesc {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+.newTutorialBoxAuthor {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 11px;
+}
+
+.newTutorialBoxDate {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+}
+
+.tutorialListBox {
+	position: relative;
+	left: 140px;
+	top: 240px;
+	width: 490px;
+	border-top: 1px solid #000000;
+	padding-top: 4px;
+}
+
+.tutorialListSpan {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 225px;
+	height: 150px;
+}
+
+.tutorialListSpanB {
+	position: absolute;
+	top: 0px;
+	left: 250px;
+	width: 225px;
+	height: 150px;
+}
+
+.tutorialListDiv {
+	position: relative;
+	top: 2px;
+	left: 2px;
+	width: 485px;
+	height: 125px;
+}
+
+.tutorialListTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.tutorialListDesc {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+	width: 220px;
+	word-wrap: break-word;
+	line-height: 100%;
+}
+
+.contentTutorialBox {
+	position: absolute;
+	left: 150px;
+	top: 78px;
+	width: 475px;
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 5px;
+}
+
+.contentTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 18px;
+	font-weight: 900;
+	text-align: center;
+}
+
+.contentHeaderA {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: 900;
+	text-align:left;
+}
+
+.contentHeaderB {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 13px;
+	font-weight: 900;
+	text-align:left;
+}
+
+.contentHeaderC {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: 900;
+	text-align:left;
+}
+
+.contentSwitchPageDiv {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+	padding-top: 10px;
+}
+
+.suggestedReadingBookSpan {
+	width: 463px;
+	padding: 7px;
+}
+
+.suggestedReadingBox {
+	position: absolute;
+	width: 475;
+	left: 150px;
+	top: 78px;
+}
+
+.homepageFeaturedContentBox {
+	position: absolute;
+	left: 150px;
+	top: 78px;
+	width: 240px;
+	border: 1px solid #000000;
+}
+
+.homepageFeaturedContentBoxTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+	text-align: center;
+	color: #ffffff;
+	border-bottom: 1px solid #000000;
+	background-color: #055890;
+}
+
+.homepageFeaturedContentBoxName {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+}
+
+.homepageFeaturedContentBoxDesc {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+.homepageFeaturedContentBoxAuthor {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 11px;
+}
+
+.homepageFeaturedContentBoxDate {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 10px;
+}
+
+.homepageFeaturedContentBoxList {
+	padding: 3px;
+}
+
+.simpleBlack {
+	border-top: 1px solid #000000;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+	
+}
+
+.homepageCodeLibraryBox {
+	position: absolute;
+	left: 400px;
+	top: 78px;
+	width: 240px;
+	height: 350px;
+	border: 1px solid #000000;
+}
+
+.homepageCodeLibraryBoxTitle {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+	text-align: center;
+	color: #ffffff;
+	border-bottom: 1px solid #000000;
+	background-color: #055890;
+}
+
+.homepageCodeLibraryBoxName {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 14px;
+	text-decoration: bold;
+}
+
+.homepageCodeLibraryBoxDesc {
+	font-family: Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+.ErrorBox {
+	position: absolute;
+	left: 150px;
+	top: 78px;
+	width: 475px;
+	height: 350px;
+	border: 1px solid #000000;
+}
+
+#shareLinks {
+	font-family: arial;
+	font-size: .8em;
+}
+
+#shareLinks a, a:visited {
+	text-decoration: none;
+	color: blue;
+}
+
+a:hover {
+	text-decoration: underline;
+	text-color: #900000;
+}

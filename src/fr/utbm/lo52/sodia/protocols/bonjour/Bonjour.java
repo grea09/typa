@@ -13,65 +13,83 @@ import android.accounts.Account;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Bonjour extends AsyncTask<Void, Void, Void> implements Protocol
+public class Bonjour extends AsyncTask<Void, Void, Void>
 {
-	
+
 	private String type = "_presence._tcp.local.";
 	private String create = "_presence._tcp.local.";
-	
+
 	private JmDNS jmdns = null;
 	private ServiceListener listener = null;
 	private ServiceInfo serviceInfo;
-	
+
 	@Override
-	 protected Void doInBackground(Void ...voids) 
-	 {
-		try {
+	protected Void doInBackground(Void... voids)
+	{
+		try
+		{
 			jmdns = JmDNS.create();
-			jmdns.addServiceListener(type, listener = new ServiceListener() {
+			jmdns.addServiceListener(type, listener = new ServiceListener()
+				{
 
-				public void serviceResolved(ServiceEvent event) {
-					Log.i("Bonjour Discover", "Service resolved: " + event.getInfo().getQualifiedName() + " port:" + event.getInfo().getPort());
-				}
+					public void serviceResolved(ServiceEvent event)
+					{
+						Log.i("Bonjour Discover", "Service resolved: "
+								+ event.getInfo().getQualifiedName() + " port:"
+								+ event.getInfo().getPort());
+					}
 
-				public void serviceRemoved(ServiceEvent ev) {
-					Log.i("Bonjour Discover", "Service removed: " + ev.getName());
-				}
+					public void serviceRemoved(ServiceEvent ev)
+					{
+						Log.i("Bonjour Discover",
+								"Service removed: " + ev.getName());
+					}
 
-				public void serviceAdded(ServiceEvent event) {
-					// Required to force serviceResolved to be called again (after the first search)
-					jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
-					Log.i("Bonjour Discover", "Service added: " + event.getName());
-				}
-			});
-			serviceInfo = ServiceInfo.create(create, "antoine@HTCEVO3D", 0, "plain test service from android");
+					public void serviceAdded(ServiceEvent event)
+					{
+						// Required to force serviceResolved to be called again
+						// (after the first search)
+						jmdns.requestServiceInfo(event.getType(),
+								event.getName(), 1);
+						Log.i("Bonjour Discover",
+								"Service added: " + event.getName());
+					}
+				});
+			serviceInfo = ServiceInfo.create(create, "antoine@HTCEVO3D", 0,
+					"plain test service from android");
 			jmdns.registerService(serviceInfo);
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 		return null;
-	 }
-	 
-/*
-	 protected void onProgressUpdate() {
-		 
-	 }
+	}
 
-	 protected void onPostExecute() {
-		 
-	 }
-*/
-	
-	public void onCancelled() {
-		if (jmdns != null) {
-			if (listener != null) {
+	/*
+	 * protected void onProgressUpdate() {
+	 * 
+	 * }
+	 * 
+	 * protected void onPostExecute() {
+	 * 
+	 * }
+	 */
+
+	public void onCancelled()
+	{
+		if (jmdns != null)
+		{
+			if (listener != null)
+			{
 				jmdns.removeServiceListener(type, listener);
 				listener = null;
 			}
 			jmdns.unregisterAllServices();
-			try {
+			try
+			{
 				jmdns.close();
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -79,28 +97,4 @@ public class Bonjour extends AsyncTask<Void, Void, Void> implements Protocol
 		}
 	}
 
-	@Override
-	public void connect(Account account) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void send(Account account, String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void presence(Account account, String status) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void disconnect(Account account) {
-		// TODO Auto-generated method stub
-		
-	}
-
- }
+}

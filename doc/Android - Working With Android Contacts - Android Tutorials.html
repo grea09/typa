@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0076)http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/3/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Android - Working With Android Contacts - Android Tutorials</title>
+    <meta name="META_Title" content="Android - Working With Android Contacts - Android Tutorials">
+    <meta name="META_Keywords" content="">
+    <meta name="META_Description" content="">
+	<link rel="stylesheet" type="text/css" href="./Android - Working With Android Contacts - Android Tutorials_files/style.css">
+<style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+<body>
+<div class="logo"><a href="http://www.higherpass.com/"><img src="./Android - Working With Android Contacts - Android Tutorials_files/hp_logo.gif" width="310" height="68" alt="higherpass" border="0">
+</a>
+</div>
+<div class="topBar"><script type="text/javascript"><!--
+google_ad_client = "pub-8719519234281669";
+google_ad_width = 234;
+google_ad_height = 60;
+google_ad_format = "234x60_as";
+google_ad_channel ="";
+google_ad_type = "text";
+//--></script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js" style="display: none; visibility: hidden; "></script></div>
+<div class="leftNav"><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/php/">php</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/html/">HTML</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/javascript/">Javascript</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/apache/">Apache</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/Comptia/">Comptia</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/linux/">Linux</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/Perl/">Perl</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/opensolaris/">OpenSolaris</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/java/">Java</a></div><div class="navBarOff" onmouseover="this.className=&#39;navBarOn&#39;;" onmouseout="this.className=&#39;navBarOff&#39;;"><a href="http://www.higherpass.com/Android/">Android</a></div></div><div class="leftNavAdsense">
+<br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-8719519234281669";
+/* Left Bar Text Links */
+google_ad_slot = "9157507039";
+google_ad_width = 120;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js" style="display: none; visibility: hidden; "></script>
+</div><div class="leftNavContentList"><br><div class="categorySmallTitleBox">Android Tutorials
+</div><div class="categorySmallContentList"><a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/">Working With Android Contacts</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Accessing-Data-With-Android-Cursors/">Accessing Data With Android Cursors</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Creating-Lists-Using-The-Android-Listactivity/">Creating Lists Using The Android ListActivity</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Android-9-Patch-Scaled-Png-Image-Guide/">Android 9 Patch Scaled PNG Image Guide</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Working-With-Images-In-Android/">Working With Images In Android</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Exploring-Android-Linearlayout-And-Relativelayout/">Exploring Android LinearLayout And RelativeLayout</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Writing-A-Basic-Android-Application/">Writing A Basic Android Application</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Installing-The-Android-Sdk-In-Eclipse/">Installing The Android SDK In Eclipse</a><br>
+</div></div><div class="contentTutorialBox"><h1 class="contentTitle">Working With Android Contacts</h1>
+
+<h2 class="contentHeaderA">Gluing it together</h2>
+<p>
+To put this together into an application there are a few glue pieces that need to be setup along with creating classes to manage accessing the data.  First we need to create a set of classes to hold the data.  Also we'll create a class to handle 2.0 API calls and a class to handle 1.6 and earlier API calls.  There's also a wrapper class that determines and loads the proper class.
+
+</p><h2 class="contentHeaderA">Contact Data Classes</h2>
+<p>
+The contact classes are a series of classes to hold a list of contacts.  The list is stored in the class ContactList that maintains an ArrayList of Contacts.  <span class="goog_qs-tidbit goog_qs-tidbit-0">The Contact objects are represented in the Contact class.  The contact class stores all the data from the Android contact record.  In addition to the ContactList and</span> Contact classes there are specialized classes to represent some of the record data.
+</p><p>
+We will create classes to represent the address, email, instant messenger, phone number, and organization(s).  Most of these classes are mere data storage classes with variables and getter/setters.
+
+</p><h3 class="contentHeaderB">ContactList</h3>
+<p>
+The ContactList class is a very basic class designed to hold an ArrayList of instances of the Contact class below. We've left this class very plain and ready to be expanded to suit your needs.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ import java.util.ArrayList;
+ 
+ public class ContactList {
+ 
+ 	private ArrayList&lt;Contact&gt; contacts = new ArrayList&lt;Contact&gt;();
+ 
+ 	public ArrayList&lt;Contact&gt; getContacts() {
+ 		return contacts;
+ 	}
+ 
+ 	public void setContacts(ArrayList&lt;Contact&gt; contacts) {
+ 		this.contacts = contacts;
+ 	}
+ 	
+ 	public void addContact(Contact contact) {
+ 		this.contacts.add(contact);
+ 	}
+  	
+ 	public ContactList() {
+ 		
+ 	}
+ 	
+ }
+</pre>
+
+<h3 class="contentHeaderB">Contact</h3>
+<p>
+The Contact class is used to store the details about each contact.  There are a series of private class variables to hold this data.  Singular data such as name and database ID are stored as strings.  Complex data is stored either as an instance or ArrayList of data specific classes.  This class is mainly getters and setters with a few methods to add to the internal ArrayLists.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ import java.util.ArrayList;
+ 
+ public class Contact {
+ 	private String id;
+ 	private String displayName;
+ 	private ArrayList&lt;Phone&gt; phone;
+ 	private ArrayList&lt;Email&gt; email;
+ 	private ArrayList&lt;String&gt; notes;
+ 	private ArrayList&lt;Address&gt; addresses = new ArrayList&lt;Address&gt;();
+ 	private ArrayList&lt;IM&gt; imAddresses;
+ 	private Organization organization;
+  	
+ 	
+ 	public Organization getOrganization() {
+ 		return organization;
+ 	}
+ 	public void setOrganization(Organization organization) {
+ 		this.organization = organization;
+ 	}
+ 	public ArrayList&lt;IM&gt; getImAddresses() {
+ 		return imAddresses;
+ 	}
+ 	public void setImAddresses(ArrayList&lt;IM&gt; imAddresses) {
+ 		this.imAddresses = imAddresses;
+  	}
+ 	public void addImAddresses(IM imAddr) {
+ 		this.imAddresses.add(imAddr);
+ 	}
+ 	public ArrayList&lt;String&gt; getNotes() {
+ 		return notes;
+ 	}
+ 	public void setNotes(ArrayList&lt;String&gt; notes) {
+ 		this.notes = notes;
+ 	}
+ 	public void addNote(String note) {
+ 		this.notes.add(note);
+ 	}
+ 	public ArrayList&lt;Address&gt; getAddresses() {
+ 		return addresses;
+ 	}
+ 	public void setAddresses(ArrayList&lt;Address&gt; addresses) {
+ 		this.addresses = addresses;
+ 	}
+ 	public void addAddress(Address address) {
+ 		this.addresses.add(address);
+ 	}
+ 	public ArrayList&lt;Email&gt; getEmail() {
+ 		return email;
+ 	}
+ 	public void setEmail(ArrayList&lt;Email&gt; email) {
+ 		this.email = email;
+ 	}
+ 	public void addEmail(Email e) {
+ 		this.email.add(e);
+ 	}	
+ 	public String getId() {
+ 		return id;
+ 	}
+ 	public void setId(String id) {
+  		this.id = id;
+ 	}
+ 	public String getDisplayName() {
+ 		return displayName;
+ 	}
+ 	public void setDisplayName(String dName) {
+ 		this.displayName = dName;
+ 	}
+ 	public ArrayList&lt;Phone&gt; getPhone() {
+ 		return phone;
+ 	}
+ 	public void setPhone(ArrayList&lt;Phone&gt; phone) {
+ 		this.phone = phone;
+ 	}
+ 	public void addPhone(Phone phone) {
+ 		this.phone.add(phone);
+ 	}
+ }
+</pre>
+
+<h3 class="contentHeaderB">Address</h3>
+<p>
+The Address class is the only class in the ContactList framework that actually does any work.  Due to differences in data storage between 1.x and 2.0 versions of Android the Address class has to determine if the input address is free-form from 1.x or was input from the formatted data structure from 2.0.  Android 2.0 has individual data columns for PO-Box, street, city, region, postal code, country while 1.x was just a text field with the entire address.  This is handled in the toString() method that returns a free-form address from either input type.  Unfortunately when using Android 1.x all the individual address getters will return null.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ public class Address {
+ 	private String poBox;
+ 	private String street;
+ 	private String city;
+ 	private String state;
+ 	private String postalCode;
+ 	private String country;
+ 	private String type;
+ 	private String asString = "";
+ 	
+ 	public String getType() {
+ 		return type;
+ 	}
+ 	public void setType(String type) {
+ 		this.type = type;
+ 	}
+ 	public String getPoBox() {
+ 		return poBox;
+ 	}
+ 	public void setPoBox(String poBox) {
+ 		this.poBox = poBox;
+ 	}
+ 	public String getStreet() {
+ 		return street;
+ 	}
+ 	public void setStreet(String street) {
+ 		this.street = street;
+ 	}
+ 	public String getCity() {
+ 		return city;
+ 	}
+ 	public void setCity(String city) {
+ 		this.city = city;
+ 	}
+ 	public String getState() {
+ 		return state;
+ 	}
+ 	public void setState(String state) {
+ 		this.state = state;
+ 	}
+ 	public String getPostalCode() {
+ 		return postalCode;
+ 	}
+ 	public void setPostalCode(String postalCode) {
+ 		this.postalCode = postalCode;
+ 	}
+ 	public String getCountry() {
+ 		return country;
+ 	}
+ 	public void setCountry(String country) {
+ 		this.country = country;
+ 	}
+ 	public String toString() {
+ 		if (this.asString.length() &gt; 0) {
+ 			return(this.asString);
+ 		} else {
+ 			String addr = "";
+ 			if (this.getPoBox() != null) {
+ 				addr = addr + this.getPoBox() + "n";
+ 			}
+ 			if (this.getStreet() != null) {
+ 				addr = addr + this.getStreet() + "n";
+ 			}
+ 			if (this.getCity() != null) {
+ 				addr = addr + this.getCity() + ", ";
+ 			}
+ 			if (this.getState() != null) {
+ 				addr = addr + this.getState() + " ";
+ 			}
+ 			if (this.getPostalCode() != null) {
+ 				addr = addr + this.getPostalCode() + " ";
+ 			}
+ 			if (this.getCountry() != null) {
+ 				addr = addr + this.getCountry();
+ 			}
+ 			return(addr);
+ 		}
+ 	}
+ 	
+ 	public Address(String asString, String type) {
+ 		this.asString = asString;
+ 		this.type = type;
+ 	}
+ 	
+ 	public Address(String poBox, String street, String city, String state, 
+ 			String postal, String country, String type) {
+ 		this.setPoBox(poBox);
+  		this.setStreet(street);
+ 		this.setCity(city);
+ 		this.setState(state);
+ 		this.setPostalCode(postal);
+ 		this.setCountry(country);
+ 		this.setType(type);
+ 	}
+ }
+</pre>
+<br>
+
+<h3 class="contentHeaderB">Email</h3>
+<p>
+Another getter/setter and data storage class.  The email class stores the email address and address type (work, home, etc).
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ public class Email {
+ 	private String address;
+ 	private String type;
+ 	public String getAddress() {
+ 		return address;
+ 	}
+ 	public void setAddress(String address) {
+ 		this.address = address;
+ 	}
+ 	public String getType() {
+ 		return type;
+ 	}
+ 	public void setType(String t) {
+ 		this.type = t;
+ 	}
+ 	
+ 	public Email(String a, String t) {
+ 		this.address = a;
+ 		this.type = t;
+ 	}
+ }
+</pre>
+
+<h3 class="contentHeaderB">IM</h3>
+<p>
+Class to hold instant messenger data.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ public class IM {
+ 	private String name;
+ 	private String type;
+ 	public String getName() {
+ 		return name;
+ 	}
+ 	public void setName(String name) {
+ 		this.name = name;
+ 	}
+ 	public String getType() {
+ 		return type;
+ 	}
+ 	public void setType(String type) {
+ 		this.type = type;
+ 	}
+ 	
+ 	public IM(String name, String type) {
+ 		this.name = name;
+ 		this.type = type;
+ 	}
+ }
+</pre>
+
+<h3 class="contentHeaderB">Organization</h3>
+<p>
+Class to hold the contacts organizational data.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ public class Organization {
+ 	private String organization = "";
+ 	private String title = "";
+ 	public String getOrganization() {
+ 		return organization;
+ 	}
+ 	public void setOrganization(String organization) {
+ 		this.organization = organization;
+ 	}
+ 	public String getTitle() {
+ 		return title;
+ 	}
+ 	public void setTitle(String title) {
+ 		this.title = title;
+ 	}
+ 	
+ 	public Organization() {
+ 		
+ 	}
+ 	public Organization(String org, String title) {
+ 		this.organization = org;
+ 		this.title = title;
+ 	}
+ }
+</pre>
+
+<h3 class="contentHeaderB">Phone</h3>
+<p>
+Class to hold the phone records.
+<br>
+</p><pre> package com.higherpass.android.ContactAPI.objects;
+ 
+ public class Phone {
+ 	private String number;
+ 	private String type;
+ 	
+ 	public String getNumber() {
+ 		return number;
+ 	}
+ 
+ 	public void setNumber(String number) {
+ 		this.number = number;
+ 	}
+ 
+ 	public String getType() {
+ 		return type;
+ 	}
+ 
+ 	public void setType(String type) {
+ 		this.type = type;
+ 	}
+ 
+ 	public Phone(String n, String t) {
+ 		this.number = n;
+ 		this.type = t;
+ 	}
+ 	
+ }
+</pre>
+<div class="contentSwitchPageDiv">
+<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/2/">Contacts in Android 1.6 and Before &lt;&lt;</a> &nbsp;<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/1/">1</a>&nbsp;<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/2/">2</a>&nbsp;<a href="./Android - Working With Android Contacts - Android Tutorials_files/Android - Working With Android Contacts - Android Tutorials.html">3</a>&nbsp;<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/4/">4</a>&nbsp;<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/5/">5</a> &nbsp;<a href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/4/">&gt;&gt; Wrapper Class and Android 2.0 API Class</a></div>
+</div><div class="rightColumn"><div class="newContentBox"><div class="redTitleBox">New Content
+</div><div class="newContentList"><a class="newContentLink" href="http://www.higherpass.com/Android/Tutorials/Working-With-Android-Contacts/">Working With Android Contacts</a><br><a class="newContentLink" href="http://www.higherpass.com/Android/Tutorials/Accessing-Data-With-Android-Cursors/">Accessing Data With Android Cursors</a><br><a class="newContentLink" href="http://www.higherpass.com/Android/Tutorials/Creating-Lists-Using-The-Android-Listactivity/">Creating Lists Using The Android ListActivity</a><br><a class="newContentLink" href="http://www.higherpass.com/Android/Tutorials/Android-9-Patch-Scaled-Png-Image-Guide/">Android 9 Patch Scaled PNG Image Guide</a><br><a class="newContentLink" href="http://www.higherpass.com/Android/Tutorials/Working-With-Images-In-Android/">Working With Images In Android</a><br></div></div><div class="amazonBookBox"><iframe src="about:blank" width="120" height="240" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="display: none; visibility: hidden; "></iframe>
+</div><div><br><div style="font-size: 13px; position: absolute; top: 500px; width: 120px;" class="categorySmallTitleBox">Related Information
+<div style="background: white;"><a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Accessing-Data-With-Android-Cursors/">Accessing Data With Android Cursors</a><br>
+<a class="categorySmallContentLink" href="http://www.higherpass.com/Android/Tutorials/Writing-A-Basic-Android-Application/">Writing A Basic Android Application</a><br>
+</div></div></div></div><img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; -webkit-transition-property: opacity; -webkit-transition-duration: 0.3s; -webkit-transition-timing-function: ease; -webkit-transition-delay: initial; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow-x: hidden; overflow-y: hidden; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: initial; border-color: initial; border-image: initial; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="><div id="goog_qs_tidbit_box" class="notranslate goog_qs-slideup"><div id="goog_qs-wrapper"><div id="goog_qs-box-toggle" style="background-image: url(chrome-extension://okanipcmceoeemlbjnmnbdibhgpbllgc/images/minimize.png); " title="Réduire"></div><div id="goog_qs-box-help" style="background-image: url(chrome-extension://okanipcmceoeemlbjnmnbdibhgpbllgc/images/help.png); " title="Ouvrir la page de l&#39;aide et des options"></div><div id="goog_qs-box-info" style="background-image: url(chrome-extension://okanipcmceoeemlbjnmnbdibhgpbllgc/images/icon16x16.png); "><span class="goog_qs-nowrap">O<img>ccurrences</span> <span class="goog_qs-nowrap">d<img>e</span> <span class="goog_qs-query"><span class="goog_qs-nowrap">A<img>ndroid</span> <span class="goog_qs-nowrap">C<img>ontact</span> <span class="goog_qs-nowrap">c<img>lass</span></span> <span class="goog_qs-nowrap">d<img>ans</span> <span class="goog_qs-nowrap">l<img>a</span> <span class="goog_qs-nowrap">p<img>age</span></div><div id="goog_qs-box-tidbits"><div class="goog_qs-box-tidbit" title="Cliquer pour afficher cet extrait de la page"><span class="goog_qs-nowrap">T<img>he</span> <em><span class="goog_qs-nowrap">C<img>ontact</span></em> <span class="goog_qs-nowrap">o<img>bjects</span> <span class="goog_qs-nowrap">a<img>re</span> <span class="goog_qs-nowrap">r<img>epresented</span> <span class="goog_qs-nowrap">i<img>n</span> <span class="goog_qs-nowrap">t<img>he</span> <em><span class="goog_qs-nowrap">C<img>ontact</span> <span class="goog_qs-nowrap">c<img>lass</span></em>. <span class="goog_qs-nowrap">T<img>he</span> <em><span class="goog_qs-nowrap">c<img>ontact</span> <span class="goog_qs-nowrap">c<img>lass</span></em> <span class="goog_qs-nowrap">s<img>tores</span> <span class="goog_qs-nowrap">a<img>ll</span> <span class="goog_qs-nowrap">t<img>he</span> <span class="goog_qs-nowrap">d<img>ata</span> <span class="goog_qs-nowrap">f<img>rom</span> <span class="goog_qs-nowrap">t<img>he</span> <em><span class="goog_qs-nowrap">A<img>ndroid</span> <span class="goog_qs-nowrap">c<img>ontact</span></em> <span class="goog_qs-nowrap">r<img>ecord.</span> <span class="goog_qs-nowrap">I<img>n</span> <span class="goog_qs-nowrap">a<img>ddition</span> <span class="goog_qs-nowrap">t<img>o</span> <span class="goog_qs-nowrap">t<img>he</span> <span class="goog_qs-nowrap">C<img>ontactList</span> <span class="goog_qs-nowrap">a<img>nd...</span> <span class="goog_qs-go">»</span></div></div><div id="goog_qs-box-bottom"><div class="goog_qs-more-matches" id="goog_qs-box-more-tidbits"><span class="goog_qs-nowrap">P<img>lus</span> <span class="goog_qs-nowrap">d<img>e</span> <span class="goog_qs-nowrap">c<img>orrespondances</span> <span class="goog_qs-go">»</span></div><div class="goog_qs-more-matches" id="goog_qs-box-fewer-tidbits" style="display:none"><span class="goog_qs-go">«</span>  <span class="goog_qs-nowrap">M<img>oins</span> <span class="goog_qs-nowrap">d<img>e</span> <span class="goog_qs-nowrap">c<img>orrespondances</span></div></div><div style="clear:both"></div></div></div></body><link rel="stylesheet" type="text/css" href="data:text/css,"></html>

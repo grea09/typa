@@ -1,13 +1,13 @@
-package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
+package fr.utbm.lo52.sodia.ui;
+
+import java.lang.reflect.InvocationTargetException;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,8 +16,10 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.protocols.Authentificator;
+import fr.utbm.lo52.sodia.protocols.Protocol;
 
-public class AuthentificatorActivity extends AccountAuthenticatorActivity
+public class Login extends AccountAuthenticatorActivity
 {
 	/**
 	 * @author Android Open Source Project The Intent flag to confirm
@@ -42,11 +44,9 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 
 	private AccountManager accountManager;
 
-	/** for posting authentication attempts back to UI thread */
-	private final Handler handler = new Handler();
-
-	/** Keep track of the progress dialog so we can dismiss it */
-	private ProgressDialog progressDialog = null;
+	private String accountType = "";
+	private Class<? extends Protocol> protocolClass;
+	private Protocol protocol;
 
 	private TextView message;
 
@@ -56,43 +56,71 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 	private String password;
 	private EditText passwordEdit;
 
-	/**
-	 * If set we are just checking that the user knows their credentials; this
-	 * doesn't cause the user's password or authToken to be changed on the
-	 * device.
-	 */
-	private Boolean confirmCredentials = false;
-
 	/** Was the original caller asking for an entirely new account? */
 	protected boolean requestNewAccount = false;
+
+	/** Do we prompt password ? **/
+	private boolean hasPassword = true;
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle icicle)
 	{
 
 		Log.i(getClass().getSimpleName(), "onCreate(" + icicle + ")");
 		super.onCreate(icicle);
+
 		accountManager = AccountManager.get(this);
+
 		Log.i(getClass().getSimpleName(), "loading data from Intent");
 		final Intent intent = getIntent();
+		protocolClass = (Class<? extends Protocol>) intent
+				.getSerializableExtra(Authentificator.KEY_PROTOCOL_CLASS);
+		accountType = intent
+				.getStringExtra(Authentificator.KEY_PROTOCOL_ACCOUNT_TYPE);
+
 		username = intent.getStringExtra(PARAM_USERNAME);
 		requestNewAccount = username == null;
-		confirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS,
-				false);
+		hasPassword = intent.getBooleanExtra(
+				Authentificator.KEY_PROTOCOL_HAS_PASSWORD,
+				Protocol.HAS_PASSWORD);
 		Log.i(getClass().getSimpleName(), "	request new: " + requestNewAccount);
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		setContentView(R.layout.login);
-		getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
-				R.drawable.ic_protocol_bonjour);
-		getWindow().setTitle("Bonjour");
+		try
+		{
+			getWindow().setFeatureDrawableResource(
+					Window.FEATURE_LEFT_ICON,
+					R.drawable.class.getDeclaredField(
+							"ic_protocol_"
+									+ protocolClass.getSimpleName()
+											.toLowerCase()).getInt(null));
+		} catch (IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getWindow().setTitle(protocolClass.getSimpleName());
 		message = (TextView) findViewById(R.id.message);
 		usernameEdit = (EditText) findViewById(R.id.username_edit);
 		passwordEdit = (EditText) findViewById(R.id.password_edit);
-		passwordEdit.setVisibility(TRIM_MEMORY_UI_HIDDEN);
-		findViewById(R.id.password_label).setVisibility(TRIM_MEMORY_UI_HIDDEN);
+		if (!hasPassword)
+		{
+			passwordEdit.setVisibility(TRIM_MEMORY_UI_HIDDEN);
+			findViewById(R.id.password_label).setVisibility(
+					TRIM_MEMORY_UI_HIDDEN);
+		}
 		if (!TextUtils.isEmpty(username))
 			usernameEdit.setText(username);
 		// message.setText(getMessage());
@@ -113,9 +141,14 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 			username = usernameEdit.getText().toString();
 		}
 		password = passwordEdit.getText().toString();
-		if (TextUtils.isEmpty(username))// || TextUtils.isEmpty(password)) {
+		if (TextUtils.isEmpty(username))
 		{
-			message.setText("User name emtpy.");
+			message.setText(getResources().getText(
+					R.string.login_message_username));
+		} else if (TextUtils.isEmpty(password) && hasPassword)
+		{
+			message.setText(getResources().getText(
+					R.string.login_message_password));
 		} else
 		{
 			// Show a progress dialog, and kick off a background task to perform
@@ -123,7 +156,35 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 			// showProgress();
 			// authTask = new UserLoginTask();
 			// authTask.execute();
-			final Account account = new Account(username, "com.apple.bonjour");
+
+			final Account account = new Account(username, accountType);
+			try
+			{
+				protocol = protocolClass.getConstructor(Account.class)
+						.newInstance(account);
+				protocol.connect();
+			} catch (IllegalArgumentException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			if (requestNewAccount)
 			{
 				accountManager.addAccountExplicitly(account, password, null);
@@ -136,8 +197,7 @@ public class AuthentificatorActivity extends AccountAuthenticatorActivity
 			}
 			final Intent intent = new Intent();
 			intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, username);
-			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE,
-					"com.apple.bonjour");
+			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType);
 			setAccountAuthenticatorResult(intent.getExtras());
 			setResult(RESULT_OK, intent);
 			finish();

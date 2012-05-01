@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.protocols.bonjour.authentificator;
+package fr.utbm.lo52.sodia.protocols;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -8,16 +8,20 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
+import fr.utbm.lo52.sodia.ui.Login;
 
-class Authenticator extends AbstractAccountAuthenticator
+public class Authentificator<E extends Protocol> extends
+		AbstractAccountAuthenticator
 {
+	public static final String KEY_PROTOCOL_CLASS = "protocol.class";
+	public static final String KEY_PROTOCOL_ACCOUNT_TYPE = "protocol.account_type";
+	public static final String KEY_PROTOCOL_HAS_PASSWORD = "protocol.has_password";
 
 	// Authentication Service context
 	private final Context context;
 
-	public Authenticator(Context context)
+	public Authentificator(Context context)
 	{
 		super(context);
 		this.context = context;
@@ -29,9 +33,12 @@ class Authenticator extends AbstractAccountAuthenticator
 			String[] requiredFeatures, Bundle options)
 	{
 		Log.v(getClass().getSimpleName(), "addAccount()");
-		final Intent intent = new Intent(context, AuthentificatorActivity.class);
+		final Intent intent = new Intent(context, Login.class);
 		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE,
 				response);
+		intent.putExtra(KEY_PROTOCOL_CLASS, E.CLASS);
+		intent.putExtra(KEY_PROTOCOL_ACCOUNT_TYPE, E.ACCOUNT_TYPE);
+		intent.putExtra(KEY_PROTOCOL_HAS_PASSWORD, E.HAS_PASSWORD);
 		final Bundle bundle = new Bundle();
 		bundle.putParcelable(AccountManager.KEY_INTENT, intent);
 		return bundle;
