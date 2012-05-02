@@ -15,6 +15,7 @@ public class Authentificator<E extends Protocol> extends
 		AbstractAccountAuthenticator
 {
 	public static final String KEY_PROTOCOL_CLASS = "protocol.class";
+	public static final String KEY_PROTOCOL_NAME = "protocol.name";
 	public static final String KEY_PROTOCOL_ACCOUNT_TYPE = "protocol.account_type";
 	public static final String KEY_PROTOCOL_HAS_PASSWORD = "protocol.has_password";
 
@@ -37,6 +38,7 @@ public class Authentificator<E extends Protocol> extends
 		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE,
 				response);
 		intent.putExtra(KEY_PROTOCOL_CLASS, E.CLASS);
+		intent.putExtra(KEY_PROTOCOL_NAME, E.NAME);
 		intent.putExtra(KEY_PROTOCOL_ACCOUNT_TYPE, E.ACCOUNT_TYPE);
 		intent.putExtra(KEY_PROTOCOL_HAS_PASSWORD, E.HAS_PASSWORD);
 		final Bundle bundle = new Bundle();

@@ -1,8 +1,9 @@
 package fr.utbm.lo52.sodia.protocols;
 
-import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
-import fr.utbm.lo52.sodia.logic.Message;
 import android.accounts.Account;
+import android.graphics.Bitmap;
+import fr.utbm.lo52.sodia.logic.Message;
+import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
 
 /**
  * @author antoine
@@ -58,4 +59,20 @@ public abstract class Protocol
 	 * Disconnect cuurent account
 	 */
 	public abstract void disconnect();
+	
+	
+	protected void receive(Message message, String contact)
+	{
+		ProtocolManager.receive(message, contact, account);
+	}
+	
+	protected void newContact(Bitmap photo, String name, String contact)
+	{
+		ProtocolManager.newContact(photo, name, contact, account);
+	}
+	
+	protected void presence(long status, String message, String contact)
+	{
+		ProtocolManager.presence(status, message, contact, account);
+	}
 }

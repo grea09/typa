@@ -47,6 +47,7 @@ public class Login extends AccountAuthenticatorActivity
 	private String accountType = "";
 	private Class<? extends Protocol> protocolClass;
 	private Protocol protocol;
+	private String protocolName;
 
 	private TextView message;
 
@@ -81,6 +82,8 @@ public class Login extends AccountAuthenticatorActivity
 				.getSerializableExtra(Authentificator.KEY_PROTOCOL_CLASS);
 		accountType = intent
 				.getStringExtra(Authentificator.KEY_PROTOCOL_ACCOUNT_TYPE);
+		protocolName = intent
+				.getStringExtra(Authentificator.KEY_PROTOCOL_NAME);
 
 		username = intent.getStringExtra(PARAM_USERNAME);
 		requestNewAccount = username == null;
@@ -96,8 +99,7 @@ public class Login extends AccountAuthenticatorActivity
 					Window.FEATURE_LEFT_ICON,
 					R.drawable.class.getDeclaredField(
 							"ic_protocol_"
-									+ protocolClass.getSimpleName()
-											.toLowerCase()).getInt(null));
+									+ protocolName.toLowerCase()).getInt(null));
 		} catch (IllegalArgumentException e)
 		{
 			// TODO Auto-generated catch block
@@ -111,7 +113,7 @@ public class Login extends AccountAuthenticatorActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getWindow().setTitle(protocolClass.getSimpleName());
+		getWindow().setTitle(protocolName);
 		message = (TextView) findViewById(R.id.message);
 		usernameEdit = (EditText) findViewById(R.id.username_edit);
 		passwordEdit = (EditText) findViewById(R.id.password_edit);

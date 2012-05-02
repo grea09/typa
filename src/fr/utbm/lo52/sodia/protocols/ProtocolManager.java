@@ -6,6 +6,7 @@ import java.util.Set;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.graphics.Bitmap;
 import fr.utbm.lo52.sodia.logic.Message;
 
 public class ProtocolManager
@@ -65,7 +66,7 @@ public class ProtocolManager
 		// TODO accounts.get(account).send(message);
 	}
 
-	public static void presence(Context context, long status, Account account)
+	public static void presence(Context context, long status, String message, Account account)
 	{
 		//TODO : add logo
 		accounts.get(account).presence(status);
@@ -76,6 +77,21 @@ public class ProtocolManager
 		if (accounts.containsValue(protocol)
 				&& accounts.containsKey(protocol.account()))
 			accounts.remove(protocol.account());
+	}
+	
+	public static void receive(Message message, String contact, Account account)
+	{
+		
+	}
+	
+	public static void newContact(Bitmap photo, String name, String contact, Account account)
+	{
+		
+	}
+	
+	public static void presence(long status, String message, String contact, Account account)
+	{
+		
 	}
 
 }

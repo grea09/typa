@@ -35,17 +35,17 @@ public class ContactQuery
 	{
 		final ContentResolver resolver = context.getContentResolver();
 		final Cursor rawContacts = resolver.query(RawContacts.CONTENT_URI,
-		          new String[]{RawContacts._ID},
-		          RawContacts.CONTACT_ID + "=? AND " + registeredProtocolsSelection(),
-		          new String[]{String.valueOf(contact)}, null);
+				new String[]{RawContacts._ID},
+				RawContacts.CONTACT_ID + "=? AND " + registeredProtocolsSelection(),
+				new String[]{String.valueOf(contact)}, null);
 		while(rawContacts.moveToNext())
 		{
 			final long rawContactId = rawContacts.getLong(0);
 			Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawContactId);
 			Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
 			Cursor rawContact = resolver.query(entityUri,
-			          new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
-			          null, null, null);
+					new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
+					null, null, null);
 		}
 		return null;
 	}
