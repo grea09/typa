@@ -3,30 +3,30 @@
 	<item android:id="@+id/search"
 		android:title="Recherche"
 		android:icon="@drawable/ic_menu_light_search"
-		android:showAsAction="ifRoom|collapseActionView"
+		android:showAsAction="always"
 		android:actionViewClass="android.widget.SearchView" />
 	
 	<item
 		android:id="@+id/chats"
-		android:showAsAction="always|withText"
 		android:icon="@drawable/ic_menu_light_social_chat"
+		android:showAsAction="always"
 		android:title="Chats"/>	
 	
 	<item android:id="@+id/newContact"
 		android:title="New Contact"
 		android:icon="@drawable/ic_menu_light_social_add_contact"
-		android:showAsAction="always" 
+		android:showAsAction="collapseActionView" 
 		android:titleCondensed="New"/>
 	
 	<item android:id="@+id/newGroup"
 		android:title="New Group"
 		android:icon="@drawable/ic_menu_light_social_add_group"
-		android:showAsAction="always" 
+		android:showAsAction="collapseActionView" 
 		android:titleCondensed="New"/>
 	
-	<item android:id="@+id/changeStatus"
-		android:title="Change Status"
+	<item android:id="@+id/settings"
+		android:title="Settings"
 		android:icon="@drawable/ic_menu_light_settings"
-		android:showAsAction="always" 
-		android:titleCondensed="Status"/>
+		android:showAsAction="collapseActionView" 
+		android:titleCondensed="Settings"/>
 </menu>

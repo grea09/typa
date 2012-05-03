@@ -76,8 +76,8 @@ public class Main extends Activity
 		        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		        startActivity(intent3);
 	        	return true;
-	        case R.id.changeStatus:
-	        	Intent intent4 = new Intent(this, ChangeStatus.class);
+	        case R.id.settings:
+	        	Intent intent4 = new Intent(this, Settings.class);
 		        intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		        startActivity(intent4);
 	        	return true;

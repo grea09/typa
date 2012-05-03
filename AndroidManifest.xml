@@ -113,7 +113,7 @@
 		    	android:label="Add a new group"
 				android:theme="@android:style/Theme.Holo.Dialog">
 		</activity>
-		<activity android:name=".ui.ChangeStatus"
+		<activity android:name=".ui.Settings"
 		    	android:label="Change your status"
 				android:theme="@android:style/Theme.Holo.Dialog">
 		</activity>
