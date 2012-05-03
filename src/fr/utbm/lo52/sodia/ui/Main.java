@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.ui;
 
 import android.app.*;
+import android.content.Intent;
 import android.graphics.*;
 import android.os.*;
 import android.view.*;
@@ -56,5 +57,34 @@ public class Main extends Activity
 		// lock.release();
 		super.onStop();
 	}
-
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	            // app icon in action bar clicked; go home
+	            Intent intent = new Intent(this, Main.class);
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(intent);
+	            return true;
+	        case R.id.newContact:
+	        	Intent intent2 = new Intent(this, NewContact.class);
+		        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(intent2);
+	        	return true;
+	        case R.id.newGroup:
+	        	Intent intent3 = new Intent(this, NewGroup.class);
+		        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(intent3);
+	        	return true;
+	        case R.id.changeStatus:
+	        	Intent intent4 = new Intent(this, ChangeStatus.class);
+		        intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(intent4);
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	
 }
