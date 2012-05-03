@@ -1,11 +1,11 @@
 package fr.utbm.lo52.sodia.ui;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import fr.utbm.lo52.sodia.R;
+import android.app.*;
+import android.graphics.*;
+import android.os.*;
+import android.view.*;
+import fr.utbm.lo52.sodia.*;
+import fr.utbm.lo52.sodia.protocols.*;
 
 public class Main extends Activity
 {
@@ -18,6 +18,8 @@ public class Main extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		this.draw();
+		ProtocolManager.newContact(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
+																						   R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
 		// wifiMultiCastLock();
 	}
 

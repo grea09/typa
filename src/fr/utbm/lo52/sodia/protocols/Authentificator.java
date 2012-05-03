@@ -18,14 +18,17 @@ public class Authentificator<E extends Protocol> extends
 	public static final String KEY_PROTOCOL_NAME = "protocol.name";
 	public static final String KEY_PROTOCOL_ACCOUNT_TYPE = "protocol.account_type";
 	public static final String KEY_PROTOCOL_HAS_PASSWORD = "protocol.has_password";
+	public static final String KEY_PROTOCOL_LOGO = "protocol.logo";
 
 	// Authentication Service context
 	private final Context context;
+	private final E protocol;
 
-	public Authentificator(Context context)
+	public Authentificator(Context context, E protocol)
 	{
 		super(context);
 		this.context = context;
+		this.protocol = protocol;
 	}
 
 	@Override
@@ -37,10 +40,12 @@ public class Authentificator<E extends Protocol> extends
 		final Intent intent = new Intent(context, Login.class);
 		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE,
 				response);
-		intent.putExtra(KEY_PROTOCOL_CLASS, E.CLASS);
-		intent.putExtra(KEY_PROTOCOL_NAME, E.NAME);
-		intent.putExtra(KEY_PROTOCOL_ACCOUNT_TYPE, E.ACCOUNT_TYPE);
-		intent.putExtra(KEY_PROTOCOL_HAS_PASSWORD, E.HAS_PASSWORD);
+		Log.v(getClass().getSimpleName(), "Protocol : " + protocol.getClass().getSimpleName());
+		intent.putExtra(KEY_PROTOCOL_CLASS, protocol.getClass());
+		intent.putExtra(KEY_PROTOCOL_NAME, protocol.getName());
+		intent.putExtra(KEY_PROTOCOL_ACCOUNT_TYPE, protocol.getAccountType());
+		intent.putExtra(KEY_PROTOCOL_HAS_PASSWORD, protocol.hasPassword());
+		intent.putExtra(KEY_PROTOCOL_LOGO, protocol.getLogoRessource());
 		final Bundle bundle = new Bundle();
 		bundle.putParcelable(AccountManager.KEY_INTENT, intent);
 		return bundle;

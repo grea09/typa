@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.protocols;
 
 import android.accounts.Account;
+import android.content.Context;
 import android.graphics.Bitmap;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
@@ -11,30 +12,41 @@ import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredExc
  */
 public abstract class Protocol
 {
-	public static final Class<? extends Protocol> CLASS = Protocol.class;
-	public static final String NAME = ""; //eg Bonjour
-	public static final String ACCOUNT_TYPE = ""; // com.apple.bonjour
-	public static final boolean HAS_PASSWORD = true;
+	public abstract String getName(); //eg Bonjour
+	public abstract String getAccountType(); // com.apple.bonjour
+	public abstract int getLogoRessource();
+	
+	public abstract boolean hasPassword();
+	
 	protected Account account;
-
-	/**
-	 * @throws IllegalArgumentException
-	 *             , ProtocolAlreadyRegisteredException
-	 **/
-	public Protocol(Account account) throws IllegalArgumentException,
-			ProtocolAlreadyRegisteredException
+	
+	public Protocol()
 	{
-		if (account.type != ACCOUNT_TYPE)
-		{
-			throw new IllegalArgumentException("Account type not suported");
-		}
-		this.account = account;
-		ProtocolManager.register(this);
+		//Please set the account before register
+	}
+	
+	
+	/**
+	 * @throws IllegalArgumentException, ProtocolAlreadyRegisteredException
+	 **/
+	public Protocol(Account account) throws IllegalArgumentException, ProtocolAlreadyRegisteredException
+	{
+		this.setAccount(account);
 	}
 
 	public Account account()
 	{
 		return account;
+	}
+	
+	public void setAccount(Account account) throws IllegalArgumentException, ProtocolAlreadyRegisteredException
+	{
+		if (account.type != getAccountType())
+		{
+			throw new IllegalArgumentException("Account type not suported");
+		}
+		this.account = account;
+		ProtocolManager.register(this);
 	}
 
 	/**
@@ -61,18 +73,18 @@ public abstract class Protocol
 	public abstract void disconnect();
 	
 	
-	protected void receive(Message message, String contact)
+	protected void receive(Context context, Message message, String contact)
 	{
-		ProtocolManager.receive(message, contact, account);
+		ProtocolManager.receive(context, message, contact, account);
 	}
 	
-	protected void newContact(Bitmap photo, String name, String contact)
+	protected void newContact(Context context, Bitmap photo, String name, String contact)
 	{
-		ProtocolManager.newContact(photo, name, contact, account);
+		ProtocolManager.newContact(context, photo, name, contact, account);
 	}
 	
-	protected void presence(long status, String message, String contact)
+	protected void presence(Context context, long status, String message, String contact)
 	{
-		ProtocolManager.presence(status, message, contact, account);
+		ProtocolManager.presence(context, status, message, contact, account);
 	}
 }

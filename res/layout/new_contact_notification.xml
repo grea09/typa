@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="10dp" >
+	<ImageView android:id="@+id/notificationPhoto"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:layout_alignParentLeft="true"
+		android:contentDescription="@string/contact_photo"
+		android:layout_marginRight="10dp" />
+
+	<TextView android:id="@+id/notificationTime"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		style="@style/NotificationText" />
+
+	<ImageView android:id="@+id/notificationIcon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/ic_notification"
+		android:layout_below="@id/notificationTime" />
+
+	<TextView android:id="@+id/notificationContactName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/notificationPhoto"
+		android:layout_toLeftOf="@id/notificationTime"
+		android:singleLine="true"
+		style="@style/NotificationTitle" />
+	
+	<ImageButton android:id="@+id/notificationDecline"
+	    android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		style="@android:style/Widget.Holo.ActionButton"
+		android:layout_toLeftOf="@id/notificationTime"
+		android:layout_below="@id/notificationContactName"
+		android:contentDescription="@string/decline"
+		android:src="@drawable/ic_menu_dark_cancel"
+	/>
+	<ImageButton android:id="@+id/notificationAccept"
+	    android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		style="@android:style/Widget.Holo.ActionButton"
+		android:layout_toLeftOf="@id/notificationDecline"
+		android:layout_below="@id/notificationContactName"
+		android:contentDescription="@string/accept"
+		android:src="@drawable/ic_menu_dark_accept"
+	/>
+
+	<TextView android:id="@+id/notificationContactId"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/notificationPhoto"
+		android:layout_toLeftOf="@id/notificationAccept"
+		android:layout_below="@id/notificationContactName"
+		android:singleLine="true"
+		style="@style/NotificationText" />
+
+</RelativeLayout>

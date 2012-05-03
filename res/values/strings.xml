@@ -9,4 +9,7 @@
 	<string name="authenticating">Authenticating\u2026</string>
 	<string name="bonjour">Bonjour</string>
 	<string name="xmpp">XMPP</string>
+	<string name="contact_photo">Contact photo</string>
+	<string name="accept">Accept</string>
+	<string name="decline">Decline</string>
 </resources>

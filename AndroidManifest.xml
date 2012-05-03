@@ -39,7 +39,7 @@
 		uiOptions="splitActionBarWhenNarrow"
 	>
 		<service
-			android:name=".protocols.bonjour.authentificator.AuthenticatorService"
+			android:name=".protocols.bonjour.authentificator.AuthenticationService"
 			android:exported="true">
 			<intent-filter>
 				<action
@@ -99,10 +99,10 @@
 		</activity>
 		<activity android:name=".ui.Chat">
 		</activity>
-		<activity android:name=".protocols.bonjour.authentificator.AuthentificatorActivity"
+		<activity android:name=".ui.Login"
 				android:theme="@android:style/Theme.Holo.Dialog">
 		</activity>
-		<activity android:name=".protocols.xmpp.authentificator.AuthentificatorActivity"
+		<activity android:name=".ui.NewContact"
 				android:theme="@android:style/Theme.Holo.Dialog">
 		</activity>
 	</application>

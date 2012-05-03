@@ -1,16 +1,24 @@
 package fr.utbm.lo52.sodia.protocols;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import fr.utbm.lo52.sodia.R;
 import android.accounts.Account;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.RemoteViews;
 import fr.utbm.lo52.sodia.logic.Message;
 
 public class ProtocolManager
 {
+	
+	public static final int NEW_CONTACT_NOTIFICATION_ID = 1;
+	
 	public static class ProtocolAlreadyRegisteredException extends Exception
 	{
 		/**
@@ -79,17 +87,34 @@ public class ProtocolManager
 			accounts.remove(protocol.account());
 	}
 	
-	public static void receive(Message message, String contact, Account account)
+	public static void receive(Context context, Message message, String contact, Account account)
 	{
 		
 	}
 	
-	public static void newContact(Bitmap photo, String name, String contact, Account account)
+	public static void newContact(Context context, Bitmap photo, String name, String contact, Account account)
 	{
+		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		RemoteViews contentView = new RemoteViews(R.class.getPackage().getName(), R.layout.new_contact_notification);
+		contentView.setImageViewBitmap(R.id.notificationPhoto, photo);
+		contentView.setTextViewText(R.id.notificationContactName, name);
+		contentView.setTextViewText(R.id.notificationContactId, contact);
+		contentView.setTextViewText(R.id.notificationTime, 
+				Calendar.getInstance().get(Calendar.HOUR) + ":" +
+				Calendar.getInstance().get(Calendar.MINUTE));
+		Notification.Builder builder = new Notification.Builder(context);
+		builder.setContent(contentView);
+		builder.setSmallIcon(R.drawable.ic_notification);
+		builder.setTicker("A new contact request your authorisation.");
+		Notification notification = builder.getNotification();
+//		Intent notificationIntent = new Intent(this, MyClass.class);
+//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//		notification.contentIntent = contentIntent;
+		notificationManager.notify(NEW_CONTACT_NOTIFICATION_ID, notification);
 		
 	}
 	
-	public static void presence(long status, String message, String contact, Account account)
+	public static void presence(Context context, long status, String message, String contact, Account account)
 	{
 		
 	}

@@ -84,35 +84,19 @@ public class Login extends AccountAuthenticatorActivity
 				.getStringExtra(Authentificator.KEY_PROTOCOL_ACCOUNT_TYPE);
 		protocolName = intent
 				.getStringExtra(Authentificator.KEY_PROTOCOL_NAME);
-
 		username = intent.getStringExtra(PARAM_USERNAME);
 		requestNewAccount = username == null;
 		hasPassword = intent.getBooleanExtra(
 				Authentificator.KEY_PROTOCOL_HAS_PASSWORD,
-				Protocol.HAS_PASSWORD);
+				true);
+		Log.i(getClass().getSimpleName(), "has password :" + hasPassword);
 		Log.i(getClass().getSimpleName(), "	request new: " + requestNewAccount);
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		setContentView(R.layout.login);
-		try
-		{
-			getWindow().setFeatureDrawableResource(
-					Window.FEATURE_LEFT_ICON,
-					R.drawable.class.getDeclaredField(
-							"ic_protocol_"
-									+ protocolName.toLowerCase()).getInt(null));
-		} catch (IllegalArgumentException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Log.i(getClass().getSimpleName(), "protocol : {" + protocolClass.getSimpleName() + ", " + accountType + ", " + protocolName + ", " + intent.getIntExtra(Authentificator.KEY_PROTOCOL_LOGO, 0) + "}");
+		getWindow().setFeatureDrawableResource(
+				Window.FEATURE_LEFT_ICON,
+				intent.getIntExtra(Authentificator.KEY_PROTOCOL_LOGO,0));
 		getWindow().setTitle(protocolName);
 		message = (TextView) findViewById(R.id.message);
 		usernameEdit = (EditText) findViewById(R.id.username_edit);

@@ -1,2 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/chats"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:showAsAction="withText"
+        android:title="Chats"/>
+
+    <item android:id="@+id/search"
+		android:title="Recherche"
+		android:icon="@drawable/ic_menu_light_social_send_now"
+		android:showAsAction="ifRoom|collapseActionView"
+		android:actionViewClass="android.widget.SearchView" />
+    
+    <item android:id="@+id/newContact"
+		android:title="New Contact"
+		android:icon="@drawable/ic_menu_light_social_contact"
+		android:showAsAction="always" 
+	android:titleCondensed="New"/>
 </menu>

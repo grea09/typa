@@ -16,7 +16,7 @@ public class AuthenticationService extends Service {
 
     @Override
     public void onCreate() {
-        authenticator = new Authentificator<Bonjour>(this);
+		authenticator = new Authentificator<Bonjour>(this, new Bonjour());
     }
 
     @Override
