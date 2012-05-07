@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.*;
 import android.os.*;
 import android.view.*;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import fr.utbm.lo52.sodia.*;
 import fr.utbm.lo52.sodia.protocols.*;
 
@@ -19,6 +21,7 @@ public class Main extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		this.draw();
+		
 		ProtocolManager.newContact(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
 																						   R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
 		// wifiMultiCastLock();
@@ -61,7 +64,6 @@ public class Main extends Activity
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
-	            // app icon in action bar clicked; go home
 	            Intent intent = new Intent(this, Main.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
@@ -80,6 +82,11 @@ public class Main extends Activity
 	        	Intent intent4 = new Intent(this, Settings.class);
 		        intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		        startActivity(intent4);
+	        	return true;
+	        case R.id.chats:
+	        	Intent intent5 = new Intent(this, Chat.class);
+	        	intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		        startActivity(intent5);
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

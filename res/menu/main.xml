@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/search"
+	<item 
+	    android:id="@+id/search"
 		android:title="Recherche"
 		android:icon="@drawable/ic_menu_light_search"
 		android:showAsAction="always"
@@ -8,25 +9,22 @@
 	
 	<item
 		android:id="@+id/chats"
+		android:title="Chats"
 		android:icon="@drawable/ic_menu_light_social_chat"
-		android:showAsAction="always"
-		android:title="Chats"/>	
+		android:showAsAction="always" />	
 	
-	<item android:id="@+id/newContact"
+	<item 
+	    android:id="@+id/newContact"
 		android:title="New Contact"
-		android:icon="@drawable/ic_menu_light_social_add_contact"
-		android:showAsAction="collapseActionView" 
-		android:titleCondensed="New"/>
+		android:icon="@drawable/ic_menu_light_social_add_contact" />
 	
-	<item android:id="@+id/newGroup"
+	<item 
+	    android:id="@+id/newGroup"
 		android:title="New Group"
-		android:icon="@drawable/ic_menu_light_social_add_group"
-		android:showAsAction="collapseActionView" 
-		android:titleCondensed="New"/>
+		android:icon="@drawable/ic_menu_light_social_add_group" />
 	
-	<item android:id="@+id/settings"
+	<item 
+	    android:id="@+id/settings"
 		android:title="Settings"
-		android:icon="@drawable/ic_menu_light_settings"
-		android:showAsAction="collapseActionView" 
-		android:titleCondensed="Settings"/>
+		android:icon="@drawable/ic_menu_light_settings" />
 </menu>

@@ -1,5 +1,6 @@
 package fr.utbm.lo52.sodia.protocols;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Map;
@@ -116,6 +117,13 @@ public class ProtocolManager
 	
 	public static void presence(Context context, long status, String message, String contact, Account account)
 	{
+		
+	}
+	
+	public static void newRoster(String name, Array contacts)
+	{
+		// Creation du nouveau groupe 
+		// ajout des contacts
 		
 	}
 

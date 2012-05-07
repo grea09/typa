@@ -12,7 +12,7 @@
         android:text="Group name : " />
 
     <EditText
-        android:id="@+id/groupname"
+        android:id="@+id/groupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" >
@@ -21,14 +21,14 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewAddContacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="Add contacts to this group : " />
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/listContacts"
         android:layout_width="match_parent"
         android:layout_height="317dp"
         android:layout_weight="1.97" >

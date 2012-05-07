@@ -4,17 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RadioGroup
-        android:id="@+id/statusGroup"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Name : " />
+            android:layout_margin="10dp"
+            android:text="Nickname : " 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <EditText
             android:id="@+id/editText1"
@@ -26,34 +22,56 @@
             <requestFocus />
         </EditText>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Photo :"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <QuickContactBadge
             android:id="@+id/quickContactBadge1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/busy"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Busy" />
+            android:layout_margin="10dp"
+            android:text="Status : " 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <RadioButton
-            android:id="@+id/online"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/statusGroup"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Online" />
+            android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/absent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Absent" />
+            <RadioButton
+                android:id="@+id/online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Online" />
 
-        <RadioButton
-            android:id="@+id/offline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Offline" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/busy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Busy" />
+
+            <RadioButton
+                android:id="@+id/absent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Absent" />
+
+            <RadioButton
+                android:id="@+id/offline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offline" />
+        </RadioGroup>
 
 </LinearLayout>
