@@ -16,6 +16,8 @@ import fr.utbm.lo52.sodia.protocols.ProtocolManager;
 public class ContactQuery
 {
 	
+	public static final Uri suportedRawContactsUri
+	
 	public static String registeredProtocolsSelection()
 	{
 		String value = Data.MIMETYPE + "='" + Im.CONTENT_ITEM_TYPE + "' AND (" +
@@ -49,5 +51,17 @@ public class ContactQuery
 					null, null, null);
 		}
 		return null;
+	}
+	
+	public static Cursor suportedRawContacts(Context context, Uri contact)
+	{
+		final ContentResolver resolver = context.getContentResolver();
+		final Cursor contact = getContentResolver().query(contact, new String[]{Contacts.CONTACT_ID}, null, null, null);
+		contact.moveToFirst();
+		final Cursor rawContacts = resolver.query(RawContacts.CONTENT_URI,
+				null,
+				RawContacts.CONTACT_ID + "=? AND " + registeredProtocolsSelection(),
+				new String[]{String.valueOf(contact.getLong(0))}, null);
+		return rawContacts;
 	}
 }
