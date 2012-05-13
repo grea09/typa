@@ -32,6 +32,6 @@ public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 	public void onPerformSync(Account account, Bundle extras, String authority,
 			ContentProviderClient provider, SyncResult syncResult)
 	{
-		
+		//TODO call some function of current protocol (Create, Register, Contact, etc)
 	}
 }

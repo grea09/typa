@@ -1,19 +1,34 @@
 package fr.utbm.lo52.sodia.ui;
 
-import android.app.*;
-import android.content.Intent;
-import android.graphics.*;
-import android.os.*;
-import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import fr.utbm.lo52.sodia.*;
-import fr.utbm.lo52.sodia.protocols.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Main extends Activity
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+import fr.utbm.lo52.sodia.R;
+
+public class Main extends SherlockActivity
 {
 
-	android.net.wifi.WifiManager.MulticastLock lock;
+	//android.net.wifi.WifiManager.MulticastLock lock;
+	
+	public static final Map<Integer, Class<? extends Activity>> intentMatch = new HashMap<Integer, Class<? extends Activity>>();
+	static
+	{
+		intentMatch.put(android.R.id.home, Main.class);
+		intentMatch.put(R.id.newContact, NewContact.class);
+		intentMatch.put(R.id.newGroup, NewGroup.class);
+		intentMatch.put(R.id.settings, Settings.class);
+		intentMatch.put(R.id.chats, Chat.class);
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -22,8 +37,8 @@ public class Main extends Activity
 		super.onCreate(savedInstanceState);
 		this.draw();
 		
-		ProtocolManager.newContact(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
-																						   R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
+		//ProtocolManager.newContact(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
+		//																				   R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
 		// wifiMultiCastLock();
 	}
 
@@ -38,7 +53,7 @@ public class Main extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		MenuInflater menuInflater = getMenuInflater();
+		MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.main, menu);
 
 		// Calling super after populating the menu is necessary here to ensure
@@ -49,7 +64,7 @@ public class Main extends Activity
 
 	protected void draw()
 	{
-		ActionBar actionBar = getActionBar();
+		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.main);
 	}
@@ -61,36 +76,16 @@ public class Main extends Activity
 		super.onStop();
 	}
 	
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case android.R.id.home:
-	            Intent intent = new Intent(this, Main.class);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(intent);
-	            return true;
-	        case R.id.newContact:
-	        	Intent intent2 = new Intent(this, NewContact.class);
-		        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        startActivity(intent2);
-	        	return true;
-	        case R.id.newGroup:
-	        	Intent intent3 = new Intent(this, NewGroup.class);
-		        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        startActivity(intent3);
-	        	return true;
-	        case R.id.settings:
-	        	Intent intent4 = new Intent(this, Settings.class);
-		        intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        startActivity(intent4);
-	        	return true;
-	        case R.id.chats:
-	        	Intent intent5 = new Intent(this, Chat.class);
-	        	intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		        startActivity(intent5);
-	        	return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		if(intentMatch.containsKey(item.getItemId()))
+		{
+			Intent intent = new Intent(this, intentMatch.get(item.getItemId()));
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	

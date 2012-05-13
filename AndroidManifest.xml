@@ -35,9 +35,10 @@
 	<application 
 		android:label="@string/app_name" 
 		android:icon="@drawable/ic_launcher"
-		android:theme="@android:style/Theme.Holo.Light"
+		android:theme="@style/Theme.Sherlock.Light"
 		uiOptions="splitActionBarWhenNarrow"
 	>
+		<!-- TODO Filter for permission -->
 		<service
 			android:name=".protocols.bonjour.authentificator.AuthenticationService"
 			android:exported="true">
@@ -103,19 +104,19 @@
 		<activity android:name=".ui.Chat">
 		</activity>
 		<activity android:name=".ui.Login"
-				android:theme="@android:style/Theme.Holo.Dialog">
+				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 		<activity android:name=".ui.NewContact"
 		    	android:label="Add a new contact"
-				android:theme="@android:style/Theme.Holo.Dialog">
+				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 		<activity android:name=".ui.NewGroup"
 		    	android:label="Add a new group"
-				android:theme="@android:style/Theme.Holo.Dialog">
+				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 		<activity android:name=".ui.Settings"
 		    	android:label="Change your status"
-				android:theme="@android:style/Theme.Holo.Dialog">
+				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 	</application>
 </manifest>

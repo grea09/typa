@@ -103,11 +103,22 @@ public class ProtocolManager
 		contentView.setTextViewText(R.id.notificationTime, 
 				Calendar.getInstance().get(Calendar.HOUR) + ":" +
 				Calendar.getInstance().get(Calendar.MINUTE));
-		Notification.Builder builder = new Notification.Builder(context);
-		builder.setContent(contentView);
-		builder.setSmallIcon(R.drawable.ic_notification);
-		builder.setTicker("A new contact request your authorisation.");
-		Notification notification = builder.getNotification();
+		Notification notification;
+		//TODO Factorize
+		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
+		{
+			Notification.Builder builder = new Notification.Builder(context);
+			builder.setContent(contentView);
+			builder.setSmallIcon(R.drawable.ic_notification);
+			//TODO Remove hardcoded String
+			builder.setTicker("A new contact request your authorisation.");
+			notification = builder.getNotification();
+		}
+		else
+		{
+			notification = new Notification(R.drawable.ic_notification, "A new contact request your authorisation.", 0 );
+			notification.contentView = contentView;
+		}
 //		Intent notificationIntent = new Intent(this, MyClass.class);
 //		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 //		notification.contentIntent = contentIntent;

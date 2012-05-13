@@ -1,16 +1,13 @@
 package fr.utbm.lo52.sodia.ui;
 
-import fr.utbm.lo52.sodia.R;
-import android.R.fraction;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
+import fr.utbm.lo52.sodia.R;
 
 public class NewGroup extends Activity {
 	
@@ -27,11 +24,12 @@ public class NewGroup extends Activity {
 	}
 	
 	public void addGroup(View view){
-		// RŽcupŽration du nom du groupe ˆ ajouter
+		// Rï¿½cupï¿½ration du nom du groupe ï¿½ ajouter
+		//TODO please English or UTF8 encoding
 		EditText editText = (EditText) findViewById(R.id.groupName);
 		String groupname = editText.getText().toString();
 		
-		// RŽcupŽration des contacts ˆ ajouter au groupe
+		// Rï¿½cupï¿½ration des contacts ï¿½ ajouter au groupe
 		
 		Context context = getApplicationContext();
 		Toast toast = Toast.makeText(context, groupname+" added !", Toast.LENGTH_LONG);

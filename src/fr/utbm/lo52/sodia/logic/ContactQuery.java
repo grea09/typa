@@ -43,6 +43,7 @@ public class ContactQuery
 			final long rawContactId = rawContacts.getLong(0);
 			Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawContactId);
 			Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
+			//TODO Great Contact wrapper
 			Cursor rawContact = resolver.query(entityUri,
 					new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
 					null, null, null);
