@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -14,6 +15,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
 {
@@ -37,9 +39,8 @@ public class Main extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		this.draw();
 		
-		//ProtocolManager.newContact(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
-		//																				   R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
-		// wifiMultiCastLock();
+		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
+		 //wifiMultiCastLock();
 	}
 
 //	private void wifiMultiCastLock()
