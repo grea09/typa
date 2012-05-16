@@ -1,5 +1,7 @@
 package fr.utbm.lo52.sodia.logic;
 
+import android.accounts.Account;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,12 +13,13 @@ public class Contact
 	public final Uri lookup;
 	private final Cursor rawContacts;
 	private final Context context;
+	private final ContentResolver contentResolver;
 	
 	public Contact(Context context, Uri lookup)
 	{
 		this.lookup = lookup;
 		this.context = context;
-		//TODO add filtering and Column selection
+		this.contentResolver = context.getContentResolver();
 		rawContacts = ContactQuery.suportedRawContacts(context, lookup);
 	}
 	
@@ -27,13 +30,26 @@ public class Contact
 	
 	public String name()
 	{
-		rawContacts.moveToFirst();
-		return "";
+		 Cursor contact = contentResolver.query(lookup,
+				new String[]{Contacts.DISPLAY_NAME}, null, null, null);
+		return contact.getString(0);
 	}
 	
-	public void name(String name)
+	public void name(String name, Account account)
 	{
-		
+/* TODO Setters
+		Uri.withAppendedPath(
+			RawContacts.CONTENT_URI.buildUpon()
+				.appendQueryParameter(RawContacts.ACCOUNT_TYPE, account.type)
+				.build(), Entity.CONTENT_DIRECTORY);
+		final Cursor contact = context.getContentResolver().query(lookup, new String[]{Contacts._ID}, null, null, null);
+		contact.moveToFirst();
+		final Cursor rawContacts = resolver.query(suportedRawContactsUri,
+				null,
+				RawContacts.CONTACT_ID + "=?",
+				new String[]{String.valueOf(contact.getLong(0))}, 
+				null);
+*/
 	}
 	
 	public String status()

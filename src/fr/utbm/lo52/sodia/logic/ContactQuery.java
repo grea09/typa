@@ -27,7 +27,8 @@ public class ContactQuery
 		//TODO for each supported account Type
 		//.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName)
 		builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, (new Bonjour()).getName());
-		suportedRawContactsUri = builder.build();
+		
+		suportedRawContactsUri = Uri.withAppendedPath(builder.build(), Entity.CONTENT_DIRECTORY);
 	}
 	
 	
