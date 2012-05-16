@@ -27,7 +27,7 @@
 	<string name="addNewContactButtonLabel">Add</string>
 	
 	<string name="addNewGroupGroupNameLabel">Group Name :</string>
-	<string name="addNewGroupContactsToAddToGroup">Contacts to add to the group :</string>
+	<string name="addNewGroupContactsToAddToGroup">Add contacts to group :</string>
 	<string name="addNewGroupAddButtonLabel">Add</string>
 	
 </resources>

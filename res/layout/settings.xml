@@ -8,9 +8,10 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/settingsNickname" 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:layout_margin="5dp"
+            android:text="@string/settingsNickname"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="15dp" />
 
         <EditText
             android:id="@+id/editText1"
@@ -26,9 +27,10 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="@string/settingsPhoto"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="15dp" />
 
         <QuickContactBadge
             android:id="@+id/quickContactBadge1"
@@ -39,9 +41,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/settingsStatus" 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:layout_margin="5dp"
+            android:text="@string/settingsStatus"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="15dp" />
 
         <RadioGroup
             android:id="@+id/statusGroup"
@@ -78,6 +81,7 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settingsValidateButtonLabel" />
+            android:text="@string/settingsValidateButtonLabel" 
+            android:onClick="changeSettings"/>
 
 </LinearLayout>
