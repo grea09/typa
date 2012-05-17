@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Sodia</string>
+	
 	<string name="login_message_username">User name missing</string>
 	<string name="login_message_password">Password missing</string>
 	<string name="login_username_label">User name</string>
 	<string name="login_password_label">Password</string>
 	<string name="login_ok_button">Add account</string>
+	
 	<string name="authenticating">Authenticating\u2026</string>
 	<string name="bonjour">Bonjour</string>
 	<string name="xmpp">XMPP</string>
 	<string name="contact_photo">Contact photo</string>
 	<string name="accept">Accept</string>
 	<string name="decline">Decline</string>
+	
+	<string name="settingsNickname">Nickname :</string>
+	<string name="settingsPhoto">Photo :</string>
+	<string name="settingsStatus">Status : </string>
+	<string name="settingsStatusOnline">Online</string>
+	<string name="settingsStatusOffline">Offline</string>
+	<string name="settingsStatusBusy">Busy</string>
+	<string name="settingsStatusAbsent">Absent</string>
+	<string name="settingsValidateButtonLabel">Validate</string>
+	
+	<string name="addNewContactButtonLabel">Add</string>
+	
+	<string name="addNewGroupGroupNameLabel">Group Name :</string>
+	<string name="addNewGroupContactsToAddToGroup">Add contacts to group :</string>
+	<string name="addNewGroupAddButtonLabel">Add</string>
+	
 	<string name="presence_offline">Offline</string>
 	<string name="presence_invisible">Invisible</string>
 	<string name="presence_away">Away</string>
 	<string name="presence_idle">Idle</string>
 	<string name="presence_do_not_disturb">Do not disturb</string>
 	<string name="presence_avaible">Avaible</string>
+	
 </resources>

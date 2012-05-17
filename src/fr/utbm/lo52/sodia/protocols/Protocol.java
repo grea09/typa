@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
+import fr.utbm.lo52.sodia.ui.*;
 
 /**
  * @author antoine
@@ -80,7 +81,7 @@ public abstract class Protocol
 	
 	protected void newContact(Context context, Bitmap photo, String name, String contact)
 	{
-		ProtocolManager.newContact(context, photo, name, contact, account);
+		ContactNotification.newContactNotification(context, photo, name, contact, account);
 	}
 	
 	protected void presence(Context context, long status, String message, String contact)

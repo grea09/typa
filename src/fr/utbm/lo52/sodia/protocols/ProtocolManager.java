@@ -93,38 +93,7 @@ public class ProtocolManager
 		
 	}
 	
-	public static void newContact(Context context, Bitmap photo, String name, String contact, Account account)
-	{
-		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		RemoteViews contentView = new RemoteViews(R.class.getPackage().getName(), R.layout.new_contact_notification);
-		contentView.setImageViewBitmap(R.id.notificationPhoto, photo);
-		contentView.setTextViewText(R.id.notificationContactName, name);
-		contentView.setTextViewText(R.id.notificationContactId, contact);
-		contentView.setTextViewText(R.id.notificationTime, 
-				Calendar.getInstance().get(Calendar.HOUR) + ":" +
-				Calendar.getInstance().get(Calendar.MINUTE));
-		Notification notification;
-		//TODO Factorize
-		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
-		{
-			Notification.Builder builder = new Notification.Builder(context);
-			builder.setContent(contentView);
-			builder.setSmallIcon(R.drawable.ic_notification);
-			//TODO Remove hardcoded String
-			builder.setTicker("A new contact request your authorisation.");
-			notification = builder.getNotification();
-		}
-		else
-		{
-			notification = new Notification(R.drawable.ic_notification, "A new contact request your authorisation.", 0 );
-			notification.contentView = contentView;
-		}
-//		Intent notificationIntent = new Intent(this, MyClass.class);
-//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-//		notification.contentIntent = contentIntent;
-		notificationManager.notify(NEW_CONTACT_NOTIFICATION_ID, notification);
-		
-	}
+	
 	
 	public static void presence(Context context, long status, String message, String contact, Account account)
 	{
