@@ -1,43 +1,42 @@
 package fr.utbm.lo52.sodia.logic;
 
-import android.accounts.Account;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Set;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.RawContacts;
+import fr.utbm.lo52.sodia.common.GroupUpdater;
 
-public class Contact
+public class Contact implements InterGroup<Group>
 {
-	public final Uri lookup;
-	private final Cursor rawContacts;
-	private final Context context;
-	private final ContentResolver contentResolver;
+	private Uri lookup;
+	private Cursor rawContacts;
+	private Context context;
+	private ContentResolver contentResolver;
 	
-	public Contact(Context context, Uri lookup)
+	private String name;
+	private ArrayList<Im> im;
+	private Set<Group> groups;
+	
+	
+	public void save(Context context)
 	{
-		this.lookup = lookup;
 		this.context = context;
-		this.contentResolver = context.getContentResolver();
-		rawContacts = ContactQuery.suportedRawContacts(context, lookup);
+		this.save();
 	}
 	
-	protected void finalize() throws Throwable
-	{
-		rawContacts.close();
-	} 
 	
-	public String name()
+	public void save()
 	{
-		 Cursor contact = contentResolver.query(lookup,
-				new String[]{Contacts.DISPLAY_NAME}, null, null, null);
-		return contact.getString(0);
-	}
-	
-	public void name(String name, Account account)
-	{
-/* TODO Setters
+		if(context == null)
+		{
+			throw new InvalidParameterException("Context not set. Please use save(Context context)");
+		}
+		//TODO if new insert in DB else save data;
+		/* TODO db connect
 		Uri.withAppendedPath(
 			RawContacts.CONTENT_URI.buildUpon()
 				.appendQueryParameter(RawContacts.ACCOUNT_TYPE, account.type)
@@ -49,16 +48,70 @@ public class Contact
 				RawContacts.CONTACT_ID + "=?",
 				new String[]{String.valueOf(contact.getLong(0))}, 
 				null);
-*/
+		*/
 	}
 	
-	public String status()
+	public Contact(Context context, Uri lookup)
 	{
-		return "";
+		this.lookup = lookup;
+		this.context = context;
+		this.contentResolver = context.getContentResolver();
+		rawContacts = ContactQuery.suportedRawContacts(context, lookup);
 	}
 	
-	public int presence()
+	public Contact(String name)
 	{
-		return 42;
+		this.name = name;
+	}
+	
+	protected void finalize() throws Throwable
+	{
+		rawContacts.close();
+	}
+
+	@Override
+	public void add(Group group)
+	{
+		// TODO Auto-generated method stub
+		GroupUpdater.magicUpdate(groups.contains(group), group, this);
+		
+	}
+
+	@Override
+	public void remove(Group group)
+	{
+		// TODO Auto-generated method stub
+		GroupUpdater.magicUpdate(groups.contains(group), group, this);
+	}
+
+	public String getName()
+	{
+		return this.name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public ArrayList<Im> getIm()
+	{
+		return this.im;
+	}
+
+	public void setIm(ArrayList<Im> im)
+	{
+		this.im = im;
+	}
+
+	public Uri getLookup()
+	{
+		return this.lookup;
+	}
+
+
+	public Set<Group> getGroups()
+	{
+		return this.groups;
 	}
 }
