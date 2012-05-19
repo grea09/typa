@@ -1,12 +1,16 @@
 package fr.utbm.lo52.sodia.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.ExpandableListView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -16,6 +20,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.Group;
 import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
@@ -33,12 +39,49 @@ public class Main extends SherlockActivity
 		//intentMatch.put(R.id.chats, Chat.class);
 	}
 
+	private ExpandableListView expandableList = null;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.draw();
+		
+setContentView(R.layout.main);
+		
+		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+		
+		
+		
+		ArrayList<Group> groupes = new ArrayList<Group>();
+		/*Group groupe = new Group("Autres");
+		
+		Contact contact = new Contact("Pierre");
+		Set<Contact> contacts = new HashSet<Contact>();
+		contacts.add(contact);
+		
+		groupe.setContacts(contacts);
+		
+		
+		groupes.add(groupe);*/
+		
+		for (int i = 1; i < 10; i++) {
+			Group groupe = new Group("Groupe " + i);
+			Set<Contact> contacts = new HashSet<Contact>();
+			for (int x = 1; x < 10; x++) {
+				//groupe.add(new Contact("Pierre Paul Jack" + x));
+				Contact contact = new Contact("Pierre");
+				contacts.add(contact);
+				
+			}
+			groupe.setContacts(contacts);
+			groupes.add(groupe);
+		}
+
+		
+		
+		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 		
 		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 		 //wifiMultiCastLock();

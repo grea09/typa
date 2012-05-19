@@ -7,6 +7,12 @@ import fr.utbm.lo52.sodia.common.GroupUpdater;
 public class Group implements InterGroup<Contact>
 {
 	private Set<Contact> contacts;
+	private String groupName;
+	
+	public Group(String name)
+	{
+		groupName = name;
+	}
 	
 	public void add(Contact contact)
 	{
@@ -21,6 +27,16 @@ public class Group implements InterGroup<Contact>
 	public Set<Contact> getContacts()
 	{
 		return contacts;
+	}
+	
+	public void setContacts(Set<Contact> setContacts)
+	{
+		contacts = setContacts;
+	}
+	
+	public String getGroupName()
+	{
+		return groupName;
 	}
 	
 }

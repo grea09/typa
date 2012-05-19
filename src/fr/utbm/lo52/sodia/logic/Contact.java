@@ -69,7 +69,6 @@ public class Contact implements InterGroup<Group>
 		rawContacts.close();
 	}
 
-	@Override
 	public void add(Group group)
 	{
 		// TODO Auto-generated method stub
@@ -77,7 +76,6 @@ public class Contact implements InterGroup<Group>
 		
 	}
 
-	@Override
 	public void remove(Group group)
 	{
 		// TODO Auto-generated method stub

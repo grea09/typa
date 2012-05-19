@@ -31,7 +31,7 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 	    View view = layoutInflater.inflate(R.layout.chats_action_provider, null);
 	    Button button = (Button) view.findViewById(R.id.chats);
 	    button.setOnClickListener(new View.OnClickListener() {
-	        @Override
+	    	
 	        public void onClick(View v) {
 	       
 	        	Log.d(this.getClass().getSimpleName(), "onClick");
@@ -53,7 +53,7 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 	public boolean hasSubMenu(){
 		return true;
 	}
-	@Override
+	
 	public boolean onMenuItemClick(MenuItem item) {
 		Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT).show();
 		return false;
