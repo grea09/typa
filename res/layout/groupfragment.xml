@@ -2,6 +2,8 @@
 
 <TextView android:textAppearance="?android:attr/textAppearanceLarge" 
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft" 
+        android:paddingTop="10dp"
+		android:paddingBottom="10dp"
         android:gravity="center_vertical" 
         android:layout_height="?android:attr/listPreferredItemHeight" 
         android:layout_width="match_parent" 

@@ -54,10 +54,10 @@ public class Main extends SherlockActivity
 
 		ArrayList<Group> groupes = new ArrayList<Group>();
 		
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i < 3; i++) {
 			Group groupe = new Group("Friends " + i);
 			Set<Contact> contacts = new HashSet<Contact>();
-			for (int x = 1; x < 10; x++) {
+			for (int x = 1; x < 5; x++) {
 				//groupe.add(new Contact("Pierre Paul Jack" + x));
 				Contact contact = new Contact("Pierre");
 				contacts.add(contact);
