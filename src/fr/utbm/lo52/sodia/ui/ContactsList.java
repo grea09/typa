@@ -1,4 +1,4 @@
-package fr.utbm.lo52.sodia.ui;
+/**package fr.utbm.lo52.sodia.ui;
 
 import fr.utbm.lo52.sodia.*;
 import android.app.Fragment;
@@ -17,3 +17,4 @@ public class ContactsList extends Fragment
 		return inflater.inflate(R.layout.contactslist, container, false);
 	}
 }
+*/

@@ -48,26 +48,14 @@ public class Main extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		this.draw();
 		
-setContentView(R.layout.main);
+		setContentView(R.layout.main);
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
-		
-		
-		
+
 		ArrayList<Group> groupes = new ArrayList<Group>();
-		/*Group groupe = new Group("Autres");
-		
-		Contact contact = new Contact("Pierre");
-		Set<Contact> contacts = new HashSet<Contact>();
-		contacts.add(contact);
-		
-		groupe.setContacts(contacts);
-		
-		
-		groupes.add(groupe);*/
 		
 		for (int i = 1; i < 10; i++) {
-			Group groupe = new Group("Groupe " + i);
+			Group groupe = new Group("Friends " + i);
 			Set<Contact> contacts = new HashSet<Contact>();
 			for (int x = 1; x < 10; x++) {
 				//groupe.add(new Contact("Pierre Paul Jack" + x));

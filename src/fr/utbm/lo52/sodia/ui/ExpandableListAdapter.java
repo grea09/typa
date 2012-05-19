@@ -3,6 +3,7 @@ package fr.utbm.lo52.sodia.ui;
 import java.util.ArrayList;
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.utbm.lo52.sodia.*;
+import fr.utbm.lo52.sodia.R.layout;
 import fr.utbm.lo52.sodia.logic.*;
 import fr.utbm.lo52.sodia.protocols.*;
 
@@ -66,13 +68,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		else {
 			childViewHolder = (ChildViewHolder) convertView.getTag();
 		}
-		
-		
-		
+	
 		childViewHolder.textView.setOnClickListener(new OnClickListener() {
 		 
             public void onClick(View v) {
-                Toast.makeText(context, "Groupe : " + contact.getGroups().toArray()[0] + " - Bouton : " + contact, Toast.LENGTH_SHORT).show();
+            	Toast.makeText(context, "Groupe ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Groupe : " + contact.getGroups().toArray()[0] + " - Bouton : " + contact, Toast.LENGTH_SHORT).show();
             }
         });
 		
