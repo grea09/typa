@@ -13,13 +13,14 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
 
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
 {
-
+	private ShareActionProvider mShareActionProvider;
 	//android.net.wifi.WifiManager.MulticastLock lock;
 	
 	public static final Map<Integer, Class<? extends Activity>> intentMatch = new HashMap<Integer, Class<? extends Activity>>();
@@ -29,7 +30,7 @@ public class Main extends SherlockActivity
 		intentMatch.put(R.id.newContact, NewContact.class);
 		intentMatch.put(R.id.newGroup, NewGroup.class);
 		intentMatch.put(R.id.settings, Settings.class);
-		intentMatch.put(R.id.chats, Chat.class);
+		//intentMatch.put(R.id.chats, Chat.class);
 	}
 
 	/** Called when the activity is first created. */
@@ -39,7 +40,7 @@ public class Main extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		this.draw();
 		
-		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
+		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 		 //wifiMultiCastLock();
 	}
 

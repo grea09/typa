@@ -115,7 +115,7 @@
 				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 		<activity android:name=".ui.Settings"
-		    	android:label="Change your status"
+		    	android:label="Settings"
 				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 	</application>
