@@ -22,7 +22,6 @@ import com.actionbarsherlock.widget.ShareActionProvider;
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Group;
-import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
 {
@@ -63,7 +62,7 @@ public class Main extends SherlockActivity
 				contacts.add(contact);
 				
 			}
-			groupe.setContacts(contacts);
+			groupe.add(contacts);
 			groupes.add(groupe);
 		}
 

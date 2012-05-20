@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import fr.utbm.lo52.sodia.common.GroupUpdater;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
 {
@@ -48,16 +47,42 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	@Override
 	public void add(Group group)
 	{
-		// TODO Auto-generated method stub
-		GroupUpdater.magicUpdate(groups.contains(group), group, this);
+		if(!groups.contains(group))
+		{
+			groups.add(group);
+			group.add(this);
+		}
 		
 	}
 	
 	@Override
 	public void remove(Group group)
 	{
-		// TODO Auto-generated method stub
-		GroupUpdater.magicUpdate(groups.contains(group), group, this);
+		if(groups.contains(group))
+		{
+			groups.remove(group);
+			group.remove(this);
+		}
+	}
+	
+	public void add(Set<Group> groups)
+	{
+		if(!this.groups.containsAll(groups))
+		{
+			this.groups.addAll(groups);
+			for(Group group : groups)
+			{
+				group.add(this);
+			}
+		}
+	}
+	
+	public void remove(Set<Group> groups)
+	{
+		for(Group group : groups)
+		{
+			remove(group);
+		}
 	}
 	
 	public String getName()

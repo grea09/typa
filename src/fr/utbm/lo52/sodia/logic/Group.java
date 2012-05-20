@@ -7,7 +7,6 @@ import java.util.Set;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import fr.utbm.lo52.sodia.common.GroupUpdater;
 
 public class Group extends DataBaseObject implements InterGroup<Contact>
 {
@@ -36,12 +35,40 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 	
 	public void add(Contact contact)
 	{
-		GroupUpdater.magicUpdate(contacts.contains(contact), contact, this);
+		if(!contacts.contains(contact))
+		{
+			contacts.add(contact);
+			contact.add(this);
+		}
 	}
 	
 	public void remove(Contact contact)
 	{
-		GroupUpdater.magicUpdate(contacts.contains(contact), contact, this);
+		if(contacts.contains(contact))
+		{
+			contacts.remove(contact);
+			contact.remove(this);
+		}
+	}
+	
+	public void add(Set<Contact> contacts)
+	{
+		if(!this.contacts.containsAll(contacts))
+		{
+			this.contacts.addAll(contacts);
+			for(Contact contact : contacts)
+			{
+				contact.add(this);
+			}
+		}
+	}
+	
+	public void remove(Set<Contact> contacts)
+	{
+		for(Contact contact : contacts)
+		{
+			remove(contact);
+		}
 	}
 	
 	public Set<Contact> getContacts()
