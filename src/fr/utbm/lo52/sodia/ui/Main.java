@@ -1,24 +1,32 @@
 package fr.utbm.lo52.sodia.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.ExpandableListView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
 
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.Group;
+import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
 {
-
+	private ShareActionProvider mShareActionProvider;
 	//android.net.wifi.WifiManager.MulticastLock lock;
 	
 	public static final Map<Integer, Class<? extends Activity>> intentMatch = new HashMap<Integer, Class<? extends Activity>>();
@@ -28,9 +36,11 @@ public class Main extends SherlockActivity
 		intentMatch.put(R.id.newContact, NewContact.class);
 		intentMatch.put(R.id.newGroup, NewGroup.class);
 		intentMatch.put(R.id.settings, Settings.class);
-		intentMatch.put(R.id.chats, Chat.class);
+		//intentMatch.put(R.id.chats, Chat.class);
 	}
 
+	private ExpandableListView expandableList = null;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -38,7 +48,30 @@ public class Main extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		this.draw();
 		
-		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEDIGUÈGLEGUEUX", "long@gmiel.com", null);
+		setContentView(R.layout.main);
+		
+		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+
+		ArrayList<Group> groupes = new ArrayList<Group>();
+		
+		for (int i = 1; i < 3; i++) {
+			Group groupe = new Group("Friends " + i);
+			Set<Contact> contacts = new HashSet<Contact>();
+			for (int x = 1; x < 5; x++) {
+				//groupe.add(new Contact("Pierre Paul Jack" + x));
+				Contact contact = new Contact("Pierre");
+				contacts.add(contact);
+				
+			}
+			groupe.setContacts(contacts);
+			groupes.add(groupe);
+		}
+
+		
+		
+		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
+		
+		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 		 //wifiMultiCastLock();
 	}
 

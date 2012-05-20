@@ -3,10 +3,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <ListView
-            android:id="@+id/contactList"
+        <ExpandableListView
+            android:id="@+id/GroupsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </ListView>
+        </ExpandableListView>
 
     </LinearLayout>

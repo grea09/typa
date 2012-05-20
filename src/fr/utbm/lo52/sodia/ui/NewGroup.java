@@ -24,7 +24,7 @@ public class NewGroup extends Activity {
 	}
 	
 	public void addGroup(View view){
-		// Rï¿½cupï¿½ration du nom du groupe ï¿½ ajouter
+		// Récupération du nom du groupe à ajouter
 		//TODO please English or UTF8 encoding
 		EditText editText = (EditText) findViewById(R.id.groupName);
 		String groupname = editText.getText().toString();
