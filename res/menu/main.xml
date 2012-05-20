@@ -12,7 +12,7 @@
 		android:title="Chats"
 		android:icon="@drawable/ic_menu_light_social_chat"
 		android:showAsAction="ifRoom"
-		android:actionProviderClass="fr.utbm.lo52.sodia.ui.AppPickActionProvider" />
+		android:actionProviderClass="fr.utbm.lo52.sodia.ui.ChatsActionProvider" />
 	
 	<item 
 	    android:id="@+id/newContact"

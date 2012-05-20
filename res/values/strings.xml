@@ -25,6 +25,7 @@
 	<string name="settingsValidateButtonLabel">Validate</string>
 	
 	<string name="addNewContactButtonLabel">Add</string>
+	<string name="addNewContactNameLabel">Contact : </string>
 	
 	<string name="addNewGroupGroupNameLabel">Group Name :</string>
 	<string name="addNewGroupContactsToAddToGroup">Add contacts to group :</string>

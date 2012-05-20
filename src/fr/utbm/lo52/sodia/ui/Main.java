@@ -17,7 +17,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.ShareActionProvider;
 
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
@@ -25,9 +24,6 @@ import fr.utbm.lo52.sodia.logic.Group;
 
 public class Main extends SherlockActivity
 {
-	private ShareActionProvider mShareActionProvider;
-	//android.net.wifi.WifiManager.MulticastLock lock;
-	
 	public static final Map<Integer, Class<? extends Activity>> intentMatch = new HashMap<Integer, Class<? extends Activity>>();
 	static
 	{
@@ -35,7 +31,6 @@ public class Main extends SherlockActivity
 		intentMatch.put(R.id.newContact, NewContact.class);
 		intentMatch.put(R.id.newGroup, NewGroup.class);
 		intentMatch.put(R.id.settings, Settings.class);
-		//intentMatch.put(R.id.chats, Chat.class);
 	}
 
 	private ExpandableListView expandableList = null;
@@ -87,13 +82,15 @@ public class Main extends SherlockActivity
 	{
 		MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.main, menu);
-
+	        
 		// Calling super after populating the menu is necessary here to ensure
 		// that the
 		// action bar helpers have a chance to handle this event.
 		return super.onCreateOptionsMenu(menu);
 	}
 
+
+	 
 	protected void draw()
 	{
 		ActionBar actionBar = getSupportActionBar();

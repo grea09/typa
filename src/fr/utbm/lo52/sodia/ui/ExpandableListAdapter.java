@@ -1,24 +1,21 @@
 package fr.utbm.lo52.sodia.ui;
 
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import fr.utbm.lo52.sodia.*;
-import fr.utbm.lo52.sodia.R.layout;
-import fr.utbm.lo52.sodia.logic.*;
-import fr.utbm.lo52.sodia.protocols.*;
+import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.Group;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
