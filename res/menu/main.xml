@@ -11,8 +11,8 @@
 		android:id="@+id/chats"
 		android:title="Chats"
 		android:icon="@drawable/ic_menu_light_social_chat"
-		android:showAsAction="always|withText"
-		android:actionProviderClass="fr.utbm.lo52.sodia.ui.ChatsActionProvider" />	
+		android:showAsAction="ifRoom"
+		android:actionProviderClass="fr.utbm.lo52.sodia.ui.AppPickActionProvider" />
 	
 	<item 
 	    android:id="@+id/newContact"
