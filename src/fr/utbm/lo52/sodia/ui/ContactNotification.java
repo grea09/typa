@@ -17,6 +17,7 @@ public class ContactNotification {
 	public static final int NEW_CONTACT_NOTIFICATION_ID = 1;
 
 	
+	@SuppressWarnings("deprecation")
 	public static void newContactNotification(Context context, Bitmap photo, String name, String contact, Account account)
 	{
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

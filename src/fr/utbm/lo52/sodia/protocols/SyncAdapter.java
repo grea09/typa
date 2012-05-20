@@ -17,8 +17,10 @@ import android.os.Bundle;
  */
 public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 {
+	@SuppressWarnings("unused")
 	private final AccountManager accountManager;
 
+	@SuppressWarnings("unused")
 	private final Context context;
 
 	public SyncAdapter(Context context, boolean autoInitialize)

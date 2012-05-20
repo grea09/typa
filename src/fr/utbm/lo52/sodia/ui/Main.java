@@ -15,7 +15,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utbm.lo52.sodia.R;
-import fr.utbm.lo52.sodia.ui.*;
 
 public class Main extends SherlockActivity
 {

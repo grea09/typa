@@ -1,18 +1,12 @@
 package fr.utbm.lo52.sodia.protocols;
 
 import java.lang.reflect.Array;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import fr.utbm.lo52.sodia.R;
 import android.accounts.Account;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.widget.RemoteViews;
 import fr.utbm.lo52.sodia.logic.Message;
 
 public class ProtocolManager
