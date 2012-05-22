@@ -1,8 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<item android:id="@+id/send"
-		android:title="Partager"
+		android:title="Share"
 		android:icon="@drawable/ic_menu_light_social_send_now"
+		android:orderInCategory="0"
+		android:showAsAction="always|withText" 
+		android:menuCategory="system"/>
+	
+	<item android:id="@+id/locate"
+		android:title="Locate"
+		android:icon="@drawable/ic_menu_light_search"
 		android:orderInCategory="0"
 		android:showAsAction="always|withText" 
 		android:menuCategory="system"/>

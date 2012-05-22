@@ -1,5 +1,7 @@
 package fr.utbm.lo52.sodia.ui;
 
+import java.util.Calendar;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,7 +53,8 @@ public class Chat extends SherlockActivity
 			InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE); 
 			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
-		t.append("\nMe : "+message);
+		t.append("\nMe @"+Calendar.getInstance().get(Calendar.HOUR) + ":" +
+				Calendar.getInstance().get(Calendar.MINUTE)+" > "+message);
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) 

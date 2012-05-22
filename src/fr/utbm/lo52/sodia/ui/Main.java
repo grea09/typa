@@ -7,10 +7,13 @@ import java.util.Map;
 import java.util.Set;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -66,7 +69,9 @@ public class Main extends SherlockActivity
 		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 		
 		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
-		 //wifiMultiCastLock();
+		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
+
+		//wifiMultiCastLock();
 	}
 
 //	private void wifiMultiCastLock()
@@ -94,7 +99,7 @@ public class Main extends SherlockActivity
 	protected void draw()
 	{
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		//actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.main);
 	}
 
@@ -117,5 +122,10 @@ public class Main extends SherlockActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
+	public void openChat(View view){
+		Context context = getApplicationContext();    	
+    	Intent intent = new Intent(context, Chat.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
 }

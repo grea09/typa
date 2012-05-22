@@ -38,4 +38,10 @@
 	<string name="presence_do_not_disturb">Do not disturb</string>
 	<string name="presence_avaible">Avaible</string>
 	
+	<string name="requestDeclineButtonLabel">Decline</string>
+	<string name="requestAcceptButtonLabel">Accept</string>
+	<string name="requestLaterButtonLabel">Later</string>
+	
+	
+	
 </resources>

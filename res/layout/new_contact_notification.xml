@@ -25,7 +25,15 @@
 		android:contentDescription="@string/app_name"
 		android:src="@drawable/ic_notification"
 		android:layout_below="@id/notificationTime" />
-
+	
+	<TextView android:id="@+id/notificationLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/notificationPhoto"
+		android:layout_toLeftOf="@id/notificationTime"
+		android:singleLine="true"
+		style="@style/NotificationTitle" />
+	
 	<TextView android:id="@+id/notificationContactName"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

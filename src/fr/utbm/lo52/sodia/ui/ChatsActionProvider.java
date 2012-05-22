@@ -68,7 +68,6 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		Intent intent = new Intent(mContext, Chat.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		mContext.startActivity(intent);
-		Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT).show();
 		
 		return true;
 	}
