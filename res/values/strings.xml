@@ -41,7 +41,12 @@
 	<string name="requestDeclineButtonLabel">Decline</string>
 	<string name="requestAcceptButtonLabel">Accept</string>
 	<string name="requestLaterButtonLabel">Later</string>
+		
+	<string name="chatHintMessage">Message</string>
+	<string name="chatButtonSendLabel">Send</string>
+	<string name="chatConversationText"></string>
 	
+	<string name="contactRequestString">XXX want to add you</string>
 	
 	
 </resources>

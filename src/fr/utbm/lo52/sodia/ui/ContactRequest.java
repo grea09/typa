@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.utbm.lo52.sodia.R;
 
@@ -14,6 +15,12 @@ public class ContactRequest extends Activity{
 	{
 		super.onCreate(icicle);
 		setContentView(R.layout.contactrequest);
+		
+		Intent i = getIntent();
+		String id = i.getStringExtra("id");
+		TextView t = (TextView)  findViewById(R.id.contactRequestTextView);
+		t.setText(id+" wants to add you in his contact list. What you want to do ?");
+
 
 	}
 	

@@ -42,12 +42,13 @@ public class ContactNotification {
 		}
 		else
 		{
-			notification = new Notification(R.drawable.ic_notification, "A new contact request your authorisation.", 0 );
+			notification = new Notification(R.drawable.ic_notification, "A new contact request your authorisation.",PendingIntent.FLAG_ONE_SHOT );
 			notification.contentView = contentView;
 		}
 		Intent notificationIntent = new Intent(context, ContactRequest.class);
-		
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+		notificationIntent.putExtra("id",contact);
+		notificationIntent.setAction("com.vantage.vcrm.android.telephony"+System.currentTimeMillis());
+		PendingIntent contentIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), notificationIntent, 0);
 		notification.contentIntent = contentIntent;
 		notificationManager.notify(NEW_CONTACT_NOTIFICATION_ID, notification);
 		

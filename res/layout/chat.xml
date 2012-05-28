@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TextView
@@ -9,31 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_weight="2179.36"
-        android:text="Max : Hey how are you ?" />
-
+        android:layout_weight="1"
+        android:text="@string/chatConversationText" />
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="46.54" >
-
-        <EditText
-            android:id="@+id/chatEditText"
-            android:layout_width="191dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textMultiLine" >
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
+		
+		<EditText
+		    android:id="@+id/chatEditText"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:hint="@string/chatHintMessage"
+		    android:inputType="textMultiLine" >
 
             <requestFocus />
         </EditText>
-
+        
         <Button
-            android:id="@+id/chatButtonSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:onClick="sendMessage" />
+        android:id="@+id/chatButtonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sendMessage"
+        android:text="@string/chatButtonSendLabel" />
+        
     </LinearLayout>
 
 </LinearLayout>
