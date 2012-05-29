@@ -51,7 +51,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			childViewHolder = new ChildViewHolder();
 			
 			convertView = inflater.inflate(R.layout.contactfragment, null);
-			
+
 			childViewHolder.quickContactBadge = (QuickContactBadge) convertView.findViewById(R.id.contactBadge);
 			childViewHolder.image = (ImageView) convertView.findViewById(R.id.statusIcon);
 			childViewHolder.textView = (TextView) convertView.findViewById(R.id.Name);
@@ -65,11 +65,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		else {
 			childViewHolder = (ChildViewHolder) convertView.getTag();
 		}
-	
+		
 		childViewHolder.textView.setOnClickListener(new OnClickListener() {
 		 
             public void onClick(View v) {
-            	Toast.makeText(context, "Groupe ", Toast.LENGTH_SHORT).show();
+            	Toast.makeText(context, "clicked ", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(context, "Groupe : " + contact.getGroups().toArray()[0] + " - Bouton : " + contact, Toast.LENGTH_SHORT).show();
             }
         });

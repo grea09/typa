@@ -1,5 +1,7 @@
 package fr.utbm.lo52.sodia.ui;
 
+import java.util.Calendar;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Message;
+import fr.utbm.lo52.sodia.logic.Mime;
 
 public class Chat extends SherlockActivity
 {
@@ -24,6 +28,8 @@ public class Chat extends SherlockActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		Chat chat = new Chat();
+		
 		setContentView(R.layout.chat);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -42,25 +48,32 @@ public class Chat extends SherlockActivity
 	}
 	
 	public void sendMessage(View view){
-		
 		TextView t = (TextView)  findViewById(R.id.chatTextView);
 		EditText editText = (EditText) findViewById(R.id.chatEditText);
-		String message = editText.getText().toString();
+		String smessage = editText.getText().toString();
+		
+		Message message = new Message(Mime.TEXT, smessage);
+		
+		
 		editText.setText("");
 		if (this.getCurrentFocus() != null){
 			InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE); 
 			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
-		t.append("\nMe : "+message);
+		t.append("\nMe @"+Calendar.getInstance().get(Calendar.HOUR) + ":" +
+				Calendar.getInstance().get(Calendar.MINUTE)+" > "+smessage);
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-		if (item.getItemId() == android.R.id.home){
-			Intent intent = new Intent(this, Main.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			return true;
+		switch(item.getItemId()){
+			case (android.R.id.home):
+				Intent intent = new Intent(this, Main.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+			default:
+				break;
 
 		}
 		return super.onOptionsItemSelected(item);
