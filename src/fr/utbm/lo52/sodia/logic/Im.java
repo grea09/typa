@@ -2,8 +2,13 @@ package fr.utbm.lo52.sodia.logic;
 
 import java.util.Map;
 
-import android.accounts.Account;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.StatusUpdates;
 
 public class Im extends DataBaseObject
 {
@@ -11,8 +16,8 @@ public class Im extends DataBaseObject
 	
 	private String userId;
 	private String name;
-	private Presence presence;
-	private String status;
+	private String protocol;
+	private Status status;
 
 	protected Uri uri = Data.CONTENT_URI;
 	protected String[] projection = new String[]
@@ -29,12 +34,9 @@ public class Im extends DataBaseObject
 		super(id);
 	}
 
-	public Im(String userId, String name, Account account, Presence presence,
-			String status)
+	public Im(String userId, String name, Status status)
 	{
 		this.userId = userId;
-		this.account = account;
-		this.presence = presence;
 		this.status = status;
 	}
 
@@ -48,32 +50,12 @@ public class Im extends DataBaseObject
 		this.userId = id;
 	}
 
-	public Account getAccount()
-	{
-		return this.account;
-	}
-
-	public void setAccount(Account account)
-	{
-		this.account = account;
-	}
-
-	public Presence getPresence()
-	{
-		return this.presence;
-	}
-
-	public void setPresence(Presence presence)
-	{
-		this.presence = presence;
-	}
-
-	public String getStatus()
+	public Status getStatus()
 	{
 		return this.status;
 	}
 
-	public void setStatus(String status)
+	public void setStatus(Status status)
 	{
 		this.status = status;
 	}
@@ -89,7 +71,28 @@ public class Im extends DataBaseObject
 	protected void get()
 	{
 		// TODO Auto-generated method stub
-		
+		final Cursor cursor = query();
+		if(cursor != null && cursor.moveToFirst())
+		{
+			setUserId(cursor.getString(1));
+			setName(cursor.getString(4));
+			setProtocol((String) ContactsContract.CommonDataKinds.Im.getProtocolLabel(Resources.getSystem(),cursor.getInt(2),cursor.getString(3)));
+			
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		// Status Fill
+		final Cursor status = (new Status(null, null, 0, null, null)).query(StatusUpdates.DATA_ID + "=?", new String[]{Long.toString(id)});
+		if (status != null && status.moveToFirst())
+		{
+			setStatus(new Status(cursor.getLong(0)));
+		}
+		if (status != null)
+		{
+			status.close();
+		}
 	}
 
 	public String getName()
@@ -109,5 +112,15 @@ public class Im extends DataBaseObject
 			return ims.get(id);
 		}
 		return new Im(id);
+	}
+
+	public String getProtocol()
+	{
+		return this.protocol;
+	}
+
+	public void setProtocol(String protocol)
+	{
+		this.protocol = protocol;
 	}
 }

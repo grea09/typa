@@ -1,13 +1,15 @@
 package fr.utbm.lo52.sodia.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 
 public class RawContact extends DataBaseObject
@@ -80,6 +82,16 @@ public class RawContact extends DataBaseObject
 		if (cursor != null)
 		{
 			cursor.close();
+		}
+		// Im Fill
+		final Cursor ims = (new Im("","",null)).query(Data.RAW_CONTACT_ID + "=?", new String[]{Long.toString(id)});
+		while (ims != null && ims.moveToNext())
+		{
+			addIm(new Im(cursor.getLong(0)));
+		}
+		if (ims != null)
+		{
+			ims.close();
 		}
 	}
 

@@ -11,6 +11,16 @@ public enum Presence
 			R.string.presence_avaible);
 
 	private int resource;
+	
+	public static Presence get(long id)
+	{
+		return Presence.get((int) id);
+	}
+	
+	public static Presence get(int id)
+	{
+		return Presence.values()[id];
+	}
 
 	private Presence(int resource)
 	{

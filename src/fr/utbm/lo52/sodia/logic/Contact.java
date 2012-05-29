@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.RawContacts;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
 {
@@ -95,7 +96,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		this.name = name;
 		for (RawContact rawContact : rawContacts)
 		{
-			rawContact.setName(name);
+			//rawContact.setName(name);
 		}
 	}
 
@@ -142,15 +143,15 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		{
 			cursor.close();
 		}
-		// IM Fill
-		final Cursor ims = (new Im(-1)).query("=?", null);
-		if (ims != null && ims.moveToFirst())
+		// RawContact Fill
+		final Cursor rawContacts = (new RawContact(false, null)).query(RawContacts.CONTACT_ID + "=?", new String[]{Long.toString(id)});
+		while (rawContacts != null && rawContacts.moveToNext())
 		{
-			// TODO Array push Im get
+			addRawContact(new RawContact(cursor.getLong(0)));
 		}
-		if (ims != null)
+		if (rawContacts != null)
 		{
-			ims.close();
+			rawContacts.close();
 		}
 		// Group Fill
 		final Cursor groups = contentResolver

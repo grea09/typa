@@ -8,6 +8,11 @@ import java.util.Set;
 public class Chat
 {
 	private static Set<Chat> chats;
+	static
+	{
+		chats = new HashSet<Chat>();
+	}
+	
 	private Set<Contact> participants;
 	private List<Message> messages;
 
