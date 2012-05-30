@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.content.ContentProviderOperation;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
@@ -94,10 +97,6 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	public void setName(String name)
 	{
 		this.name = name;
-		for (RawContact rawContact : rawContacts)
-		{
-			//rawContact.setName(name);
-		}
 	}
 
 	public void addRawContact(RawContact rawContact)
@@ -144,7 +143,9 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 			cursor.close();
 		}
 		// RawContact Fill
-		final Cursor rawContacts = (new RawContact(false, null)).query(RawContacts.CONTACT_ID + "=?", new String[]{Long.toString(id)});
+		final Cursor rawContacts = (new RawContact(false, null, null)).query(
+				RawContacts.CONTACT_ID + "=?", new String[]
+					{ Long.toString(id) });
 		while (rawContacts != null && rawContacts.moveToNext())
 		{
 			addRawContact(new RawContact(cursor.getLong(0)));
@@ -176,29 +177,16 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		return new Contact(id);
 	}
 
-	public void save()
+	@Override
+	public void save() throws RemoteException, OperationApplicationException
 	{
-		// TODO if new insert in DB else save data;
-		/*
-		 * TODO db connect Uri.withAppendedPath(
-		 * RawContacts.CONTENT_URI.buildUpon()
-		 * .appendQueryParameter(RawContacts.ACCOUNT_TYPE, account.type)
-		 * .build(), Entity.CONTENT_DIRECTORY); final Cursor contact =
-		 * context.getContentResolver().query(lookup, new
-		 * String[]{Contacts._ID}, null, null, null); contact.moveToFirst();
-		 * final Cursor rawContacts = resolver.query(suportedRawContactsUri,
-		 * null, RawContacts.CONTACT_ID + "=?", new
-		 * String[]{String.valueOf(contact.getLong(0))}, null);
-		 */
+		for (RawContact rawContact : this.rawContacts)
+		{
+			rawContact.setName(name);
+		}
+		save((DataBaseObject[]) this.rawContacts.toArray());
+		save((DataBaseObject[]) this.groups.toArray());
 	}
-
-	/*
-	 * @Override public ArrayList<Contact> get(String selection, String[]
-	 * selectionArgs) { ArrayList<Contact> list = new ArrayList<Contact>();
-	 * final Cursor cursor = query(selection, selectionArgs);
-	 * while(cursor.moveToNext()) { Contact item = new
-	 * Contact(cursor.getLong(0)); list.add(item); } return list; }
-	 */
 
 	@Override
 	public boolean equals(Object object)
@@ -206,4 +194,11 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		Contact contact = (Contact) object;
 		return contact.name == this.name || super.equals(object);
 	}
+
+	@Override
+	protected ContentProviderOperation operation()
+	{
+		return null;
+	}
+
 }

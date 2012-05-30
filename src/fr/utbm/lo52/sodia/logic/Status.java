@@ -2,6 +2,7 @@ package fr.utbm.lo52.sodia.logic;
 
 import java.util.Map;
 
+import android.content.ContentProviderOperation;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,7 +21,7 @@ public class Status extends DataBaseObject
 	}
 
 	private static Map<Long, Status> statusUpdates;
-	
+
 	private Presence presence;
 	private String status;
 	private long timestamp;
@@ -28,15 +29,11 @@ public class Status extends DataBaseObject
 	private Drawable icon;
 
 	protected Uri uri = StatusUpdates.CONTENT_URI;
-	protected String[] projection = new String[]{
-		StatusUpdates.DATA_ID, 
-		StatusUpdates.PRESENCE, 
-		StatusUpdates.STATUS,
-		StatusUpdates.STATUS_TIMESTAMP,
-		StatusUpdates.STATUS_RES_PACKAGE,
-		StatusUpdates.STATUS_LABEL,
-		StatusUpdates.STATUS_ICON
-	};
+	protected String[] projection = new String[]
+		{ StatusUpdates.DATA_ID, StatusUpdates.PRESENCE, StatusUpdates.STATUS,
+				StatusUpdates.STATUS_TIMESTAMP,
+				StatusUpdates.STATUS_RES_PACKAGE, StatusUpdates.STATUS_LABEL,
+				StatusUpdates.STATUS_ICON };
 
 	public Status(long id)
 	{
@@ -46,7 +43,6 @@ public class Status extends DataBaseObject
 	@Override
 	public void save()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
@@ -55,13 +51,13 @@ public class Status extends DataBaseObject
 	{
 		// TODO Auto-generated method stub
 		final Cursor cursor = query();
-		if(cursor != null && cursor.moveToFirst())
+		if (cursor != null && cursor.moveToFirst())
 		{
 			setPresence(Presence.get(cursor.getLong(1)));
 			setStatus(cursor.getString(2));
 			setTimestamp(cursor.getLong(3));
-			//TODO respackage
-			
+			// TODO respackage
+
 		}
 		if (cursor != null)
 		{
@@ -107,4 +103,19 @@ public class Status extends DataBaseObject
 	{
 		this.timestamp = timestamp;
 	}
+
+	@Override
+	protected ContentProviderOperation operation()
+	{
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
+				: (ContentProviderOperation.newUpdate(uri).withSelection(
+						StatusUpdates.DATA_ID + "=?", new String[]
+							{ String.valueOf(id) })))
+				.withValue(StatusUpdates.PRESENCE, presence.ordinal())
+				.withValue(StatusUpdates.STATUS, status)
+				.withValue(StatusUpdates.STATUS_ICON, icon)
+				.withValue(StatusUpdates.STATUS_LABEL, label)
+				.withValue(StatusUpdates.STATUS_TIMESTAMP, timestamp).build();
+	}
+
 }

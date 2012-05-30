@@ -12,7 +12,7 @@ public class Chat
 	{
 		chats = new HashSet<Chat>();
 	}
-	
+
 	private Set<Contact> participants;
 	private List<Message> messages;
 

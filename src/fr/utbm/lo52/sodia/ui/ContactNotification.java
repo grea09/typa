@@ -45,7 +45,8 @@ public class ContactNotification {
 			notification = new Notification(R.drawable.ic_notification, "A new contact request your authorisation.",PendingIntent.FLAG_ONE_SHOT );
 			notification.contentView = contentView;
 		}
-		Intent notificationIntent = new Intent(context, ContactRequest.class);
+		
+		Intent notificationIntent = new Intent(context, null);//ContactRequest.class
 		notificationIntent.putExtra("id",contact);
 		notificationIntent.setAction("com.vantage.vcrm.android.telephony"+System.currentTimeMillis());
 		PendingIntent contentIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), notificationIntent, 0);

@@ -2,32 +2,30 @@ package fr.utbm.lo52.sodia.logic;
 
 import java.util.Map;
 
+import android.content.ContentProviderOperation;
+import android.content.OperationApplicationException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.StatusUpdates;
 
 public class Im extends DataBaseObject
 {
 	private static Map<Long, Im> ims;
-	
+
 	private String userId;
-	private String name;
-	private String protocol;
+	private int protocolType;
+	private String customProtocol;
 	private Status status;
 
 	protected Uri uri = Data.CONTENT_URI;
 	protected String[] projection = new String[]
-	{
-		Data._ID,
-		ContactsContract.CommonDataKinds.Im.DATA,
-		ContactsContract.CommonDataKinds.Im.PROTOCOL,
-		ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL,
-		StructuredName.DISPLAY_NAME
-	};
+		{ CommonDataKinds.Im._ID, CommonDataKinds.Im.DATA,
+				CommonDataKinds.Im.PROTOCOL, CommonDataKinds.Im.CUSTOM_PROTOCOL };
 
 	public Im(long id)
 	{
@@ -61,30 +59,26 @@ public class Im extends DataBaseObject
 	}
 
 	@Override
-	public void save()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void get()
 	{
-		// TODO Auto-generated method stub
-		final Cursor cursor = query();
-		if(cursor != null && cursor.moveToFirst())
+		// Im
+		final Cursor cursor = query(Data.MIMETYPE + "=?", new String[]
+			{ CommonDataKinds.Im.CONTENT_ITEM_TYPE });
+		if (cursor != null && cursor.moveToFirst())
 		{
 			setUserId(cursor.getString(1));
-			setName(cursor.getString(4));
-			setProtocol((String) ContactsContract.CommonDataKinds.Im.getProtocolLabel(Resources.getSystem(),cursor.getInt(2),cursor.getString(3)));
-			
+			setProtocolType(cursor.getInt(2));
+			setCustomProtocol(cursor.getString(3));
 		}
 		if (cursor != null)
 		{
 			cursor.close();
 		}
+
 		// Status Fill
-		final Cursor status = (new Status(null, null, 0, null, null)).query(StatusUpdates.DATA_ID + "=?", new String[]{Long.toString(id)});
+		final Cursor status = (new Status(null, null, 0, null, null)).query(
+				StatusUpdates.DATA_ID + "=?", new String[]
+					{ Long.toString(id) });
 		if (status != null && status.moveToFirst())
 		{
 			setStatus(new Status(cursor.getLong(0)));
@@ -95,16 +89,6 @@ public class Im extends DataBaseObject
 		}
 	}
 
-	public String getName()
-	{
-		return this.name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
 	public static Im get(long id)
 	{
 		if (ims.containsKey(id))
@@ -114,13 +98,51 @@ public class Im extends DataBaseObject
 		return new Im(id);
 	}
 
-	public String getProtocol()
+	@Override
+	protected ContentProviderOperation operation()
 	{
-		return this.protocol;
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
+				: (ContentProviderOperation.newUpdate(uri).withSelection(
+						CommonDataKinds.Im._ID + "=?", new String[]
+							{ String.valueOf(id) })))
+				.withValue(Data.MIMETYPE, CommonDataKinds.Im.CONTENT_ITEM_TYPE)
+				.withValue(CommonDataKinds.Im.DATA, userId)
+				.withValue(CommonDataKinds.Im.PROTOCOL, protocolType)
+				.withValue(CommonDataKinds.Im.CUSTOM_PROTOCOL, customProtocol)
+				.build();
 	}
 
-	public void setProtocol(String protocol)
+	public int getProtocolType()
 	{
-		this.protocol = protocol;
+		return this.protocolType;
+	}
+
+	public void setProtocolType(int protocolType)
+	{
+		this.protocolType = protocolType;
+	}
+
+	public String getCustomProtocol()
+	{
+		return this.customProtocol;
+	}
+
+	public void setCustomProtocol(String customProtocol)
+	{
+		this.customProtocol = customProtocol;
+	}
+
+	public String getProtocol()
+	{
+		return (String) ContactsContract.CommonDataKinds.Im.getProtocolLabel(
+				Resources.getSystem(), protocolType, customProtocol);
+	}
+
+	@Override
+	public void save() throws RemoteException, OperationApplicationException
+	{
+		super.save();
+		save(new DataBaseObject[]
+			{ status });
 	}
 }

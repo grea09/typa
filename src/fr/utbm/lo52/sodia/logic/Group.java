@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import android.accounts.Account;
+import android.content.ContentProviderOperation;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -18,7 +20,11 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 
 	protected Uri uri = ContactsContract.Groups.CONTENT_URI;
 	protected String[] projection = new String[]
-		{ ContactsContract.Groups._ID, ContactsContract.Groups.TITLE };
+		{ ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
+				ContactsContract.Groups.ACCOUNT_TYPE,
+				ContactsContract.Groups.ACCOUNT_NAME };
+
+	private Account account;
 
 	protected Group(long id)
 	{
@@ -76,21 +82,15 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 	}
 
 	@Override
-	public void save()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void get()
 	{
 		contacts = new HashSet<Contact>();
 		groups.put(id, this);
 		final Cursor cursor = query();
-		if(cursor != null && cursor.moveToFirst())
+		if (cursor != null && cursor.moveToFirst())
 		{
 			setName(cursor.getString(1));
+			setAccount(fromString(cursor.getString(2), cursor.getString(3)));
 		}
 		if (cursor != null)
 		{
@@ -131,4 +131,30 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		Group group = (Group) object;
 		return group.name == this.name || super.equals(object);
 	}
+
+	@Override
+	protected ContentProviderOperation operation()
+	{
+		if (id == -1 && account == null)
+		{
+			throw new UnsupportedOperationException(
+					"Account must be suplied for new Groups.");
+		}
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
+				: (ContentProviderOperation.newUpdate(uri)))
+				.withValue(ContactsContract.Groups.ACCOUNT_NAME, account.name)
+				.withValue(ContactsContract.Groups.ACCOUNT_TYPE, account.type)
+				.withValue(ContactsContract.Groups.TITLE, name).build();
+	}
+
+	public Account getAccount()
+	{
+		return this.account;
+	}
+
+	public void setAccount(Account account)
+	{
+		this.account = account;
+	}
+
 }
