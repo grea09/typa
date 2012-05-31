@@ -5,14 +5,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.QuickContactBadge;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -37,6 +42,7 @@ public class Main extends SherlockActivity
 	}
 
 	private ExpandableListView expandableList = null;
+	LayoutInflater inflater = null;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -44,8 +50,15 @@ public class Main extends SherlockActivity
 	{
 		super.onCreate(savedInstanceState);
 		this.draw();
+				
+
+		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
+		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
+		TextView textView = (TextView) findViewById(R.id.monName);
 		
-		setContentView(R.layout.main);
+		textView.setText("Moi");
+		quickContactBadge.setImageToDefault();
+
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
 
@@ -68,7 +81,7 @@ public class Main extends SherlockActivity
 		
 		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 		
-		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
+		//ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 
 		//wifiMultiCastLock();
 	}

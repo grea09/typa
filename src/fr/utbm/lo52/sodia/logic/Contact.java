@@ -48,7 +48,6 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		this.name = name;
 	}
 
-	@Override
 	public void add(Group group)
 	{
 		if (!groups.contains(group))
@@ -59,7 +58,6 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 
 	}
 
-	@Override
 	public void remove(Group group)
 	{
 		if (groups.contains(group))

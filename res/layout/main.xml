@@ -1,12 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+            
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+        			<QuickContactBadge
+		        android:id="@+id/monContactBadge"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" />
+	        
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:orientation="vertical" >
+			
+		        <TextView
+		                android:id="@+id/monName"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="Toto"
+		                android:singleLine="true"
+		                android:textAppearance="?android:attr/textAppearanceLarge" />
+				<!--TODO Understand what eclipse try to say  -->
+		        <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent" >
+		
+		            <ImageView
+		                android:id="@+id/monStatusIcon"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@android:drawable/presence_online" />
+		            
+		            <TextView
+			        android:id="@+id/monStatusText"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Status"
+			        android:singleLine="true"
+			        android:textAppearance="?android:attr/textAppearanceSmall" />
+		
+		           
+		        </LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+		
+
 
         <ExpandableListView
             android:id="@+id/GroupsList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" >
         </ExpandableListView>
-
+        
     </LinearLayout>

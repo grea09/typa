@@ -62,7 +62,6 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 
 	}
 
-	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		
 		Intent intent = new Intent(mContext, Chat.class);
