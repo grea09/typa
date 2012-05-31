@@ -28,6 +28,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.DataBaseObject;
 import fr.utbm.lo52.sodia.logic.Group;
 
 public class Main extends SherlockActivity
@@ -42,7 +43,6 @@ public class Main extends SherlockActivity
 	}
 
 	private ExpandableListView expandableList = null;
-	LayoutInflater inflater = null;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -62,6 +62,10 @@ public class Main extends SherlockActivity
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
 
+		DataBaseObject.context = getApplicationContext();
+		DataBaseObject.contentResolver = getContentResolver();
+		
+		
 		ArrayList<Group> groupes = new ArrayList<Group>();
 		
 		for (int i = 1; i < 3; i++) {
