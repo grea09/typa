@@ -85,7 +85,7 @@ public class Main extends SherlockActivity
 		
 		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 		
-		//ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
+		ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 
 		//wifiMultiCastLock();
 	}

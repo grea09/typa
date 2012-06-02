@@ -46,7 +46,7 @@ public class ContactNotification {
 			notification.contentView = contentView;
 		}
 		
-		Intent notificationIntent = new Intent(context, null);//ContactRequest.class
+		Intent notificationIntent = new Intent(context, ContactRequest.class);//ContactRequest.class
 		notificationIntent.putExtra("id",contact);
 		notificationIntent.setAction("com.vantage.vcrm.android.telephony"+System.currentTimeMillis());
 		PendingIntent contentIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), notificationIntent, 0);
