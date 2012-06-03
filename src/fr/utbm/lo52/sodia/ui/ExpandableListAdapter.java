@@ -3,7 +3,9 @@ package fr.utbm.lo52.sodia.ui;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,11 +68,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			childViewHolder = (ChildViewHolder) convertView.getTag();
 		}
 		
-		childViewHolder.textView.setOnClickListener(new OnClickListener() {
+		convertView.setOnClickListener(new OnClickListener() {
 		 
             public void onClick(View v) {
-            	Toast.makeText(context, "clicked ", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(context, "Groupe : " + contact.getGroups().toArray()[0] + " - Bouton : " + contact, Toast.LENGTH_SHORT).show();
+            	Intent intent = new Intent(context, ChatActivity.class);
+            	intent.putExtra("id",contact.getName());
+        		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        		context.startActivity(intent);
             }
         });
 		

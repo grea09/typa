@@ -1,5 +1,8 @@
 package fr.utbm.lo52.sodia.ui;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +14,10 @@ import com.actionbarsherlock.view.ActionProvider;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.actionbarsherlock.view.SubMenu;
+
+import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Chat;
+import fr.utbm.lo52.sodia.logic.Contact;
 
 public class ChatsActionProvider extends ActionProvider implements OnMenuItemClickListener {
 
@@ -52,20 +59,33 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		Log.d(this.getClass().getSimpleName(), "onPrepareSubMenu");
 
 		subMenu.clear();
-
-		
-		for (int i = 0; i < 8 ; i++) {
-						
-			subMenu.add(0, i, i, "test"+i).setOnMenuItemClickListener(this).setIcon(null);
-
+	
+		if (Chat.getChats().size() == 0){
+			Toast toast = Toast.makeText(mContext, "No chat opened !", Toast.LENGTH_LONG);
+			toast.show();
+			
+		}else{
+			Iterator<Chat> itchats = Chat.getChats().iterator();
+			int i = 0;
+			while (itchats.hasNext()) {
+				Chat chat = itchats.next();
+				Iterator<Contact> itcontacts = chat.getParticipants().iterator();
+				String chatname = "Chat : ";
+				while(itcontacts.hasNext()){
+					Contact contact = itcontacts.next();
+					chatname += contact.getName()+", ";
+				}
+				subMenu.add(0, i, i, chatname).setOnMenuItemClickListener(this).setIcon(null);
+				i++;
+			}
 		}
-
 	}
 
 	public boolean onMenuItemClick(MenuItem item) {
 		
-		Intent intent = new Intent(mContext, Chat.class);
+		Intent intent = new Intent(mContext, ChatActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	intent.putExtra("id", item.getTitle());
 		mContext.startActivity(intent);
 		
 		return true;

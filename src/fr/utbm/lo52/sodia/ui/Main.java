@@ -73,7 +73,7 @@ public class Main extends SherlockActivity
 			Set<Contact> contacts = new HashSet<Contact>();
 			for (int x = 1; x < 5; x++) {
 				//groupe.add(new Contact("Pierre Paul Jack" + x));
-				Contact contact = new Contact("Pierre");
+				Contact contact = new Contact("Pierre"+x);
 				contacts.add(contact);
 				
 			}
@@ -138,10 +138,4 @@ public class Main extends SherlockActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void openChat(View view){
-		Context context = getApplicationContext();    	
-    	Intent intent = new Intent(context, Chat.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
-	}
 }

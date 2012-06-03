@@ -100,7 +100,7 @@
 			</intent-filter>
 			
 		</activity>
-		<activity android:name=".ui.Chat">
+		<activity android:name=".ui.ChatActivity">
 		</activity>
 		<activity android:name=".ui.Login"
 				android:theme="@style/Theme.Sherlock.Dialog">

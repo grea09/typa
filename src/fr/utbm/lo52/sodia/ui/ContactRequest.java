@@ -10,6 +10,9 @@ import android.widget.Toast;
 import fr.utbm.lo52.sodia.R;
 
 public class ContactRequest extends Activity{
+	
+	private String id;
+	
 	@Override
 	public void onCreate(Bundle icicle)
 	{
@@ -18,6 +21,7 @@ public class ContactRequest extends Activity{
 		
 		Intent i = getIntent();
 		String id = i.getStringExtra("id");
+		this.id = id;
 		TextView t = (TextView)  findViewById(R.id.contactRequestTextView);
 		t.setText(id+" wants to add you in his contact list. What you want to do ?");
 
@@ -29,7 +33,8 @@ public class ContactRequest extends Activity{
 		String toastMessage = "";
 		switch(view.getId()){
 			case R.id.buttonAccept:
-				toastMessage = "Contact added !";
+				
+				toastMessage = this.id+" added !";
 				break;
 			case R.id.buttonLater:
 				toastMessage = "I'll wait for it !";

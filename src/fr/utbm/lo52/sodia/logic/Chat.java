@@ -57,4 +57,12 @@ public class Chat
 		return chat.participants.containsAll(this.participants)
 				&& this.participants.containsAll(chat.participants);
 	}
+	
+	public List<Message> getMessages(){
+		return this.messages;
+	}
+	
+	public Set<Contact> getParticipants(){
+		return this.participants;
+	}
 }
