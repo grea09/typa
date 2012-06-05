@@ -1,7 +1,9 @@
 package fr.utbm.lo52.sodia.ui;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,18 +39,31 @@ public class ChatActivity extends SherlockActivity
 		
 		// Récupération du contact
 		Intent intent = getIntent();
-		String id = intent.getStringExtra("id");
-		Log.d("Chatting with : [id]=", id);
+		long[] ids = intent.getLongArrayExtra("ids");
+		Set<Contact> contacts = new HashSet<Contact>();
+		for (int i = 0 ; i < ids.length ; i++){
+			//contacts.add(Contact.get(ids[i]));
+			Log.d("Chatting with : [id]=", ""+ids[i]);
+		}
+		this.chat = new Chat(new Contact("Name"));
 
-		// Création/Récupération du chat
-		this.chat = new Chat(new Contact(id));
+		if (contacts.size() > 1){
+			setTitle("Group");
+		}else{
+			setTitle("Contact");
+		}
 		
-		// Récupération des messages précédents
-		TextView t = (TextView)  findViewById(R.id.chatTextView);
-		List<Message> messages = this.chat.getMessages();
-		for (int i = 0 ; i < messages.size() ; i++){
-			Log.d("message", ""+i);
-			t.append((CharSequence) messages.get(i).data());	
+		if (false){
+			// Création/Récupération du chat
+			this.chat = new Chat(contacts);
+			
+			// Récupération des messages précédents
+			TextView t = (TextView)  findViewById(R.id.chatTextView);
+			List<Message> messages = this.chat.getMessages();
+			for (int i = 0 ; i < messages.size() ; i++){
+				Log.d("message", ""+i);
+				t.append((CharSequence) messages.get(i).data());	
+			}
 		}
 		setContentView(R.layout.chat);
 		ActionBar actionBar = getSupportActionBar();
@@ -91,6 +106,11 @@ public class ChatActivity extends SherlockActivity
 				Intent intent = new Intent(this, Main.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
+				break;
+			case (R.id.addcontacttochat):
+				Intent intent2 = new Intent(this, AddContactToChat.class);
+				intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent2);
 				break;
 			default:
 				break;

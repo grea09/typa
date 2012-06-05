@@ -117,6 +117,10 @@
 		    	android:label="Settings"
 				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
+		<activity android:name=".ui.AddContactToChat"
+		    	android:label="Add a contact to the chat"
+				android:theme="@style/Theme.Sherlock.Dialog">
+		</activity>
 		<activity android:name=".ui.ContactRequest">
 		</activity>
 	</application>

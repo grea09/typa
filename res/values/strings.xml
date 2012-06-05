@@ -48,5 +48,8 @@
 	
 	<string name="contactRequestString">XXX want to add you</string>
 	
+	<string name="addContactToChatButtonLabel">Add to chat</string>
+	
+	
 	
 </resources>

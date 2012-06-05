@@ -4,14 +4,14 @@
 	    android:id="@+id/search"
 		android:title="Search"
 		android:icon="@drawable/ic_menu_light_search"
-		android:showAsAction="always"
+		android:showAsAction="always|withText"
 		android:actionViewClass="android.widget.SearchView" />
 	
 	<item
 		android:id="@+id/chats"
 		android:title="Chats"
 		android:icon="@drawable/ic_menu_light_social_chat"
-		android:showAsAction="ifRoom"
+		android:showAsAction="always|withText"
 		android:actionProviderClass="fr.utbm.lo52.sodia.ui.ChatsActionProvider" />
 	
 	<item 

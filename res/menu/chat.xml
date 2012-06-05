@@ -1,15 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/send"
-		android:title="Share"
-		android:icon="@drawable/ic_menu_light_social_send_now"
+	<item android:id="@+id/addcontacttochat"
+		android:title="Add Contact"
+		android:icon="@drawable/ic_menu_light_social_add_contact"
 		android:orderInCategory="0"
 		android:showAsAction="always|withText" 
 		android:menuCategory="system"/>
 	
+	<item android:id="@+id/send"
+		android:title="Share"
+		android:icon="@drawable/ic_new_attachment"
+		android:orderInCategory="0"
+		android:showAsAction="always|withText" 
+		android:menuCategory="system"
+		android:actionProviderClass="fr.utbm.lo52.sodia.ui.AttachFileActionProvider"/>
+
 	<item android:id="@+id/locate"
 		android:title="Locate"
-		android:icon="@drawable/ic_menu_light_search"
+		android:icon="@drawable/ic_locate"
 		android:orderInCategory="0"
 		android:showAsAction="always|withText" 
 		android:menuCategory="system"/>

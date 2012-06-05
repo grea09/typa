@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
@@ -72,11 +73,24 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		 
             public void onClick(View v) {
             	Intent intent = new Intent(context, ChatActivity.class);
-            	intent.putExtra("id",contact.getName());
+            	long[] ids = {contact.getId()};
+            	intent.putExtra("ids",ids);
         		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         		context.startActivity(intent);
             }
         });
+		
+		convertView.setOnLongClickListener(new OnLongClickListener(){
+
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		
+			
+		});
 		
 		return convertView;
 	}
