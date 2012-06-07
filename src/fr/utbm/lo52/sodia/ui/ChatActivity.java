@@ -37,7 +37,7 @@ public class ChatActivity extends SherlockActivity
 	{
 		super.onCreate(savedInstanceState);
 		
-		// RŽcupŽration du contact
+		// Rï¿½cupï¿½ration du contact
 		Intent intent = getIntent();
 		long[] ids = intent.getLongArrayExtra("ids");
 		Set<Contact> contacts = new HashSet<Contact>();
@@ -45,7 +45,7 @@ public class ChatActivity extends SherlockActivity
 			//contacts.add(Contact.get(ids[i]));
 			Log.d("Chatting with : [id]=", ""+ids[i]);
 		}
-		this.chat = new Chat(new Contact("Name"));
+		this.chat = Chat.get(new Contact("Name"));
 
 		if (contacts.size() > 1){
 			setTitle("Group");
@@ -54,10 +54,10 @@ public class ChatActivity extends SherlockActivity
 		}
 		
 		if (false){
-			// CrŽation/RŽcupŽration du chat
-			this.chat = new Chat(contacts);
+			// Crï¿½ation/Rï¿½cupï¿½ration du chat
+			this.chat = Chat.get(contacts);
 			
-			// RŽcupŽration des messages prŽcŽdents
+			// Rï¿½cupï¿½ration des messages prï¿½cï¿½dents
 			TextView t = (TextView)  findViewById(R.id.chatTextView);
 			List<Message> messages = this.chat.getMessages();
 			for (int i = 0 ; i < messages.size() ; i++){

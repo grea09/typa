@@ -68,7 +68,7 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 			
 		}else{
 			this.chats = new ArrayList<Chat>();
-			Iterator<Chat> itchats = Chat.getChats().iterator();
+			Iterator<Chat> itchats = Chat.getChats().values().iterator();
 			int i = 0;
 			while (itchats.hasNext()) {
 				Chat chat = itchats.next();

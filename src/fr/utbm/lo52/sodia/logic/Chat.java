@@ -1,33 +1,28 @@
 package fr.utbm.lo52.sodia.logic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Chat
 {
-	private static Set<Chat> chats;
+	private static Map<Set<Contact>, Chat> chats;
 	static
 	{
-		chats = new HashSet<Chat>();
+		chats = new HashMap<Set<Contact>, Chat>();
 	}
 
 	private Set<Contact> participants;
 	private List<Message> messages;
 
-	public Chat(Contact participant)
+	protected Chat(Set<Contact> participants)
 	{
-		this(new HashSet<Contact>());
-		this.messages = new ArrayList<Message>();
-		this.add(participant);
-	}
-
-	public Chat(Set<Contact> participants)
-	{
+		chats.put(participants, this);
 		this.participants = participants;
 		this.messages = new ArrayList<Message>();
-		chats.add(this);
 	}
 
 	public void add(Message message)
@@ -45,11 +40,12 @@ public class Chat
 		participants.remove(contact);
 	}
 
-	public static Set<Chat> getChats()
+	public static Map<Set<Contact>, Chat> getChats()
 	{
 		return chats;
 	}
 
+/*
 	@Override
 	public boolean equals(Object object)
 	{
@@ -57,6 +53,7 @@ public class Chat
 		return chat.participants.containsAll(this.participants)
 				&& this.participants.containsAll(chat.participants);
 	}
+*/
 	
 	public List<Message> getMessages(){
 		return this.messages;
@@ -64,5 +61,17 @@ public class Chat
 	
 	public Set<Contact> getParticipants(){
 		return this.participants;
+	}
+	
+	public static Chat get(Contact participant)
+	{
+		Set<Contact> participants = new HashSet<Contact>();
+		participants.add(participant);
+		return get(participants);
+	}
+	
+	public static Chat get(Set<Contact> participants)
+	{
+		return ((chats.containsKey(participants))?(chats.get(participants)):(new Chat(participants)));
 	}
 }
