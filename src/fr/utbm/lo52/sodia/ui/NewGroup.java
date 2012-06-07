@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import fr.utbm.lo52.sodia.R;
 
@@ -20,6 +22,10 @@ public class NewGroup extends Activity {
 	{
 		super.onCreate(icicle);
 		setContentView(R.layout.newgroup);
+		
+		ListView lvListe = (ListView)findViewById(R.id.listContactsNewGroup);
+		String[] listeStrings = {"Pierre","Paul","Jacques","Geoffrey","Antoine", "Mathieu"};
+		lvListe.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,listeStrings));
 		
 	}
 	

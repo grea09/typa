@@ -38,6 +38,8 @@
 		android:theme="@style/Theme.Sherlock.Light"
 		uiOptions="splitActionBarWhenNarrow"
 	>
+		<uses-library android:required="true" android:name="com.google.android.maps" />
+	    
 		<!-- TODO Filter for permission -->
 		<service
 			android:name=".protocols.typa.authentificator.AuthenticationService"
@@ -119,9 +121,11 @@
 		</activity>
 		<activity android:name=".ui.AddContactToChat"
 		    	android:label="Add a contact to the chat"
-				android:theme="@style/Theme.Sherlock.Dialog">
+				android:theme="@style/Theme.Sherlock.Light.Dialog">
 		</activity>
 		<activity android:name=".ui.ContactRequest">
+		</activity>
+		<activity android:name=".ui.LocateActivity" >
 		</activity>
 	</application>
 </manifest>

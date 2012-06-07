@@ -25,8 +25,9 @@ import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
+import fr.utbm.lo52.sodia.protocols.ProtocolListener;
 
-public class ChatActivity extends SherlockActivity
+public class ChatActivity extends SherlockActivity implements ProtocolListener
 {
 
 	private Chat chat;
@@ -37,13 +38,13 @@ public class ChatActivity extends SherlockActivity
 	{
 		super.onCreate(savedInstanceState);
 		
-		// R�cup�ration du contact
+		// R�cup�ration des contacts
 		Intent intent = getIntent();
 		long[] ids = intent.getLongArrayExtra("ids");
 		Set<Contact> contacts = new HashSet<Contact>();
 		for (int i = 0 ; i < ids.length ; i++){
 			//contacts.add(Contact.get(ids[i]));
-			Log.d("Chatting with : [id]=", ""+ids[i]);
+			Log.d("Chatting with [id]", ""+ids[i]);
 		}
 		this.chat = Chat.get(new Contact("Name"));
 
@@ -112,11 +113,21 @@ public class ChatActivity extends SherlockActivity
 				intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent2);
 				break;
+			case (R.id.locate):
+				Intent intent3 = new Intent(this, LocateActivity.class);
+				intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent3);
 			default:
 				break;
 
 		}
 		return super.onOptionsItemSelected(item);
 
+	}
+
+	@Override
+	public void receive(Message message) {
+		// TODO Auto-generated method stub
+		this.chat.add(message);
 	}
 }

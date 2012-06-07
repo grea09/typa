@@ -29,8 +29,9 @@
             <requestFocus />
         </EditText>
         
-        <Button
+        <ImageButton
         android:id="@+id/chatButtonSend"
+        android:background="@drawable/ic_menu_light_social_send_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="sendMessage"

@@ -35,10 +35,6 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 	@Override
 	public View onCreateActionView() {
 		Log.d(this.getClass().getSimpleName(), "onCreateActionView");
-
-		TextView textView = new TextView(mContext);
-		textView.setText("Pick");
-
 		return null;
 	}
 
@@ -69,15 +65,20 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		}else{
 			this.chats = new ArrayList<Chat>();
 			Iterator<Chat> itchats = Chat.getChats().values().iterator();
+			Log.d("Liste chats :", "  :");
 			int i = 0;
 			while (itchats.hasNext()) {
 				Chat chat = itchats.next();
 				this.chats.add(chat);
+				Log.d("Chat :", ""+i);
 				Iterator<Contact> itcontacts = chat.getParticipants().iterator();
 				String chatname = "";
 				while(itcontacts.hasNext()){
 					Contact contact = itcontacts.next();
-					chatname += contact.getName()+", ";
+					if (chatname != "") chatname += ", ";
+					chatname += contact.getName();
+					Log.d("Participant : ", ""+contact.getName());
+
 				}
 				subMenu.add(0, i, i, chatname).setOnMenuItemClickListener(this).setIcon(R.drawable.ic_menu_light_social_contact);
 				i++;
@@ -90,7 +91,9 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		Intent intent = new Intent(mContext, ChatActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		
+		// Récupération du chat cliqué
 		Chat chat = this.chats.get(item.getItemId());
+		// Récupération des participants du chat
 		Set<Contact> contacts = chat.getParticipants(); 
 		long[] ids = new long[contacts.size()];
 		Iterator<Contact> itcontacts = contacts.iterator();
@@ -99,7 +102,6 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 			ids[i] = itcontacts.next().getId();
 			i++;
 		}
-		
 		
     	intent.putExtra("ids", ids);
 		mContext.startActivity(intent);
