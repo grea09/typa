@@ -40,7 +40,7 @@
 	>
 		<!-- TODO Filter for permission -->
 		<service
-			android:name=".protocols.bonjour.authentificator.AuthenticationService"
+			android:name=".protocols.typa.authentificator.AuthenticationService"
 			android:exported="true">
 			<intent-filter>
 				<action
@@ -48,10 +48,10 @@
 			</intent-filter>
 			<meta-data
 				android:name="android.accounts.AccountAuthenticator"
-				android:resource="@xml/bonjour_authentificator" />
+				android:resource="@xml/typa_authentificator" />
 		</service>
 		<service
-			android:name=".protocols.bonjour.syncadapter.SyncService"
+			android:name=".protocols.typa.syncadapter.SyncService"
 			android:exported="true">
 			<intent-filter>
 				<action
@@ -59,10 +59,10 @@
 			</intent-filter>
 			<meta-data
 				android:name="android.content.SyncAdapter"
-				android:resource="@xml/bonjour_syncadapter" />
+				android:resource="@xml/typa_syncadapter" />
 			<meta-data
 				android:name="android.provider.CONTACTS_STRUCTURE"
-				android:resource="@xml/bonjour_contacts" />
+				android:resource="@xml/typa_contacts" />
 		</service>
 		<!--
 		<service

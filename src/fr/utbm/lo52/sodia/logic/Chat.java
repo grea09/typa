@@ -28,11 +28,15 @@ public class Chat
 	public void add(Message message)
 	{
 		this.messages.add(message);
+		// TODO for (AccountManager.get().contains(message.to));
+		// 
 	}
 
 	public void add(Contact contact)
 	{
+		chats.remove(participants);
 		participants.add(contact);
+		chats.put(participants, this);
 	}
 
 	public void remove(Contact contact)

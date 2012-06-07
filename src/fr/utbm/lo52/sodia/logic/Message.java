@@ -5,7 +5,7 @@ public class Message
 	private Mime type;
 	private Object data;
 	private Contact from;
-	private Contact to;
+	private Contact[] to;
 
 	public Message(Mime type, Object data)
 	{
@@ -43,12 +43,12 @@ public class Message
 		this.from = from;
 	}
 
-	public Contact getTo()
+	public Contact[] getTo()
 	{
 		return this.to;
 	}
 
-	public void setTo(Contact to)
+	public void setTo(Contact[] to)
 	{
 		this.to = to;
 	}
