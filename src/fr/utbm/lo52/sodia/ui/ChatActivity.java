@@ -25,8 +25,9 @@ import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
+import fr.utbm.lo52.sodia.protocols.ProtocolListener;
 
-public class ChatActivity extends SherlockActivity
+public class ChatActivity extends SherlockActivity implements ProtocolListener
 {
 
 	private Chat chat;
@@ -122,5 +123,11 @@ public class ChatActivity extends SherlockActivity
 		}
 		return super.onOptionsItemSelected(item);
 
+	}
+
+	@Override
+	public void receive(Message message) {
+		// TODO Auto-generated method stub
+		this.chat.add(message);
 	}
 }

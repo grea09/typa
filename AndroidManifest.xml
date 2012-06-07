@@ -121,7 +121,7 @@
 		</activity>
 		<activity android:name=".ui.AddContactToChat"
 		    	android:label="Add a contact to the chat"
-				android:theme="@style/Theme.Sherlock.Dialog">
+				android:theme="@style/Theme.Sherlock.Light.Dialog">
 		</activity>
 		<activity android:name=".ui.ContactRequest">
 		</activity>
