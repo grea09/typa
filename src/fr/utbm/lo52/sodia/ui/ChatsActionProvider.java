@@ -90,7 +90,9 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		Intent intent = new Intent(mContext, ChatActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		
+		// Récupération du chat cliqué
 		Chat chat = this.chats.get(item.getItemId());
+		// Récupération des participants du chat
 		Set<Contact> contacts = chat.getParticipants(); 
 		long[] ids = new long[contacts.size()];
 		Iterator<Contact> itcontacts = contacts.iterator();
@@ -99,7 +101,6 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 			ids[i] = itcontacts.next().getId();
 			i++;
 		}
-		
 		
     	intent.putExtra("ids", ids);
 		mContext.startActivity(intent);

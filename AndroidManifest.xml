@@ -38,6 +38,8 @@
 		android:theme="@style/Theme.Sherlock.Light"
 		uiOptions="splitActionBarWhenNarrow"
 	>
+		<uses-library android:required="true" android:name="com.google.android.maps" />
+	    
 		<!-- TODO Filter for permission -->
 		<service
 			android:name=".protocols.bonjour.authentificator.AuthenticationService"
@@ -122,6 +124,8 @@
 				android:theme="@style/Theme.Sherlock.Dialog">
 		</activity>
 		<activity android:name=".ui.ContactRequest">
+		</activity>
+		<activity android:name=".ui.LocateActivity" >
 		</activity>
 	</application>
 </manifest>
