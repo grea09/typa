@@ -157,4 +157,9 @@ public class RawContact extends DataBaseObject
 	{
 		this.name = name;
 	}
+
+	public List<Im> getIms()
+	{
+		return this.ims;
+	}
 }

@@ -3,6 +3,8 @@ package fr.utbm.lo52.sodia.protocols.typa;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
@@ -15,15 +17,32 @@ public class Formater
 	{
 		GET,
 		RET;
+		@Override
+		public String toString()
+		{
+			return this.name() + SEPARATOR;
+		}
+	}
+	
+	public enum Type
+	{
+		CONTACT,
+		MESSAGE;
+		
+		@Override
+		public String toString()
+		{
+			return this.name() + SEPARATOR;
+		}
 	}
 	
 	public int size;
 	
 	public Operation operation;
 	
-	public String type;
+	public Type type;
 	
-	public static final String SEPARATOR = ";";
+	public static final char SEPARATOR = ';';
 	
 	public InputStream input;
 	
@@ -41,6 +60,7 @@ public class Formater
 		parse();
 	}
 	
+	@SuppressWarnings("unused")
 	public void parseContact() throws IOException
 	{
 		String id = get();
@@ -53,6 +73,8 @@ public class Formater
 	
 	public void parseMessage() throws IOException
 	{
+		Mime mime = Mime.valueOf(Mime.class, get().toUpperCase());
+		@SuppressWarnings("unused")
 		String from = get();
 		int size = Integer.decode(get());
 		String[] to = new String[size];
@@ -60,7 +82,6 @@ public class Formater
 		{
 			to[i] = get();
 		}
-		Mime mime = Mime.valueOf(Mime.class, get().toUpperCase());
 		Message message = null;
 		switch(mime)
 		{
@@ -94,7 +115,10 @@ public class Formater
 	protected String get() throws IOException
 	{
 		String value = "";
-		while((char)(input.read()) != SEPARATOR.charAt(0))
+		Set<Character> endOfField = new HashSet<Character>();
+		endOfField.add(SEPARATOR);
+		endOfField.add((char) -1);
+		while(endOfField.contains((char)(input.read())))
 		{
 			value += (char)(input.read());
 		}
@@ -103,28 +127,106 @@ public class Formater
 	
 	public void parse() throws NumberFormatException, IOException
 	{
-		operation = Operation.valueOf(Operation.class, get().toUpperCase());
+		operation = Operation.valueOf(get().toUpperCase());
 		size = Integer.decode(get());
-		type = get();
+		type = Type.valueOf(get());
 		if(operation == Operation.RET)
 		{
 			for (int i = 0; i < size; i++)
 			{
-				if(type.toUpperCase() == "CONTACT")
+				switch(type)
 				{
-					parseContact();
-				}
-				else if (type.toUpperCase() == "MESSAGE")
-				{
-					parseMessage();
+					case CONTACT :
+						parseContact();
+					break;
+					case MESSAGE :
+						parseMessage();
+					break;
 				}
 			}
 		}
 	}
 	
+	protected String toString(Contact contact)
+	{
+		return contact.getTypaIm() + SEPARATOR + contact.getName();
+	}
+	
+	protected String contactsToString()
+	{
+		String value = "";
+		for(Contact contact : contacts)
+		{
+			value += toString(contact) + SEPARATOR;
+		}
+		return value;
+	}
+	
+	protected String toString(Message message)
+	{
+		String to = "" + message.getTo().length + SEPARATOR;
+		for (Contact contact : message.getTo())
+		{
+			to += contact.getTypaIm() + SEPARATOR;
+		}
+		return "" + message.type() + SEPARATOR + message.getFrom().getTypaIm() + SEPARATOR + to + message.data();
+	}
+	
+	protected String messagesToString()
+	{
+		String value = "";
+		for(Message message : messages)
+		{
+			value += toString(message) + SEPARATOR;
+		}
+		return value;
+	}
+	
+	
+	@Override
 	public String toString()
 	{
-		
-		return "";
+		String value = "" + operation + size + SEPARATOR + type;
+		if(operation == Operation.GET)
+		{
+			assert size == 0;
+			if(type == Type.MESSAGE)
+			{
+				value += "" + SEPARATOR + messages.get(0).type();
+			}
+		}
+		else if(operation == Operation.RET)
+		{
+			switch(type)
+			{
+				case CONTACT :
+					value += contactsToString();
+				break;
+				case MESSAGE :
+					value += messagesToString();
+				break;
+			}
+		}
+		return value;
+	}
+
+	public ArrayList<Contact> getContacts()
+	{
+		return this.contacts;
+	}
+
+	public void setContacts(ArrayList<Contact> contacts)
+	{
+		this.contacts = contacts;
+	}
+
+	public ArrayList<Message> getMessages()
+	{
+		return this.messages;
+	}
+
+	public void setMessages(ArrayList<Message> messages)
+	{
+		this.messages = messages;
 	}
 }

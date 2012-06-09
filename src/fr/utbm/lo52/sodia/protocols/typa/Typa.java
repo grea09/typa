@@ -6,7 +6,7 @@ import fr.utbm.lo52.sodia.protocols.Protocol;
 
 public class Typa extends Protocol
 {
-
+	public static final int PORT = 4242;
 
 	@Override
 	public void connect()

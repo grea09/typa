@@ -2,7 +2,6 @@ package fr.utbm.lo52.sodia.ui;
 
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import android.content.Context;
@@ -54,18 +53,18 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			setTitle("Contact");
 		}
 		
-		if (false){
-			// Cr�ation/R�cup�ration du chat
-			this.chat = Chat.get(contacts);
-			
-			// R�cup�ration des messages pr�c�dents
-			TextView t = (TextView)  findViewById(R.id.chatTextView);
-			List<Message> messages = this.chat.getMessages();
-			for (int i = 0 ; i < messages.size() ; i++){
-				Log.d("message", ""+i);
-				t.append((CharSequence) messages.get(i).data());	
-			}
-		}
+//		if (false){
+//			// Cr�ation/R�cup�ration du chat
+//			this.chat = Chat.get(contacts);
+//			
+//			// R�cup�ration des messages pr�c�dents
+//			TextView t = (TextView)  findViewById(R.id.chatTextView);
+//			List<Message> messages = this.chat.getMessages();
+//			for (int i = 0 ; i < messages.size() ; i++){
+//				Log.d("message", ""+i);
+//				t.append((CharSequence) messages.get(i).data());	
+//			}
+//		}
 		setContentView(R.layout.chat);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
