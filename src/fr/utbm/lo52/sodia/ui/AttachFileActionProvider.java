@@ -1,8 +1,6 @@
 package fr.utbm.lo52.sodia.ui;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;

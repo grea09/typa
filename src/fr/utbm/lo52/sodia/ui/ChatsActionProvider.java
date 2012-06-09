@@ -2,14 +2,12 @@ package fr.utbm.lo52.sodia.ui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.ActionProvider;
@@ -20,7 +18,6 @@ import com.actionbarsherlock.view.SubMenu;
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
-import fr.utbm.lo52.sodia.logic.Group;
 
 public class ChatsActionProvider extends ActionProvider implements OnMenuItemClickListener {
 
@@ -91,9 +88,9 @@ public class ChatsActionProvider extends ActionProvider implements OnMenuItemCli
 		Intent intent = new Intent(mContext, ChatActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		
-		// RŽcupŽration du chat cliquŽ
+		// Rï¿½cupï¿½ration du chat cliquï¿½
 		Chat chat = this.chats.get(item.getItemId());
-		// RŽcupŽration des participants du chat
+		// Rï¿½cupï¿½ration des participants du chat
 		Set<Contact> contacts = chat.getParticipants(); 
 		long[] ids = new long[contacts.size()];
 		Iterator<Contact> itcontacts = contacts.iterator();

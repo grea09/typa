@@ -5,20 +5,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.Inflater;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -53,6 +47,7 @@ public class Main extends SherlockActivity
 				
 
 		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
+		@SuppressWarnings("unused")
 		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
 		TextView textView = (TextView) findViewById(R.id.monName);
 		
@@ -114,6 +109,7 @@ public class Main extends SherlockActivity
 	 
 	protected void draw()
 	{
+		@SuppressWarnings("unused")
 		ActionBar actionBar = getSupportActionBar();
 		//actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.main);

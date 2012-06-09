@@ -86,6 +86,21 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 			remove(group);
 		}
 	}
+	
+	public String getTypaIm()
+	{
+		for(RawContact rawContact : getRawContacts())
+		{
+			for(Im im : rawContact.getIms())
+			{
+				if(im.getProtocol() == "Typa")
+				{
+					return im.getUserId();
+				}
+			}
+		}
+		return null;
+	}
 
 	public String getName()
 	{
@@ -197,6 +212,11 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	protected ContentProviderOperation operation()
 	{
 		return null;
+	}
+
+	public List<RawContact> getRawContacts()
+	{
+		return this.rawContacts;
 	}
 
 }
