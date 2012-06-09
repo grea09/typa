@@ -12,8 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
@@ -61,7 +64,7 @@ public class Main extends SherlockActivity
 
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
-
+		registerForContextMenu(expandableList);
 		DataBaseObject.context = getApplicationContext();
 		DataBaseObject.contentResolver = getContentResolver();
 		
@@ -136,6 +139,24 @@ public class Main extends SherlockActivity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, 0, 0, "Locate");
+		menu.add(0, 1, 0,  "Chat");
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		switch (item.getItemId()) {
+			case 0:
+				return true;
+			case 1:
+				return true;
+			default:
+				return true;
+		}
 	}
 	
 }
