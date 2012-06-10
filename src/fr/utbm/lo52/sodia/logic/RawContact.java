@@ -60,6 +60,19 @@ public class RawContact extends DataBaseObject
 	{
 		this.ims.remove(im);
 	}
+	
+	public Im[] getImByProtocol(String protocol)
+	{
+		ArrayList<Im> ims = new ArrayList<Im>();
+		for(Im im : getIms())
+		{
+			if(im.getProtocol() == protocol)
+			{
+				ims.add(im);
+			}
+		}
+		return (Im[]) ims.toArray();
+	}
 
 	@Override
 	protected void get()

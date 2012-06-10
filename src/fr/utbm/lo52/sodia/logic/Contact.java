@@ -12,7 +12,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
@@ -25,6 +27,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	private String name;
 	private List<RawContact> rawContacts;
 	private Set<Group> groups;
+	private int[] position;
 
 	protected Uri uri = ContactsContract.Contacts.CONTENT_URI;
 	protected String[] projection = new String[]
@@ -87,19 +90,17 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		}
 	}
 	
-	public String getTypaIm()
+	public Im[] getImByProtocol(String protocol)
 	{
+		ArrayList<Im> ims = new ArrayList<Im>();
 		for(RawContact rawContact : getRawContacts())
 		{
-			for(Im im : rawContact.getIms())
+			for(Im im :rawContact.getImByProtocol(protocol))
 			{
-				if(im.getProtocol() == "Typa")
-				{
-					return im.getUserId();
-				}
+				ims.add(im);
 			}
 		}
-		return null;
+		return (Im[]) ims.toArray();
 	}
 
 	public String getName()
@@ -207,7 +208,29 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		Contact contact = (Contact) object;
 		return contact.name == this.name || super.equals(object);
 	}
-
+	
+	public static Contact getByIm(String im)
+	{
+		Contact contact = null;
+		final Cursor cursor = contentResolver.query(Data.CONTENT_URI, 
+				new String[] {Data.CONTACT_ID}, 
+				Data.MIMETYPE + "=? AND " + CommonDataKinds.Im.DATA + "=?" , 
+				new String[]{CommonDataKinds.Im.MIMETYPE, im}, 
+				null
+		);
+		if(cursor != null && cursor.moveToFirst())
+		{
+			contact = Contact.get(cursor.getLong(0));
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		return contact;
+	}
+	
+	
+	
 	@Override
 	protected ContentProviderOperation operation()
 	{
@@ -217,6 +240,16 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	public List<RawContact> getRawContacts()
 	{
 		return this.rawContacts;
+	}
+
+	public int[] getPosition()
+	{
+		return position;
+	}
+
+	public void setPosition(int[] position)
+	{
+		this.position = position;
 	}
 
 }

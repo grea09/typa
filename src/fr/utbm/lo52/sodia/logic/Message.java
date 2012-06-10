@@ -1,6 +1,6 @@
 package fr.utbm.lo52.sodia.logic;
 
-public class Message
+public class Message // TODO Type parameter
 {
 	private Mime type;
 	private Object data;

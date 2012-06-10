@@ -35,7 +35,7 @@ public class Status extends DataBaseObject
 				StatusUpdates.STATUS_RES_PACKAGE, StatusUpdates.STATUS_LABEL,
 				StatusUpdates.STATUS_ICON };
 
-	public Status(long id)
+	protected Status(long id)
 	{
 		super(id);
 	}
