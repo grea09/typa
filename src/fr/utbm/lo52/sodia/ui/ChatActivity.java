@@ -7,6 +7,10 @@ import java.util.Set;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,8 +40,9 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.chat);
 		
-		// Rï¿½cupï¿½ration des contacts
+		// Rï¿½cupï¿½ration des participants
 		Intent intent = getIntent();
 		long[] ids = intent.getLongArrayExtra("ids");
 		Set<Contact> contacts = new HashSet<Contact>();
@@ -45,12 +50,18 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			//contacts.add(Contact.get(ids[i]));
 			Log.d("Chatting with [id]", ""+ids[i]);
 		}
+		
+		// RŽcupŽration du chat ou crŽation si non existant
 		this.chat = Chat.get(new Contact("Name"));
 
 		if (contacts.size() > 1){
 			setTitle("Group");
 		}else{
-			setTitle("Contact");
+			if (ids[0] != -1){
+				setTitle(Contact.get(ids[0]).getName());
+			}else{
+				setTitle("Contact");
+			}
 		}
 		
 //		if (false){
@@ -65,7 +76,8 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 //				t.append((CharSequence) messages.get(i).data());	
 //			}
 //		}
-		setContentView(R.layout.chat);
+		
+		((TextView) findViewById(R.id.chatTextView)).setMovementMethod(new ScrollingMovementMethod());
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
@@ -95,8 +107,11 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE); 
 			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
-		t.append("\nMe @"+Calendar.getInstance().get(Calendar.HOUR) + ":" +
-				Calendar.getInstance().get(Calendar.MINUTE)+" > "+smessage);
+		t.append("\nMe @"+Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" +
+				Calendar.getInstance().get(Calendar.MINUTE) + ":" +
+						Calendar.getInstance().get(Calendar.SECOND)+" > "+Html.fromHtml("")+":"+smessage);
+		
+		Linkify.addLinks(t, Linkify.ALL);
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) 

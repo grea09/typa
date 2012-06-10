@@ -39,7 +39,6 @@ public class Main extends SherlockActivity
 		intentMatch.put(android.R.id.home, Main.class);
 		intentMatch.put(R.id.newContact, NewContact.class);
 		intentMatch.put(R.id.newGroup, NewGroup.class);
-		intentMatch.put(R.id.settings, Settings.class);
 	}
 
 	private ExpandableListView expandableList = null;
@@ -81,6 +80,8 @@ public class Main extends SherlockActivity
 			groupe.add(contacts);
 			groupes.add(groupe);
 		}
+		
+		
 
 		
 		
@@ -156,6 +157,13 @@ public class Main extends SherlockActivity
 			default:
 				return true;
 		}
+	}
+	
+	public void goToSettings(View v){
+		Intent intent = new Intent(this, Settings.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		
 	}
 	
 }

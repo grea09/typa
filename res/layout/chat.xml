@@ -10,7 +10,10 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:text="@string/chatConversationText" />
+        android:text="@string/chatConversationText" 
+        android:maxLines = "9999"
+		android:scrollbars = "vertical"
+		android:autoLink="phone|web|email|map|all" />
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +27,7 @@
 		    android:layout_height="wrap_content"
 		    android:layout_weight="1"
 		    android:hint="@string/chatHintMessage"
-		    android:inputType="textMultiLine" >
+		    android:inputType="textMultiLine">
 
             <requestFocus />
         </EditText>
