@@ -5,10 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
@@ -33,7 +39,6 @@ public class Main extends SherlockActivity
 		intentMatch.put(android.R.id.home, Main.class);
 		intentMatch.put(R.id.newContact, NewContact.class);
 		intentMatch.put(R.id.newGroup, NewGroup.class);
-		intentMatch.put(R.id.settings, Settings.class);
 	}
 
 	private ExpandableListView expandableList = null;
@@ -56,7 +61,7 @@ public class Main extends SherlockActivity
 
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
-
+		registerForContextMenu(expandableList);
 		DataBaseObject.context = getApplicationContext();
 		DataBaseObject.contentResolver = getContentResolver();
 		
@@ -75,6 +80,8 @@ public class Main extends SherlockActivity
 			groupe.add(contacts);
 			groupes.add(groupe);
 		}
+		
+		
 
 		
 		
@@ -132,6 +139,31 @@ public class Main extends SherlockActivity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, 0, 0, "Locate");
+		menu.add(0, 1, 0,  "Chat");
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		switch (item.getItemId()) {
+			case 0:
+				return true;
+			case 1:
+				return true;
+			default:
+				return true;
+		}
+	}
+	
+	public void goToSettings(View v){
+		Intent intent = new Intent(this, Settings.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		
 	}
 	
 }

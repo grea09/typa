@@ -23,9 +23,5 @@
 	    android:id="@+id/newGroup"
 		android:title="New Group"
 		android:icon="@drawable/ic_menu_light_social_add_group" />
-	
-	<item 
-	    android:id="@+id/settings"
-		android:title="Settings"
-		android:icon="@drawable/ic_menu_light_settings" />
+
 </menu>

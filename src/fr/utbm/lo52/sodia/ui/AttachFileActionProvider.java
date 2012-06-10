@@ -57,6 +57,7 @@ public class AttachFileActionProvider extends ActionProvider implements OnMenuIt
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()){
 		case 0:
+			
 			break;
 		case 1:
 			break;
