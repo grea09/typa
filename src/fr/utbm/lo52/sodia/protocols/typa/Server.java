@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Set;
 
+import android.accounts.Account;
 import android.os.AsyncTask;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
@@ -31,17 +32,34 @@ public class Server extends AsyncTask<Void, Void, Void>
 				switch(formater.operation)
 				{
 					case RET:
+						Set<Typa> typas = Protocol.getProtocolsByType(Typa.class);
 						switch(formater.type)
 						{
 						case CONTACT:
-							
+							for(Typa typa : typas)
+							{
+								typa.contacts((Contact[]) formater.getContacts().toArray());
+							}
 							break;
 						case MESSAGE:
-							
+							for(Message message : formater.getMessages())
+							{
+								for(Contact contact : message.getTo())
+								{
+									for(Im im :contact.getImByProtocol((new Typa()).getName()))
+									{
+										Account account = Protocol.getAccount(im.getUserId().split("" +Im.USER_ID_SEPARATOR)[0]);
+										if(account != null)
+										{
+											Protocol.get(account).receive(message);
+										}
+										
+									}
+								}
+							}
 							break;
 						}
 						break;
-						
 					case GET:
 						Formater response = new Formater();
 						response.operation = Formater.Operation.RET;

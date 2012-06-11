@@ -91,6 +91,10 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 						{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						} catch (Throwable e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				});
@@ -101,10 +105,7 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 		{
 			e.printStackTrace();
 		}
-		while(true)
-		{
-			
-		}
+		return null;
 	}
 
 	/*

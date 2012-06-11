@@ -15,6 +15,8 @@ import android.provider.ContactsContract.StatusUpdates;
 
 public class Im extends DataBaseObject
 {
+	public static final char USER_ID_SEPARATOR = '@';
+	
 	private static Map<Long, Im> ims;
 
 	private String userId;

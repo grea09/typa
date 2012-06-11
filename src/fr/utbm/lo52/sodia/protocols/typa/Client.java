@@ -1,7 +1,6 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
@@ -28,11 +27,10 @@ public class Client
 		clients.put(address, this);
 	}
 	
-	public void send(Formater formater) throws IOException
+	public void send(Formater formater) throws Throwable
 	{
-		OutputStream outputStream = clientSocket.getOutputStream();
-		outputStream.write(formater.toString().getBytes());
-		outputStream.close();
+		formater.output = clientSocket.getOutputStream();
+		formater.send();
 	}
 	
 	@Override
@@ -40,8 +38,8 @@ public class Client
 	{
 		try
 		{
-			clientSocket.close();
 			clients.remove(address);
+			clientSocket.close();
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block

@@ -9,6 +9,7 @@ import java.util.Set;
 import android.accounts.Account;
 import android.os.AsyncTask;
 import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Status;
 
@@ -47,6 +48,18 @@ public abstract class Protocol
 			}
 		}
 		return accounts;
+	}
+	
+	public static Account getAccount(String name)
+	{
+		for(Account account: Protocol.accounts.keySet())
+		{
+			if(account.name == name)
+			{
+				return account;
+			}
+		}
+		return null;
 	}
 	
 	public static Set<Class<? extends Protocol>> getProtocolsClass()
@@ -142,6 +155,31 @@ public abstract class Protocol
 		return constructor(account.type);
 	}
 	
+	public static Class<? extends Protocol> typeToClass(String type)
+	{
+		Set<Class<? extends Protocol>> classes = getProtocolsClass();
+		for(Class<? extends Protocol> clazz : classes)
+		{
+			try
+			{
+				Protocol value = clazz.newInstance();
+				if(value.getAccountType() == type)
+				{
+					return clazz;
+				}
+			} catch (InstantiationException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	public static Protocol constructor(String type)
 	{
 		Set<Class<? extends Protocol>> classes = getProtocolsClass();
@@ -196,7 +234,7 @@ public abstract class Protocol
 		this.account = account;
 		try
 		{
-			me = Contact.getByIm(account.name + "@" + InetAddress.getLocalHost().getHostName());
+			me = Contact.getByIm(account.name + Im.USER_ID_SEPARATOR + InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
@@ -215,13 +253,13 @@ public abstract class Protocol
 	 * @param message
 	 * @param contact of the form "someone@server.org"
 	 */
-	public abstract void send(Message message);
+	public abstract void send(Message message) throws Throwable;
 
 	/**
 	 * Set status of current account on the network.
 	 * @param status status in the db
 	 */
-	public abstract void presence(Status status);
+	public abstract void presence(Status status) throws Throwable;
 
 	/**
 	 * Disconnect cuurent account
