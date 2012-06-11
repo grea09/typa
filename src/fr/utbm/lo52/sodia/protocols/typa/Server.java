@@ -13,7 +13,6 @@ import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
 import fr.utbm.lo52.sodia.protocols.Protocol;
-import fr.utbm.lo52.sodia.protocols.ProtocolManager;
 
 public class Server extends AsyncTask<Void, Void, Void>
 {
@@ -32,7 +31,15 @@ public class Server extends AsyncTask<Void, Void, Void>
 				switch(formater.operation)
 				{
 					case RET:
-						// TODO Call protocolManager
+						switch(formater.type)
+						{
+						case CONTACT:
+							
+							break;
+						case MESSAGE:
+							
+							break;
+						}
 						break;
 						
 					case GET:
@@ -40,7 +47,7 @@ public class Server extends AsyncTask<Void, Void, Void>
 						response.operation = Formater.Operation.RET;
 						response.type = formater.type;
 						boolean send = true;
-						Set<Typa> protocols = ProtocolManager.getProtocolsByType(Typa.class);
+						Set<Typa> protocols = Protocol.getProtocolsByType(Typa.class);
 						ArrayList<Contact> contacts = new ArrayList<Contact>();
 						for(Protocol protocol: protocols)
 						{

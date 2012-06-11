@@ -2,15 +2,15 @@ package fr.utbm.lo52.sodia.protocols;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import android.accounts.Account;
-import android.content.Context;
-import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Status;
-import fr.utbm.lo52.sodia.protocols.ProtocolManager.ProtocolAlreadyRegisteredException;
-import fr.utbm.lo52.sodia.ui.ContactNotification;
 
 /**
  * @author antoine
@@ -18,6 +18,10 @@ import fr.utbm.lo52.sodia.ui.ContactNotification;
  */
 public abstract class Protocol
 {
+	private static Map<Account, Protocol> accounts;
+	
+	private static Set<ProtocolListener> listeners = new HashSet<ProtocolListener>();
+	
 	public abstract String getName(); //eg Bonjour
 	public abstract String getAccountType(); // com.apple.bonjour
 	public abstract int getLogoRessource();
@@ -27,17 +31,153 @@ public abstract class Protocol
 	protected Account account;
 	protected Contact me;
 	
+	public static Set<Account> getAccounts()
+	{
+		return accounts.keySet();
+	}
+	
+	public static Set<Account> getAccountsByType(String type)
+	{
+		Set<Account> accounts = new HashSet<Account>();
+		for(Account account: Protocol.accounts.keySet())
+		{
+			if(account.type == type)
+			{
+				accounts.add(account);
+			}
+		}
+		return accounts;
+	}
+	
+	public static Set<Class<? extends Protocol>> getProtocolsClass()
+	{
+		Set<Class<? extends Protocol>> protocols = new HashSet<Class<? extends Protocol>>();
+		for(Protocol protocol : accounts.values())
+		{
+			protocols.add(protocol.getClass());
+		}
+		return protocols;
+	}
+	
+	public static Set<? extends Protocol> getProtocols()
+	{
+		return (Set<? extends Protocol>) accounts.values();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static<T extends Protocol> Set<T> getProtocolsByType(Class<T> clazz)
+	{
+		Set<T> protocols = new HashSet<T>();
+		for(Protocol protocol : accounts.values())
+		{
+			if(protocol.getClass() == clazz)
+			{
+				protocols.add((T) protocol);
+			}
+		}
+		return protocols;
+	}
+	
+	public static Set<String> getAccountTypes()
+	{
+		Set<Account> accounts = Protocol.accounts.keySet();
+		Set<String> value = new HashSet<String>();
+		for(Account account : accounts)
+		{
+			value.add(account.type);
+		}
+		return value;
+	}
+	
+	public static void add(ProtocolListener listener)
+	{
+		listeners.add(listener);
+	}
+	
+	public static void remove(ProtocolListener listener)
+	{
+		listeners.remove(listener);
+	}
+	
+	public void receive(final Message message)
+	{
+		AsyncTask.execute(new Runnable()
+			{
+				
+				@Override
+				public void run()
+				{
+					for(ProtocolListener listener : listeners)
+					{
+						listener.receive(message);
+					}
+					
+				}
+			});
+	}
+	
+	public void contacts(final Contact[] contacts)
+	{
+		AsyncTask.execute(new Runnable()
+		{
+			
+			@Override
+			public void run()
+			{
+				for(ProtocolListener listener : listeners)
+				{
+					listener.contacts(contacts);
+				}
+				
+			}
+		});
+	}
+	
+	public static Protocol get(Account account)
+	{
+		if(accounts.containsKey(account))
+		{
+			return accounts.get(account);
+		}
+		return constructor(account.type);
+	}
+	
+	public static Protocol constructor(String type)
+	{
+		Set<Class<? extends Protocol>> classes = getProtocolsClass();
+		for(Class<? extends Protocol> clazz : classes)
+		{
+			try
+			{
+				Protocol value = clazz.newInstance();
+				if(value.getAccountType() == type)
+				{
+					return value;
+				}
+			} catch (InstantiationException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
 	public Protocol()
 	{
-		//Please set the account before register
+		//Virtual static only.
 	}
 	
 	
 	/**
-	 * @throws IllegalArgumentException, ProtocolAlreadyRegisteredException
-	 * @throws UnknownHostException 
+	 * @throws IllegalArgumentException
 	 **/
-	public Protocol(Account account) throws IllegalArgumentException, ProtocolAlreadyRegisteredException, UnknownHostException
+	protected Protocol(Account account) throws IllegalArgumentException
 	{
 		this.setAccount(account);
 	}
@@ -47,15 +187,22 @@ public abstract class Protocol
 		return account;
 	}
 	
-	public void setAccount(Account account) throws IllegalArgumentException, ProtocolAlreadyRegisteredException, UnknownHostException
+	public void setAccount(Account account) throws IllegalArgumentException
 	{
 		if (account.type != getAccountType())
 		{
 			throw new IllegalArgumentException("Account type not suported");
 		}
 		this.account = account;
-		me = Contact.getByIm(account.name + "@" + InetAddress.getLocalHost().getHostName());
-		ProtocolManager.register(this);
+		try
+		{
+			me = Contact.getByIm(account.name + "@" + InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		accounts.put(account, this);
 	}
 
 	/**
@@ -81,21 +228,6 @@ public abstract class Protocol
 	 */
 	public abstract void disconnect();
 	
-	
-	protected void receive(Context context, Message message, String contact)
-	{
-		ProtocolManager.receive(context, message, contact, account);
-	}
-	
-	protected void newContact(Context context, Bitmap photo, String name, String contact)
-	{
-		ContactNotification.newContactNotification(context, photo, name, contact, account);
-	}
-	
-	protected void presence(Context context, long status, String message, String contact)
-	{
-		ProtocolManager.presence(context, status, message, contact, account);
-	}
 	public Contact getMe()
 	{
 		return this.me;

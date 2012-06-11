@@ -199,7 +199,8 @@ public class IcsLinearLayout extends NineLinearLayout {
             if (child == null) {
                 bottom = getHeight() - getPaddingBottom() - mDividerHeight;
             } else {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                @SuppressWarnings("unused")
+				final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 bottom = child.getBottom()/* + lp.bottomMargin*/;
             }
             drawHorizontalDivider(canvas, bottom);
@@ -226,7 +227,8 @@ public class IcsLinearLayout extends NineLinearLayout {
             if (child == null) {
                 right = getWidth() - getPaddingRight() - mDividerWidth;
             } else {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                @SuppressWarnings("unused")
+				final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 right = child.getRight()/* + lp.rightMargin*/;
             }
             drawVerticalDivider(canvas, right);

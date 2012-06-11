@@ -73,21 +73,18 @@ public class Formater
 		this.output = output;
 	}
 	
-	@SuppressWarnings("unused")
 	public void parseContact() throws IOException
 	{
 		String id = get();
-		//TODO get Contact by id
+		Contact contact = Contact.getByIm(id);
 		String name = get();
-		
-		// contact.setName(name)
-		// contacts.add(contact);
+		contact.setName(name);
+		contacts.add(contact);
 	}
 	
 	public void parseMessage() throws IOException
 	{
 		Mime mime = Mime.valueOf(Mime.class, get().toUpperCase());
-		@SuppressWarnings("unused")
 		String from = get();
 		int size = Integer.decode(get());
 		String[] to = new String[size];
@@ -109,9 +106,14 @@ public class Formater
 		}
 		if(message != null)
 		{
-			//TODO get Contact from id
-			//message.setFrom(from);
-			//message.setTo(to);
+			
+			message.setFrom(Contact.getByIm(from));
+			ArrayList<Contact> contacts = new ArrayList<Contact>(to.length);
+			for(String im:to)
+			{
+				contacts.add(Contact.getByIm(im));
+			}
+			message.setTo((Contact[])contacts.toArray());
 			messages.add(message);
 		}
 		
@@ -201,7 +203,6 @@ public class Formater
 				set(im.getUserId() + SEPARATOR);
 			}
 		}
-		// TODO switch type
 		switch (message.type())
 		{
 		case PRESENCE:
@@ -213,7 +214,7 @@ public class Formater
 			set("" + position[0] + SEPARATOR + position[1]);
 			break;
 		case PICTURE:
-			((Bitmap)(message.data())).compress(CompressFormat.PNG, 0 /*ignored for PNG*/, output);
+			((Bitmap)(message.data())).compress(CompressFormat.PNG, 0, output);
 			break;
 		case TEXT:
 			set(message.data().toString());
@@ -260,7 +261,6 @@ public class Formater
 		}
 		else if(operation == Operation.RET)
 		{
-			// TODO See if last separator must be removed
 			switch(type)
 			{
 				case CONTACT :

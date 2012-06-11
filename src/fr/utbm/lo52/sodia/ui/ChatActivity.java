@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -51,7 +50,7 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			Log.d("Chatting with [id]", ""+ids[i]);
 		}
 		
-		// RŽcupŽration du chat ou crŽation si non existant
+		// Rï¿½cupï¿½ration du chat ou crï¿½ation si non existant
 		this.chat = Chat.get(new Contact("Name"));
 
 		if (contacts.size() > 1){
@@ -143,5 +142,12 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 	public void receive(Message message) {
 		// TODO Auto-generated method stub
 		this.chat.add(message);
+	}
+
+	@Override
+	public void contacts(Contact[] contacts)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
