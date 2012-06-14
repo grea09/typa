@@ -6,7 +6,9 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Client
+import android.util.Log;
+
+class Client
 {
 	private static Map<InetAddress, Client> clients = new HashMap<InetAddress, Client>();
 	
@@ -42,8 +44,7 @@ public class Client
 			clientSocket.close();
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(getClass().getName(), "", e);
 		}
 		
 	}

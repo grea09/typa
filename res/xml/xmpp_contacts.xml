@@ -17,17 +17,15 @@
  */
 -->
 
-<!--
-  The attributes in this XML file provide configuration information
-  for the SampleSyncAdapter.
+<ContactsAccountType
+    xmlns:android="http://schemas.android.com/apk/res/android"
+>
 
-  See xml/syncadapter.xml for greater details, but this version of
-  the file specifies that uploading (and thus editing) is supported.
--->
+    <ContactsDataKind
+        android:mimeType="vnd.android.cursor.item/vnd.xmpp.profile"
+        android:icon="@drawable/ic_protocol_xmpp"
+        android:summaryColumn="data2"
+        android:detailColumn="data3"
+        android:detailSocialSummary="true" />
 
-<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="com.android.contacts"
-    android:accountType="fr.utbm.lo52.sodia.typa"
-    android:supportsUploading="true"
-    android:userVisible="true"
-/>
+</ContactsAccountType>

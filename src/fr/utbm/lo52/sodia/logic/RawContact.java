@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.logic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +18,11 @@ import android.provider.ContactsContract.RawContacts;
 
 public class RawContact extends DataBaseObject
 {
-	private static Map<Long, RawContact> rawContacts;
+	private static Map<Long, RawContact> rawContacts = new HashMap<Long, RawContact>();
 
 	private boolean dirty;
 	private Account account;
-	private List<Im> ims;
+	private List<Im> ims = new ArrayList<Im>();
 	private Name name;
 
 	protected Uri uri = RawContacts.CONTENT_URI;
@@ -71,7 +72,7 @@ public class RawContact extends DataBaseObject
 				ims.add(im);
 			}
 		}
-		return (Im[]) ims.toArray();
+		return ims.toArray(new Im[ims.size()]);
 	}
 
 	@Override
@@ -156,7 +157,7 @@ public class RawContact extends DataBaseObject
 	public void save() throws RemoteException, OperationApplicationException
 	{
 		super.save();
-		save((DataBaseObject[]) ims.toArray());
+		save(ims.toArray(new DataBaseObject[ims.size()]));
 		save(new DataBaseObject[]
 			{ name });
 	}

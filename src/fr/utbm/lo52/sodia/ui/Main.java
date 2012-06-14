@@ -43,6 +43,7 @@ public class Main extends SherlockActivity
 	
 	/** Called when the activity is first created. */
 	@Override
+	@SuppressWarnings("unused")
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -50,12 +51,18 @@ public class Main extends SherlockActivity
 				
 
 		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
-		@SuppressWarnings("unused")
 		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
 		TextView textView = (TextView) findViewById(R.id.monName);
 		
 		textView.setText("Moi");
-		quickContactBadge.setImageToDefault();
+		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
+		{
+			quickContactBadge.setImageToDefault();
+		}
+		else
+		{
+			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
+		}
 
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 

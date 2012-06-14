@@ -9,13 +9,13 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import android.content.Context;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.util.Log;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
 
-public class Bonjour extends AsyncTask<Void, Void, Void>
+class Bonjour
 {
 
 	private String type = "_typa._tcp.local.";
@@ -25,9 +25,16 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 	private ServiceInfo serviceInfo;
 	
 	private static WifiManager.MulticastLock lock;
+	
+	public Bonjour(Context context)
+	{
+		WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(android.content.Context.WIFI_SERVICE);
+		lock = wifi.createMulticastLock("mylockthereturn");
+		lock.setReferenceCounted(true);
+		lock.acquire();
+	}
 
-	@Override
-	protected Void doInBackground(Void... voids)
+	public void connect()
 	{
 		try
 		{
@@ -37,41 +44,16 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 					public void serviceResolved(ServiceEvent event)
 					{
 						Log.i("Bonjour Discover", "Service resolved: "
-								+ event.getInfo().getQualifiedName() + " port:"
+								+ event.getInfo().getQualifiedName() + " host:" + event.getInfo().getInet4Addresses()[0] + " port:"
 								+ event.getInfo().getPort());
-						
-					}
-
-					public void serviceRemoved(ServiceEvent event)
-					{
-						Log.i("Bonjour Discover",
-								"Service removed: " + event.getName());
 						try
 						{
 							for(InetAddress host : event.getInfo().getInetAddresses())
 							{
-								Client client = Client.get(host);
-								client.finalize();
-							}
-						} catch (IOException e)
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					public void serviceAdded(ServiceEvent event)
-					{
-						// Required to force serviceResolved to be called again
-						// (after the first search)
-						jmdns.requestServiceInfo(event.getType(),
-								event.getName(), 1);
-						Log.i("Bonjour Discover",
-								"Service added: " + event.getName());
-						try
-						{
-							for(InetAddress host : event.getInfo().getInetAddresses())
-							{
+								if(host.equals(InetAddress.getLocalHost()))
+								{
+									continue;
+								}
 								Client client = Client.get(host);
 								Formater formater = new Formater();
 								formater.operation = Formater.Operation.GET;
@@ -89,41 +71,52 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 							}
 						} catch (IOException e)
 						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							Log.e(getClass().getName(), "", e);
 						} catch (Throwable e)
 						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							Log.e(getClass().getName(), "", e);
 						}
 					}
+
+					public void serviceRemoved(ServiceEvent event)
+					{
+						Log.i("Bonjour Discover",
+								"Service removed: " + event.getName());
+						try
+						{
+							for(InetAddress host : event.getInfo().getInetAddresses())
+							{
+								Client client = Client.get(host);
+								client.finalize();
+							}
+						} catch (IOException e)
+						{
+							Log.e(getClass().getName(), "", e);
+						}
+					}
+
+					public void serviceAdded(ServiceEvent event)
+					{
+						// Required to force serviceResolved to be called again
+						// (after the first search)
+						jmdns.requestServiceInfo(event.getType(),
+								event.getName(), 1);
+						Log.i("Bonjour Discover",
+								"Service added:"
+								+ event.getName() + " host:" + event.getInfo().getInet4Addresses()[0] + " port:"
+								+ event.getInfo().getPort());
+					}
 				});
-			serviceInfo = ServiceInfo.create(type, "Typa", 0,
+			serviceInfo = ServiceInfo.create(type, "Typa", Typa.PORT,
 					"CSV Protocol for serverless local IM on Android");
 			jmdns.registerService(serviceInfo);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		return null;
 	}
-
-	/*
-	 * protected void onProgressUpdate() {
-	 * 
-	 * }
-	 * 
-	 * protected void onPostExecute() {
-	 * 
-	 * }
-	 */
 	
 	public void close()
-	{
-		onCancelled();
-	}
-
-	public void onCancelled()
 	{
 		if (jmdns != null)
 		{
@@ -138,8 +131,7 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 				jmdns.close();
 			} catch (IOException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(getClass().getName(), "", e);
 			}
 			jmdns = null;
 		}
@@ -147,14 +139,5 @@ public class Bonjour extends AsyncTask<Void, Void, Void>
 		{
 			lock.release();
 		}
-	}
-	
-	
-	public void wifiMultiCastLock(WifiManager wifi)
-	{
-		//WifiManager wifi = (android.net.wifi.WifiManager) getSystemService(android.content.Context.WIFI_SERVICE);
-		lock = wifi.createMulticastLock("mylockthereturn");
-		lock.setReferenceCounted(true);
-		lock.acquire();
 	}
 }

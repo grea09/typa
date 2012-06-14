@@ -21,8 +21,8 @@
 <!-- for the Account Manager. -->
 
 <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accountType="com.apple.bonjour"
-    android:icon="@drawable/ic_protocol_bonjour"
-    android:smallIcon="@drawable/ic_protocol_bonjour"
-    android:label="@string/bonjour"
+    android:accountType="fr.utbm.lo52.sodia.typa"
+    android:icon="@drawable/ic_protocol_typa"
+    android:smallIcon="@drawable/ic_protocol_typa"
+    android:label="@string/typa"
 />

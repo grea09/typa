@@ -100,7 +100,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 				ims.add(im);
 			}
 		}
-		return (Im[]) ims.toArray();
+		return ims.toArray(new Im[ims.size()]);
 	}
 
 	public String getName()
@@ -198,8 +198,8 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		{
 			rawContact.setName(name);
 		}
-		save((DataBaseObject[]) this.rawContacts.toArray());
-		save((DataBaseObject[]) this.groups.toArray());
+		save(this.rawContacts.toArray(new DataBaseObject[rawContacts.size()]));
+		save(this.groups.toArray(new DataBaseObject[groups.size()]));
 	}
 
 	@Override

@@ -58,7 +58,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			childViewHolder.textView = (TextView) convertView.findViewById(R.id.Name);
 			
 			childViewHolder.textView.setText(contact.getName());
-			childViewHolder.quickContactBadge.setImageToDefault();
+			if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
+			{
+				childViewHolder.quickContactBadge.setImageToDefault();
+			}
+			else
+			{
+				childViewHolder.quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
+			}
 			
 			convertView.setTag(childViewHolder);
 		} 

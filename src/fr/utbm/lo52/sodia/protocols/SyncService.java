@@ -42,6 +42,12 @@ public class SyncService<E extends Protocol> extends Service
 			}
 		}
 	}
+	
+	@Override
+	public void onDestroy()
+	{
+		syncAdapter.destroy();
+	}
 
 	@Override
 	public IBinder onBind(Intent intent)

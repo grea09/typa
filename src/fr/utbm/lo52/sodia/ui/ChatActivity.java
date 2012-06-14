@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -139,15 +140,17 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 	}
 
 	@Override
-	public void receive(Message message) {
+	public void receive(Message message, Account account)
+	{
 		// TODO Auto-generated method stub
 		this.chat.add(message);
 	}
 
 	@Override
-	public void contacts(Contact[] contacts)
+	public void contacts(Contact[] contacts, Account account)
 	{
 		// TODO Auto-generated method stub
 		
 	}
+
 }

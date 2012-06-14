@@ -3,6 +3,7 @@ package fr.utbm.lo52.sodia.protocols.typa;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
+import android.content.Intent;
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
@@ -12,9 +13,13 @@ import fr.utbm.lo52.sodia.protocols.Protocol;
 
 public class Typa extends Protocol
 {
+	static
+	{
+		Protocol.add(Typa.class);
+	}
+	
 	public static final int PORT = 4242;
 	private Server server;
-	private Bonjour bonjour;
 
 	@Override
 	public String getName()
@@ -31,7 +36,7 @@ public class Typa extends Protocol
 	@Override
 	public int getLogoRessource()
 	{
-		return R.drawable.ic_protocol_bonjour;
+		return R.drawable.ic_protocol_typa;
 	}
 
 	@Override
@@ -44,11 +49,12 @@ public class Typa extends Protocol
 	@Override
 	public void connect()
 	{
-		// TODO Auto-generated method stub
-		bonjour = new Bonjour();
-		bonjour.execute((Void[]) null);
-		server = new Server();
-		server.execute((Void[]) null);
+		if(!(server instanceof Server))
+		{
+			Intent intent = new Intent(context, Server.class);
+			context.startService(intent);
+			
+		}
 	}
 
 	@Override
@@ -79,9 +85,10 @@ public class Typa extends Protocol
 	@Override
 	public void disconnect()
 	{
-		// TODO Auto-generated method stub
-		bonjour.close();
-		server.cancel(true);
+		if(server instanceof Server)
+		{
+			server.stopSelf();
+		}
 	}
 
 
