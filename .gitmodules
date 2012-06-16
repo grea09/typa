@@ -1,0 +1,6 @@
+[submodule "libs/HoloEverywhere"]
+	path = libs/HoloEverywhere
+	url = git://github.com/ChristopheVersieux/HoloEverywhere.git
+[submodule "libs/ActionBarSherlock"]
+	path = libs/ActionBarSherlock
+	url = git://github.com/JakeWharton/ActionBarSherlock.git
