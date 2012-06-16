@@ -1,9 +1,5 @@
 package fr.utbm.lo52.sodia.ui;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
-
 import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Html;
 import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
@@ -20,19 +15,20 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChatActivity extends SherlockActivity implements ProtocolListener
 {
@@ -120,6 +116,7 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 
 	}
 	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
 		switch(item.getItemId()){
