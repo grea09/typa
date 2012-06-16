@@ -3,18 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
     <TextView
         android:id="@+id/chatTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:text="@string/chatConversationText" 
         android:maxLines = "9999"
 		android:scrollbars = "vertical"
 		android:autoLink="phone|web|email|map|all" />
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
