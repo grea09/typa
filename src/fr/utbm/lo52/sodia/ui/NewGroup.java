@@ -30,12 +30,11 @@ public class NewGroup extends Activity {
 	}
 	
 	public void addGroup(View view){
-		// Récupération du nom du groupe à ajouter
-		//TODO please English or UTF8 encoding
+		// Get group name and add
 		EditText editText = (EditText) findViewById(R.id.groupName);
 		String groupname = editText.getText().toString();
 		
-		// Rï¿½cupï¿½ration des contacts ï¿½ ajouter au groupe
+		// Get Contact to add to group
 		
 		Context context = getApplicationContext();
 		Toast toast = Toast.makeText(context, groupname+" added !", Toast.LENGTH_LONG);

@@ -10,6 +10,7 @@ import android.content.ContentProviderOperation;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
@@ -100,7 +101,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 				ims.add(im);
 			}
 		}
-		return (Im[]) ims.toArray();
+		return ims.toArray(new Im[ims.size()]);
 	}
 
 	public String getName()
@@ -194,12 +195,13 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	@Override
 	public void save() throws RemoteException, OperationApplicationException
 	{
+		Log.i(getClass().getSimpleName(), "save");
 		for (RawContact rawContact : this.rawContacts)
 		{
 			rawContact.setName(name);
 		}
-		save((DataBaseObject[]) this.rawContacts.toArray());
-		save((DataBaseObject[]) this.groups.toArray());
+		save(this.rawContacts.toArray(new DataBaseObject[rawContacts.size()]));
+		save(this.groups.toArray(new DataBaseObject[groups.size()]));
 	}
 
 	@Override

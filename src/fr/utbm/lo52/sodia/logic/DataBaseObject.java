@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 
@@ -51,6 +52,7 @@ public abstract class DataBaseObject
 
 	public void save() throws RemoteException, OperationApplicationException
 	{
+		Log.i(getClass().getSimpleName(), "save");
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		operations.add(operation());
 		id = ContentUris.parseId(contentResolver.applyBatch(

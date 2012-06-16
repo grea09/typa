@@ -6,6 +6,7 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -146,29 +147,20 @@ public class Login extends AccountAuthenticatorActivity
 			final Account account = new Account(username, accountType);
 			try
 			{
-				protocol = protocolClass.getConstructor(Account.class)
-						.newInstance(account);
+				protocol = (Protocol) protocolClass.getMethod("get", Account.class, Context.class).invoke(null, account, this);
 				protocol.connect();
 			} catch (IllegalArgumentException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(getClass().getName(), "", e);
 			} catch (IllegalAccessException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(getClass().getName(), "", e);
 			} catch (InvocationTargetException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(getClass().getName(), "", e);
 			} catch (NoSuchMethodException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(getClass().getName(), "", e);
 			}
 
 			if (requestNewAccount)

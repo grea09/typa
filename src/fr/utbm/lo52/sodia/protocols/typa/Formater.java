@@ -9,6 +9,7 @@ import java.util.Set;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.util.Log;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.Message;
@@ -65,6 +66,7 @@ public class Formater
 	
 	public Formater(InputStream input) throws NumberFormatException, IOException
 	{
+		this.input = input;
 		parse();
 	}
 	
@@ -140,10 +142,12 @@ public class Formater
 		Set<Character> endOfField = new HashSet<Character>();
 		endOfField.add(SEPARATOR);
 		endOfField.add((char) -1);
-		while(endOfField.contains((char)(input.read())))
+		char read;
+		while(!(endOfField.contains(read = (char)(input.read()))))
 		{
-			value += (char)(input.read());
+			value += read;
 		}
+		Log.d(getClass().getName(), "get = " + value);
 		return value;
 	}
 	
@@ -167,7 +171,7 @@ public class Formater
 				}
 			}
 		}
-		input.close();
+		//input.close();
 	}
 	
 	protected void send(Contact contact) throws IOException
@@ -272,7 +276,7 @@ public class Formater
 			}
 		}
 		output.flush();
-		output.close();
+		//output.close();
 	}
 
 	public ArrayList<Contact> getContacts()
@@ -283,7 +287,7 @@ public class Formater
 	public void setContacts(ArrayList<Contact> contacts)
 	{
 		this.contacts = contacts;
-		size = sizeOf((Contact[]) contacts.toArray());
+		size = sizeOf(contacts.toArray(new Contact[contacts.size()]));
 	}
 
 	public ArrayList<Message> getMessages()
