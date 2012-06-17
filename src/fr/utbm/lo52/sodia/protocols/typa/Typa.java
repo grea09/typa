@@ -148,7 +148,6 @@ public class Typa extends Protocol
 				RawContact rawContact = new RawContact(false, account, new Name(account.name, null, null, null));
 				rawContact.addIm(im);
 				Group group = Group.getByName("LAN", account);
-				group.setAccount(account);
 				me.addRawContact(rawContact);
 				me.add(group);
 				me.save();

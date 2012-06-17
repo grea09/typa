@@ -165,6 +165,7 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		if(cursor != null && cursor.moveToFirst())
 		{
 			group = Group.get(cursor.getLong(0));
+			group.setAccount(account);
 		}
 		if (cursor != null)
 		{

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.os.AsyncTask;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.util.Log;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Group;
@@ -290,11 +291,10 @@ public abstract class Protocol
 			{
 				Log.i(getClass().getName(), "Create Me !!!");
 				me = new Contact(contactName);
-				Im im = new Im(account.name, contactName, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null)); // TODO Add label and icon
+				Im im = new Im(account.name, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, getName()); // TODO Add label and icon
 				RawContact rawContact = new RawContact(false, account, new Name(contactName, null, null, null));
 				rawContact.addIm(im);
-				Group group = new Group("Friends");
-				group.setAccount(account);
+				Group group = Group.getByName("Friends", account);
 				me.addRawContact(rawContact);
 				me.add(group);
 				me.save();
