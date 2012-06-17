@@ -7,24 +7,45 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Data;
+import java.util.HashMap;
 
 public class Name extends DataBaseObject
 {
-	private static Map<Long, Name> names;
+	private static Map<Long, Name> names = new HashMap<Long, Name>();
 
 	private String name;
 	private String famillyName;
 	private String givenName;
 	private String middleName;
+	
+	private long rawContactId;
 
-	protected Uri uri = Data.CONTENT_URI;
-	protected String[] projection = new String[]
+	public long getRawContactId() {
+		return rawContactId;
+	}
+
+	public void setRawContactId(long rawContactId) {
+		this.rawContactId = rawContactId;
+	}
+
+	@Override
+	protected Uri uri()
+	{
+		return Data.CONTENT_URI;
+	}
+	
+	@Override
+	protected String[] projection()
+	{
+		return new String[]
 		{ Data._ID, StructuredName.DISPLAY_NAME, StructuredName.FAMILY_NAME,
 				StructuredName.GIVEN_NAME, StructuredName.MIDDLE_NAME };
+	}
 
 	public Name(long id)
 	{
 		super(id);
+		names.put(id, this);
 	}
 
 	@Override
@@ -74,11 +95,12 @@ public class Name extends DataBaseObject
 	@Override
 	protected ContentProviderOperation operation()
 	{
-		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
-				: (ContentProviderOperation.newUpdate(uri).withSelection(
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri()))
+				: (ContentProviderOperation.newUpdate(uri()).withSelection(
 						Data._ID + "=?", new String[]
 							{ String.valueOf(id) })))
 				.withValue(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE)
+				.withValue(Data.RAW_CONTACT_ID, rawContactId)
 				.withValue(StructuredName.DISPLAY_NAME, name)
 				.withValue(StructuredName.FAMILY_NAME, famillyName)
 				.withValue(StructuredName.GIVEN_NAME, givenName)

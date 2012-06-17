@@ -12,32 +12,56 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.StatusUpdates;
+import java.util.HashMap;
 
 public class Im extends DataBaseObject
 {
 	public static final char USER_ID_SEPARATOR = '@';
 	
-	private static Map<Long, Im> ims;
+	private static Map<Long, Im> ims = new HashMap<Long, Im>();
 
 	private String userId;
 	private int protocolType;
 	private String customProtocol;
 	private Status status;
+	private long rawContactId;
 
-	protected Uri uri = Data.CONTENT_URI;
-	protected String[] projection = new String[]
+	public long getRawContactId() {
+		return rawContactId;
+	}
+
+	public void setRawContactId(long rawContactId) {
+		this.rawContactId = rawContactId;
+		status.setRawContactId(rawContactId);
+	}
+
+	@Override
+	protected Uri uri()
+	{
+		return Data.CONTENT_URI;
+	}
+	
+	@Override
+	protected String[] projection()
+	{
+		return new String[]
 		{ CommonDataKinds.Im._ID, CommonDataKinds.Im.DATA,
 				CommonDataKinds.Im.PROTOCOL, CommonDataKinds.Im.CUSTOM_PROTOCOL };
+	}
 
 	public Im(long id)
 	{
 		super(id);
+		ims.put(id, this);
 	}
 
-	public Im(String userId, String name, Status status)
+	public Im(String userId, Status status, int protocolType, String customProtocol)
 	{
 		this.userId = userId;
 		this.status = status;
+		status.setIm(this);
+		this.protocolType = protocolType;
+		this.customProtocol = customProtocol;
 	}
 
 	public String getUserId()
@@ -58,6 +82,10 @@ public class Im extends DataBaseObject
 	public void setStatus(Status status)
 	{
 		this.status = status;
+		if(status instanceof Status)
+		{
+			status.setIm(this);
+		}
 	}
 
 	@Override
@@ -103,11 +131,12 @@ public class Im extends DataBaseObject
 	@Override
 	protected ContentProviderOperation operation()
 	{
-		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
-				: (ContentProviderOperation.newUpdate(uri).withSelection(
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri()))
+				: (ContentProviderOperation.newUpdate(uri()).withSelection(
 						CommonDataKinds.Im._ID + "=?", new String[]
 							{ String.valueOf(id) })))
 				.withValue(Data.MIMETYPE, CommonDataKinds.Im.CONTENT_ITEM_TYPE)
+				.withValue(Data.RAW_CONTACT_ID, rawContactId)
 				.withValue(CommonDataKinds.Im.DATA, userId)
 				.withValue(CommonDataKinds.Im.PROTOCOL, protocolType)
 				.withValue(CommonDataKinds.Im.CUSTOM_PROTOCOL, customProtocol)
@@ -144,7 +173,6 @@ public class Im extends DataBaseObject
 	public void save() throws RemoteException, OperationApplicationException
 	{
 		super.save();
-		save(new DataBaseObject[]
-			{ status });
+		status.save();
 	}
 }

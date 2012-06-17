@@ -1,25 +1,16 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
+import android.content.Intent;
+import android.content.OperationApplicationException;
+import android.net.wifi.WifiManager;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.util.Log;
+import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.*;
+import fr.utbm.lo52.sodia.protocols.Protocol;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.net.UnknownHostException;
-
-import android.content.Intent;
-import android.util.Log;
-import android.net.wifi.WifiManager;
-import android.content.OperationApplicationException;
-import android.os.RemoteException;
-
-import fr.utbm.lo52.sodia.R;
-import fr.utbm.lo52.sodia.logic.Contact;
-import fr.utbm.lo52.sodia.logic.Im;
-import fr.utbm.lo52.sodia.logic.Message;
-import fr.utbm.lo52.sodia.logic.Status;
-import fr.utbm.lo52.sodia.protocols.Protocol;
-import fr.utbm.lo52.sodia.logic.Group;
-import fr.utbm.lo52.sodia.logic.Name;
-import fr.utbm.lo52.sodia.logic.Presence;
-import fr.utbm.lo52.sodia.logic.RawContact;
 
 public class Typa extends Protocol
 {
@@ -37,12 +28,19 @@ public class Typa extends Protocol
 		{
 			WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(android.content.Context.WIFI_SERVICE);
 			int ip = wifi.getConnectionInfo().getIpAddress();
-			hostName = String.format("%d.%d.%d.%d",
-					(ip >>  0 & 0xff),
-					(ip >>  8 & 0xff),
-					(ip >> 16 & 0xff),
-					(ip >> 24 & 0xff)
-			);
+			if(ip == 0)
+			{
+				hostName = "localhost";
+			}
+			else
+			{
+				hostName = String.format("%d.%d.%d.%d",
+						(ip       & 0xff),
+						(ip >>  8 & 0xff),
+						(ip >> 16 & 0xff),
+						(ip >> 24 & 0xff)
+				);
+			}
 			Log.d(Typa.class.getSimpleName(), "localhost = " + hostName);
 		}
 	}
@@ -134,6 +132,10 @@ public class Typa extends Protocol
 	@Override
 	protected void createMe()
 	{
+		if(me instanceof Contact)
+		{
+			return;
+		}
 		try
 		{
 			String accountIm = account.name + Im.USER_ID_SEPARATOR + getHostName();
@@ -142,10 +144,10 @@ public class Typa extends Protocol
 			{
 				Log.i(getClass().getName(), "Create Me !!!");
 				me = new Contact(account.name);
-				Im im = new Im(accountIm, account.name, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null)); // TODO Add label and icon
+				Im im = new Im(accountIm, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, getName()); // TODO Add label and icon
 				RawContact rawContact = new RawContact(false, account, new Name(account.name, null, null, null));
 				rawContact.addIm(im);
-				Group group = new Group("LAN");
+				Group group = Group.getByName("LAN", account);
 				group.setAccount(account);
 				me.addRawContact(rawContact);
 				me.add(group);

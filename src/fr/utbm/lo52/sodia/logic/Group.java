@@ -1,28 +1,24 @@
 package fr.utbm.lo52.sodia.logic;
 
+import android.accounts.Account;
+import android.content.ContentProviderOperation;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import android.accounts.Account;
-import android.content.ContentProviderOperation;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-
 public class Group extends DataBaseObject implements InterGroup<Contact>
 {
-	private static Map<Long, Group> groups;
+	private static Map<Long, Group> groups = new HashMap<Long, Group>();
 
 	private Set<Contact> contacts;
 
 	private String name;
-
-	protected Uri uri = ContactsContract.Groups.CONTENT_URI;
-	protected String[] projection = new String[]
-		{ ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
-				ContactsContract.Groups.ACCOUNT_TYPE,
-				ContactsContract.Groups.ACCOUNT_NAME };
 
 	private Account account;
 
@@ -135,13 +131,13 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 	@Override
 	protected ContentProviderOperation operation()
 	{
-		if (id == -1 && account == null)
+		if (account == null)
 		{
 			throw new UnsupportedOperationException(
-					"Account must be suplied for new Groups.");
+					"Account must be suplied before save.");
 		}
-		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
-				: (ContentProviderOperation.newUpdate(uri)))
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri()))
+				: (ContentProviderOperation.newUpdate(uri())))
 				.withValue(ContactsContract.Groups.ACCOUNT_NAME, account.name)
 				.withValue(ContactsContract.Groups.ACCOUNT_TYPE, account.type)
 				.withValue(ContactsContract.Groups.TITLE, name).build();
@@ -155,6 +151,45 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 	public void setAccount(Account account)
 	{
 		this.account = account;
+	}
+	
+	public static Group getByName(String name, Account account) throws RemoteException, OperationApplicationException
+	{
+		Group group = null;
+		final Cursor cursor = contentResolver.query(ContactsContract.Groups.CONTENT_URI, 
+				new String[]{ContactsContract.Groups._ID}, 
+				ContactsContract.Groups.TITLE + " =? AND " +
+				ContactsContract.Groups.ACCOUNT_NAME + " =? AND " +
+				ContactsContract.Groups.ACCOUNT_TYPE + " =?", 
+				new String[]{name, account.name, account.type}, null);
+		if(cursor != null && cursor.moveToFirst())
+		{
+			group = Group.get(cursor.getLong(0));
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		if(group == null)
+		{
+			group = new Group(name);
+			group.setAccount(account);
+			group.save();
+		}
+		return group;
+	}
+
+	@Override
+	protected Uri uri() {
+		return ContactsContract.Groups.CONTENT_URI;
+	}
+
+	@Override
+	protected String[] projection() {
+		return new String[]
+		{ ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
+				ContactsContract.Groups.ACCOUNT_TYPE,
+				ContactsContract.Groups.ACCOUNT_NAME };
 	}
 
 }

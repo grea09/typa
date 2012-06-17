@@ -30,15 +30,16 @@ public abstract class DataBaseObject
 
 	protected long id;
 
-	protected Uri uri;
+	abstract protected Uri uri();
+	
 	/**
 	 * ID_ should always be first
 	 **/
-	protected String[] projection;
+	abstract protected String[] projection();
 
 	protected DataBaseObject(long id)
 	{
-		this.id = id;
+		setId(id);
 		if (id != -1)
 		{
 			get();
@@ -47,7 +48,7 @@ public abstract class DataBaseObject
 
 	public DataBaseObject()
 	{
-		this.id = -1;
+		setId(-1);
 	}
 
 	public void save() throws RemoteException, OperationApplicationException
@@ -55,8 +56,18 @@ public abstract class DataBaseObject
 		Log.i(getClass().getSimpleName(), "save");
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		operations.add(operation());
-		id = ContentUris.parseId(contentResolver.applyBatch(
-				ContactsContract.AUTHORITY, operations)[0].uri);
+		ContentProviderResult result = contentResolver.applyBatch(ContactsContract.AUTHORITY, operations)[0];
+		if(id == -1 && result.uri != null)
+		{
+			setId(ContentUris.parseId(result.uri));
+			Log.i(getClass().getSimpleName(), "	id = " + id);
+		}
+		
+	}
+	
+	protected void setId(long id)
+	{
+		this.id = id;
 	}
 
 	protected abstract void get();
@@ -65,13 +76,13 @@ public abstract class DataBaseObject
 
 	protected Cursor query(String selection, String[] selectionArgs)
 	{
-		return contentResolver.query(uri, projection, selection, selectionArgs,
+		return contentResolver.query(uri(), projection(), selection, selectionArgs,
 				null);
 	}
 
 	protected Cursor query()
 	{
-		return contentResolver.query(uri, projection, projection[0] + "=?",
+		return contentResolver.query(uri(), projection(), projection()[0] + "=?",
 				new String[]
 					{ Long.toString(id) }, null);
 	}
@@ -96,7 +107,7 @@ public abstract class DataBaseObject
 		for (Account account : AccountManager.get(context).getAccountsByType(
 				type))
 		{
-			if (account.name == name)
+			if (account.name.equals(name))
 			{
 				return account;
 			}
@@ -109,7 +120,7 @@ public abstract class DataBaseObject
 	{
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		ContentProviderResult[] result;
-
+		
 		for (int i = 0; i < dbDataBaseObjects.length; i++)
 		{
 			operations.add(dbDataBaseObjects[i].operation());
@@ -118,8 +129,7 @@ public abstract class DataBaseObject
 				operations);
 		for (int i = 0; i < dbDataBaseObjects.length; i++)
 		{
-			dbDataBaseObjects[i].id = ContentUris.parseId(result[i].uri);
+			dbDataBaseObjects[i].setId(ContentUris.parseId(result[i].uri));
 		}
-
 	}
 }

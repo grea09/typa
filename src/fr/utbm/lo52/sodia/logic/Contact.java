@@ -17,11 +17,12 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
+import java.util.HashMap;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
 {
 
-	private static Map<Long, Contact> contacts;
+	private static Map<Long, Contact> contacts = new HashMap<Long, Contact>();
 
 	private Uri lookup;
 
@@ -30,9 +31,18 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	private Set<Group> groups;
 	private int[] position;
 
-	protected Uri uri = ContactsContract.Contacts.CONTENT_URI;
-	protected String[] projection = new String[]
+	@Override
+	protected Uri uri()
+	{
+		return ContactsContract.Contacts.CONTENT_URI;
+	}
+	
+	@Override
+	protected String[] projection()
+	{
+		return new String[]
 		{ ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME };
+	}
 
 	protected Contact(Uri lookup)
 	{
@@ -43,6 +53,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	protected Contact(long id)
 	{
 		super(id);
+		contacts.put(id, this);
 	}
 
 	public Contact(String name)
@@ -196,19 +207,42 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	public void save() throws RemoteException, OperationApplicationException
 	{
 		Log.i(getClass().getSimpleName(), "save");
+		for (Group group : this.groups)
+		{
+			group.save();
+		}
 		for (RawContact rawContact : this.rawContacts)
 		{
 			rawContact.setName(name);
+			rawContact.save();
+			for (Group group : this.groups)
+			{
+				rawContact.addToGroup(group);
+			}
 		}
-		save(this.rawContacts.toArray(new DataBaseObject[rawContacts.size()]));
-		save(this.groups.toArray(new DataBaseObject[groups.size()]));
+		
+		if(!rawContacts.isEmpty())
+		{
+			final Cursor cursor = contentResolver.query(RawContacts.CONTENT_URI, 
+					new String[]{RawContacts.CONTACT_ID}, 
+					RawContacts._ID + "=?", 
+					new String[]{"" + rawContacts.get(0).getId()}, null);
+			if (cursor != null && cursor.moveToFirst())
+			{
+				id = cursor.getLong(0);
+			}
+			if (cursor != null)
+			{
+				cursor.close();
+			}
+		}
 	}
 
 	@Override
 	public boolean equals(Object object)
 	{
 		Contact contact = (Contact) object;
-		return contact.name == this.name || super.equals(object);
+		return (contact.name == null ? this.name == null : contact.name.equals(this.name)) || super.equals(object);
 	}
 	
 	public static Contact getByIm(String im)

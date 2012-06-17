@@ -7,14 +7,18 @@ import java.util.Map;
 
 import android.accounts.Account;
 import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.ContextWrapper;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
+import android.util.Log;
 
 public class RawContact extends DataBaseObject
 {
@@ -25,14 +29,24 @@ public class RawContact extends DataBaseObject
 	private List<Im> ims = new ArrayList<Im>();
 	private Name name;
 
-	protected Uri uri = RawContacts.CONTENT_URI;
-	protected String[] projection = new String[]
+	@Override
+	protected Uri uri()
+	{
+		return RawContacts.CONTENT_URI;
+	}
+	
+	@Override
+	protected String[] projection()
+	{
+		return new String[]
 		{ RawContacts._ID, RawContacts.ACCOUNT_TYPE, RawContacts.ACCOUNT_NAME,
 				RawContacts.DIRTY };
+	}
 
 	public RawContact(long id)
 	{
 		super(id); // Mais c'est une super idée !
+		rawContacts.put(id, this);
 	}
 
 	public RawContact(boolean dirty, Account account, Name name)
@@ -91,7 +105,7 @@ public class RawContact extends DataBaseObject
 			cursor.close();
 		}
 		// Im Fill
-		final Cursor ims = (new Im("", "", null)).query(Data.RAW_CONTACT_ID
+		final Cursor ims = (new Im("", null, 0, "")).query(Data.RAW_CONTACT_ID
 				+ "=? AND " + Data.MIMETYPE + "=?", new String[]
 			{ Long.toString(id), CommonDataKinds.Im.CONTENT_ITEM_TYPE });
 		while (ims != null && ims.moveToNext())
@@ -144,8 +158,8 @@ public class RawContact extends DataBaseObject
 	@Override
 	protected ContentProviderOperation operation()
 	{
-		return ((id == -1) ? (ContentProviderOperation.newInsert(uri))
-				: (ContentProviderOperation.newUpdate(uri).withSelection(
+		return ((id == -1) ? (ContentProviderOperation.newInsert(uri()))
+				: (ContentProviderOperation.newUpdate(uri()).withSelection(
 						RawContacts._ID + "=?", new String[]
 							{ String.valueOf(id) })))
 				.withValue(RawContacts.ACCOUNT_NAME, account.name)
@@ -157,9 +171,11 @@ public class RawContact extends DataBaseObject
 	public void save() throws RemoteException, OperationApplicationException
 	{
 		super.save();
-		save(ims.toArray(new DataBaseObject[ims.size()]));
-		save(new DataBaseObject[]
-			{ name });
+		for(Im im: ims)
+		{
+			im.save();
+		}
+		name.save();
 	}
 
 	public Name getName()
@@ -175,5 +191,41 @@ public class RawContact extends DataBaseObject
 	public List<Im> getIms()
 	{
 		return this.ims;
+	}
+	
+	public void addToGroup(Group group)
+	{
+		try
+		{
+			// Add selected contact to selected group
+			ContentValues values = new ContentValues();
+			values.put(ContactsContract.CommonDataKinds.GroupMembership.RAW_CONTACT_ID,id); 
+			values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID,group.getId());
+			values.put(ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE);
+			contentResolver.insert(ContactsContract.Data.CONTENT_URI, values);
+			// End add contact to group code
+		}
+		catch (Exception e) 
+		{
+		// TODO: handle exception
+		Log.d("add group error :", ""+ e.getMessage().toString());
+		}
+	}
+	
+	@Override
+	protected void setId(long id)
+	{
+		super.setId(id);
+		if(ims instanceof List)
+		{
+			for(Im im:ims)
+			{
+				im.setRawContactId(id);
+			}
+		}
+		if(name instanceof Name)
+		{
+			name.setRawContactId(id);
+		}
 	}
 }
