@@ -103,12 +103,14 @@
 				android:theme="@style/DialogHoloDark">
 		</activity>
 		<activity android:name=".ui.AddContactToChat"
-		    	android:label="Add a contact to the chat"
+		    	android:label="Invite contact to chat"
 				android:theme="@style/DialogHoloDark">
 		</activity>
 		<activity android:name=".ui.ContactRequest">
 		</activity>
 		<activity android:name=".ui.LocateActivity" >
+		</activity>
+                <activity android:name=".ui.BrowseGallery" >
 		</activity>
 	</application>
 </manifest>

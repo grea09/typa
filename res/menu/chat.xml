@@ -12,8 +12,18 @@
 		android:icon="@drawable/ic_new_attachment"
 		android:orderInCategory="0"
 		android:showAsAction="always|withText" 
-		android:menuCategory="system"
-		android:actionProviderClass="fr.utbm.lo52.sodia.ui.AttachFileActionProvider"/>
+		android:menuCategory="system">
+                
+                <menu>
+                      <item android:id="@+id/sendMusic"
+                         android:title="Music"
+                         android:icon="@drawable/ic_play" />
+                      
+                      <item android:id="@+id/sendImage"
+                         android:title="Picture"
+                         android:icon="@drawable/ic_picture" />
+                 </menu>
+        </item>
 
 	<item android:id="@+id/locate"
 		android:title="Locate"
