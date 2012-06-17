@@ -110,7 +110,7 @@ public class RawContact extends DataBaseObject
 			{ Long.toString(id), CommonDataKinds.Im.CONTENT_ITEM_TYPE });
 		while (ims != null && ims.moveToNext())
 		{
-			addIm(new Im(cursor.getLong(0)));
+			addIm(Im.get(ims.getLong(0)));
 		}
 		if (ims != null)
 		{
@@ -123,7 +123,7 @@ public class RawContact extends DataBaseObject
 					{ Long.toString(id), StructuredName.CONTENT_ITEM_TYPE });
 		if (name != null && name.moveToFirst())
 		{
-			setName(new Name(cursor.getLong(0)));
+			setName(Name.get(name.getLong(0)));
 		}
 		if (name != null)
 		{

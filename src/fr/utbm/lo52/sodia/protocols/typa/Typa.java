@@ -139,19 +139,14 @@ public class Typa extends Protocol
 		try
 		{
 			String accountIm = account.name + Im.USER_ID_SEPARATOR + getHostName();
-			me = Contact.getByIm(accountIm);
-			if(me == null)
-			{
-				Log.i(getClass().getName(), "Create Me !!!");
-				me = new Contact(account.name);
-				Im im = new Im(accountIm, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, getName()); // TODO Add label and icon
-				RawContact rawContact = new RawContact(false, account, new Name(account.name, null, null, null));
-				rawContact.addIm(im);
-				Group group = Group.getByName("LAN", account);
-				me.addRawContact(rawContact);
-				me.add(group);
-				me.save();
-			}
+			Log.i(getClass().getName(), "Create Me !!!");
+			me = Contact.simpleCreate(account, account.name, 
+				new Im(accountIm, 
+					new Status(Presence.AVAILABLE,""), 
+				ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, 
+				getName()
+				), "LAN"
+			);
 		} catch (RemoteException e)
 		{
 			Log.e(getClass().getName(), "", e);
@@ -161,6 +156,41 @@ public class Typa extends Protocol
 		}
 	}
 
-	
+	@Deprecated
+	public void generateFalseContactList() throws RemoteException, OperationApplicationException
+	{
+		//For test only
+		String[][] names = new String[][]
+		{
+			{"Geoffrey TISSERAND", "gtisserand@192.168.1.42"},
+			{"Mathieu JEVAUDAN", "mjevaudan@192.168.1.54"},
+			{"Antoine GRÉA", "agrea@192.168.1.9"},
+			{"Bernard TRICON", "nardnard@192.168.1.23"},
+			{"Martin COMPTEUR", "m++@192.168.1.24"},
+			{"Virgil LITTLETOWN", "odst@192.168.1.25"},
+			{"Roger BLANC", "#ffffff@192.168.1.29"},
+			{"Jean-Jaques GRINGUEDIGÈGLE", "jjgr@192.168.1.12"}
+		};
+		for (int i = 0; i < 3; i++)
+		{
+			Contact.simpleCreate(account, names[i][0], 
+				new Im(names[i][1], 
+					new Status(Presence.AVAILABLE,""), 
+				ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, 
+				getName()
+				), "Friends"
+			);
+		}
+		for (int i = 3; i < names.length; i++)
+		{
+			Contact.simpleCreate(account, names[i][0], 
+				new Im(names[i][1], 
+					new Status(Presence.IDLE,""), 
+				ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, 
+				getName()
+				), "LAN"
+			);
+		}
+	}
 
 }

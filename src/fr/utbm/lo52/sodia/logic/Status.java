@@ -34,6 +34,15 @@ public class Status extends DataBaseObject
 		this.label = label;
 		this.icon = icon;
 	}
+	
+	public Status(Presence presence, String status)
+	{
+		this.presence = presence;
+		this.status = status;
+		this.timestamp = System.currentTimeMillis();
+		this.label = null;
+		this.icon = null;
+	}
 	private static Map<Long, Status> statusUpdates = new HashMap<Long, Status>();
 	private Presence presence;
 	private String status;
@@ -87,7 +96,10 @@ public class Status extends DataBaseObject
 			setStatus(cursor.getString(2));
 			setTimestamp(cursor.getLong(3));
 			// TODO respackage
-			im.setUserId(cursor.getString(7));
+			if(im != null)
+			{
+				im.setUserId(cursor.getString(7));
+			}
 		}
 		if (cursor != null)
 		{

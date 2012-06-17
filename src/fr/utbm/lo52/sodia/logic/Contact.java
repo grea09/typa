@@ -1,5 +1,6 @@
 package fr.utbm.lo52.sodia.logic;
 
+import android.accounts.Account;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -168,14 +169,16 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		{
 			cursor.close();
 		}
+		
 		// RawContact Fill
 		final Cursor rawContacts = (new RawContact(false, null, null)).query(
 				RawContacts.CONTACT_ID + "=?", new String[]
 					{ Long.toString(id) });
 		while (rawContacts != null && rawContacts.moveToNext())
 		{
-			addRawContact(new RawContact(cursor.getLong(0)));
+			addRawContact(RawContact.get(rawContacts.getLong(0)));
 		}
+		
 		if (rawContacts != null)
 		{
 			rawContacts.close();
@@ -188,9 +191,13 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 						ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID
 								+ "=?", new String[]
 							{ Long.toString(id) }, null);
-		while (groups.moveToNext())
+		while (groups != null && groups.moveToNext())
 		{
 			this.add(Group.get(groups.getLong(0)));
+		}
+		if (groups != null)
+		{
+			groups.close();
 		}
 	}
 
@@ -245,6 +252,37 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		return (contact.name == null ? this.name == null : contact.name.equals(this.name)) || super.equals(object);
 	}
 	
+	public static Contact simpleCreate(Account account, String name, Im im, String groupName) throws RemoteException, OperationApplicationException
+	{
+		Contact contact = getByName(name);
+		RawContact rawContact = new RawContact(false, account, new Name(name, null, null, null));
+		rawContact.addIm(im);
+		Group group = Group.getByName(groupName, account);
+		contact.addRawContact(rawContact);
+		contact.add(group);
+		contact.save();
+		return contact;
+	}
+	
+	public static Contact getByName(String name)
+	{
+		Contact contact = null;
+		final Cursor cursor = new Contact("").query(ContactsContract.Contacts.DISPLAY_NAME + "=?", new String[]{name});
+		if(cursor != null && cursor.moveToFirst())
+		{
+			contact = Contact.get(cursor.getLong(0));
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		if(contact == null)
+		{
+			return new Contact(name);
+		}
+		return contact;
+	}
+	
 	public static Contact getByIm(String im)
 	{
 		Contact contact = null;
@@ -287,5 +325,30 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	{
 		this.position = position;
 	}
-
+	
+	public static Contact[] getAll(Account account)
+	{
+		List<Contact> allContacts = new ArrayList<Contact>();
+		final Cursor cursor = contentResolver.query(
+			RawContacts.CONTENT_URI, 
+			new String[]
+			{
+				RawContacts.CONTACT_ID
+			}, 
+			RawContacts.ACCOUNT_NAME + "=? AND " + RawContacts.ACCOUNT_TYPE + "=?", 
+			new String[]
+			{
+				account.name, account.type
+			},
+			null);
+		while(cursor != null && cursor.moveToNext())
+		{
+			allContacts.add(Contact.get(cursor.getLong(0)));
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		return allContacts.toArray(new Contact[allContacts.size()]);
+	}
 }

@@ -59,7 +59,10 @@ public class Im extends DataBaseObject
 	{
 		this.userId = userId;
 		this.status = status;
-		status.setIm(this);
+		if(status != null)
+		{
+			status.setIm(this);
+		}
 		this.protocolType = protocolType;
 		this.customProtocol = customProtocol;
 	}
@@ -111,7 +114,7 @@ public class Im extends DataBaseObject
 					{ Long.toString(id) });
 		if (status != null && status.moveToFirst())
 		{
-			setStatus(new Status(cursor.getLong(0)));
+			setStatus(new Status(status.getLong(0)));
 		}
 		if (status != null)
 		{
