@@ -1,12 +1,5 @@
 package fr.utbm.lo52.sodia.protocols;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import android.accounts.Account;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -14,15 +7,12 @@ import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
-import fr.utbm.lo52.sodia.logic.Contact;
-import fr.utbm.lo52.sodia.logic.Group;
-import fr.utbm.lo52.sodia.logic.Im;
-import fr.utbm.lo52.sodia.logic.Message;
-import fr.utbm.lo52.sodia.logic.Name;
-import fr.utbm.lo52.sodia.logic.Presence;
-import fr.utbm.lo52.sodia.logic.RawContact;
-import fr.utbm.lo52.sodia.logic.Status;
+import fr.utbm.lo52.sodia.logic.*;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author antoine

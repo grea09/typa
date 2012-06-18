@@ -30,6 +30,9 @@ public class Server extends Service
 
 	private Looper mServiceLooper;
 	private ServiceHandler mServiceHandler;
+	
+	private static Server instance;
+	private boolean started;
 
 	// Handler that receives messages from the thread
 	private final class ServiceHandler extends Handler
@@ -96,6 +99,11 @@ public class Server extends Service
 						}
 						break;
 					case GET:
+						if(Client.isConnected(socket.getInetAddress()))
+						{
+							Log.w(getClass().getSimpleName(), "Request from non discovered client ! Rejected");
+							break;
+						}
 						Formater response = new Formater();
 						response.operation = Formater.Operation.RET;
 						response.type = formater.type;
@@ -144,7 +152,7 @@ public class Server extends Service
 						}
 						if (send)
 						{
-							response.output = socket.getOutputStream();
+							response.output = Client.get(socket.getInetAddress()).getClientSocket().getOutputStream();
 							try
 							{
 								response.send();
@@ -177,13 +185,24 @@ public class Server extends Service
 		// Get the HandlerThread's Looper and use it for our Handler
 		mServiceLooper = thread.getLooper();
 		mServiceHandler = new ServiceHandler(mServiceLooper);
+		
+		
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
+		if(instance instanceof Server)
+		{
+			started = false;
+			stopSelfResult(startId);
+			return Service.MODE_PRIVATE;
+		}
+		instance = this;
+		started = true;
+		
 		Log.i(getClass().getName(), "Server started.");
-
+		
 		// For each start request, send a message to start a job and deliver the
 		// start ID so we know which request we're stopping when we finish the
 		// job
@@ -205,15 +224,22 @@ public class Server extends Service
 	@Override
 	public void onDestroy()
 	{
-		try
+		if(instance == this && started)
 		{
-			bonjour.close();
-			serverSocket.close();
-		} catch (IOException e)
-		{
-			Log.e(getClass().getName(), "Can't close socket", e);
+			instance = null;
+			try
+			{
+				bonjour.close();
+				serverSocket.close();
+			} catch (IOException e)
+			{
+				Log.e(getClass().getName(), "Can't close socket", e);
+			}
+			Log.i(getClass().getName(), "Server stopped.");
 		}
-		Log.i(getClass().getName(), "Server stopped.");
+		
+		
+		
 	}
 
 }

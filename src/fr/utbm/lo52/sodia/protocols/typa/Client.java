@@ -49,6 +49,11 @@ class Client
 		
 	}
 	
+	public static boolean isConnected(InetAddress address)
+	{
+		return clients.containsKey(address);
+	}
+	
 	public static Client get(InetAddress address) throws IOException
 	{
 		if(clients.containsKey(address))

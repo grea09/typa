@@ -44,22 +44,19 @@ class Bonjour
 					public void serviceResolved(ServiceEvent event)
 					{
 						Log.i("Bonjour Discover", "Service resolved: "
-								+ event.getInfo().getQualifiedName() + " host:" + event.getInfo().getInet4Addresses()[0] + " port:"
-								+ event.getInfo().getPort());
+								+ event.getInfo().getQualifiedName() + " host:" + event.getInfo().getInet4Addresses() + " port:"
+								+ event.getInfo().getPort()); // TODO iterate through inet addresses
 						try
 						{
 							for(InetAddress host : event.getInfo().getInetAddresses())
 							{
 								Client client = Client.get(host);
-								Log.i(getClass().getName(), "Local service :" + host.equals(client.getClientSocket().getLocalAddress()));
-/*
 								if(host.equals(client.getClientSocket().getLocalAddress()))
 								{
 									Log.i(getClass().getName(), "Local service detected !");
-									continue;
+									break;
 								}
-*/
-								
+								//TODO Wait 1 sec
 								Formater formater = new Formater();
 								formater.operation = Formater.Operation.GET;
 								formater.size = 0;

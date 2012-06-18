@@ -214,10 +214,18 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	public void save() throws RemoteException, OperationApplicationException
 	{
 		Log.i(getClass().getSimpleName(), "save");
+		List<Group> corrupted = new ArrayList<Group>();
 		for (Group group : this.groups)
 		{
+			if(group.getAccount() == null)
+			{
+				corrupted.add(group);
+				continue;
+			}
 			group.save();
 		}
+		groups.removeAll(corrupted);
+		
 		for (RawContact rawContact : this.rawContacts)
 		{
 			rawContact.setName(name);
@@ -254,7 +262,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	
 	public static Contact simpleCreate(Account account, String name, Im im, String groupName) throws RemoteException, OperationApplicationException
 	{
-		Contact contact = getByName(name);
+		Contact contact = getByName(name, account);
 		RawContact rawContact = new RawContact(false, account, new Name(name, null, null, null));
 		rawContact.addIm(im);
 		Group group = Group.getByName(groupName, account);
@@ -264,10 +272,10 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		return contact;
 	}
 	
-	public static Contact getByName(String name)
+	public static Contact getByName(String name, Account account)
 	{
 		Contact contact = null;
-		final Cursor cursor = new Contact("").query(ContactsContract.Contacts.DISPLAY_NAME + "=?", new String[]{name});
+		final Cursor cursor = new Contact("").query(ContactsContract.Contacts.DISPLAY_NAME + "=? ", new String[]{name});
 		if(cursor != null && cursor.moveToFirst())
 		{
 			contact = Contact.get(cursor.getLong(0));
