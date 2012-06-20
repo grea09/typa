@@ -62,8 +62,9 @@ public class LocateActivity extends MapActivity {
 	    
 	    for (Account account : Protocol.getAccountsByType(new Typa().getAccountType())){
 		for (Contact contact : Contact.getAll(account)){
-		     int[] coord = contact.getPosition();
-		     GeoPoint point = new GeoPoint(coord[0],coord[1]);
+		    
+		     GeoPoint point = new GeoPoint(2373047,48835797);
+		   
 		     OverlayItem overlayitem = new OverlayItem(point,contact.getName(), "Distance : ");
 		     itemizedoverlay.addOverlay(overlayitem);
 		}
