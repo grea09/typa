@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.OperationApplicationException;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -119,7 +121,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 		{
 			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
 		}
-
+		
 	}
 
 	@Override
