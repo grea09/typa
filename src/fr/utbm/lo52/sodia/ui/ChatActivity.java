@@ -73,10 +73,8 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		// R�cup�ration des messages pr�c�dents
 		List<Message> messages = this.chat.getMessages();
 		for (int i = 0 ; i < messages.size() ; i++){
-			appendMessage((CharSequence) messages.get(i).getFrom().getName()+" > "+(CharSequence) messages.get(i).data());	
-			if (i < messages.size() - 1){
-			    appendMessage("\n");
-			}
+			appendMessage((CharSequence) messages.get(i).getFrom().getName()+" > "+(CharSequence) messages.get(i).data()+"\n");	
+			
 		}
 //		
 		

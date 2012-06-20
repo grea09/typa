@@ -1,9 +1,13 @@
 package fr.utbm.lo52.sodia.ui;
 
 import android.accounts.Account;
+import android.content.Context;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
@@ -16,11 +20,17 @@ import com.google.android.maps.OverlayItem;
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.protocols.Protocol;
+import fr.utbm.lo52.sodia.protocols.typa.Server;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LocateActivity extends MapActivity {
-
+	
+	static int mylatitude;
+	static int mylongitude;
+	
 	@Override
 	protected boolean isRouteDisplayed() {
 	    return false;
@@ -38,11 +48,17 @@ public class LocateActivity extends MapActivity {
 	    MapController myMapController = mapView.getController();
 	    myMapController.setCenter(new GeoPoint(48835797,2373047));
 	    
-	    
+	    LocateActivity.mylatitude = 2373047;
+	    LocateActivity.mylongitude = 48835797;
 	    List<Overlay> mapOverlays = mapView.getOverlays();
 	    Drawable drawable = this.getResources().getDrawable(R.drawable.ic_locate);
 	    LocateItemizedOverlay itemizedoverlay = new LocateItemizedOverlay(drawable, this);
 	    
+	    
+	    GeoPoint pointme = new GeoPoint(LocateActivity.mylongitude,LocateActivity.mylatitude);
+	    OverlayItem overlayitemme = new OverlayItem(pointme,"ME", "Distance : ");
+	    itemizedoverlay.addOverlay(overlayitemme);
+
 	    
 	    for (Account account : Protocol.getAccountsByType(new Typa().getAccountType())){
 		for (Contact contact : Contact.getAll(account)){
@@ -52,6 +68,8 @@ public class LocateActivity extends MapActivity {
 		     itemizedoverlay.addOverlay(overlayitem);
 		}
 	    }
+	    
+	    mapOverlays.add(itemizedoverlay);
 	    
 
 	}
