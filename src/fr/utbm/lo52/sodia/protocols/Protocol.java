@@ -33,6 +33,11 @@ public abstract class Protocol
 	}
 
 	protected Context context;
+
+	public void setContext(Context context)
+	{
+		this.context = context;
+	}
 	
 	public void add(ProtocolListener listener)
 	{
@@ -237,6 +242,10 @@ public abstract class Protocol
 
 	public Contact getMe()
 	{
+		if(me == null)
+		{
+			createMe();
+		}
 		return this.me;
 	}
 	

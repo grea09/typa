@@ -52,8 +52,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" >
-
-            <requestFocus />
         </EditText>    
 
         <TextView
@@ -75,7 +73,8 @@
                 android:id="@+id/online"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settingsStatusOnline"/>
+                android:text="@string/settingsStatusOnline"
+				android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/busy"

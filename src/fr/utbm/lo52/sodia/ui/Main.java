@@ -79,22 +79,30 @@ public class Main extends SherlockActivity implements ProtocolListener
 			Protocol.get(account).add(this);
 			//contacts(Contact.getAll(account), account);
 		}
-
-
-
-
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 		Contact me = new Contact("Moi");
 
 		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
 		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
 		TextView textView = (TextView) findViewById(R.id.monName);
+		TextView presence = (TextView) findViewById(R.id.maPresence);
+		
 
 		for(Protocol prot : Protocol.getProtocolsByType(Typa.class))
 		{
+			prot.setContext(this);
 			me = prot.getMe();
 		}
 
-		textView.setText("me.getName()");
+		textView.setText(me.getName());
+		image.setBackgroundResource(me.getBest().getPresence().getImage());
+		presence.setText(me.getBest().getStatus());
+		
 		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
 		{
 			quickContactBadge.setImageToDefault();
@@ -166,9 +174,18 @@ public class Main extends SherlockActivity implements ProtocolListener
 		}
 	}
 
-	public void setSetting(View v){
+	public void setSettings(View v){
 		Intent intent = new Intent(this, Settings.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Contact me = null;
+		
+		for(Protocol prot : Protocol.getProtocolsByType(Typa.class))
+		{
+			prot.setContext(this);
+			me = prot.getMe();
+		}
+			
+		intent.putExtra(Settings.CONTACT_KEY, me.getId());
 		startActivity(intent);
 	}
 

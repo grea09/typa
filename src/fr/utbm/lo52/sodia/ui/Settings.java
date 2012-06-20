@@ -5,24 +5,31 @@ import fr.utbm.lo52.sodia.logic.Presence;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.logic.Im;
+import fr.utbm.lo52.sodia.logic.RawContact;
+import fr.utbm.lo52.sodia.protocols.typa.Typa;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Settings extends Activity {
 
+	public static final String CONTACT_KEY = "contact";
+	private Contact contact;
 	
 	@Override
 	public void onCreate(Bundle icicle)
 	{
 		super.onCreate(icicle);
 		setContentView(R.layout.settings);
-
+		contact = Contact.get(getIntent().getLongExtra(CONTACT_KEY, MODE_PRIVATE));
 	}
 	
 	public void OnCheckedChangeListener(RadioGroup group, int checkedId){
@@ -35,28 +42,49 @@ public class Settings extends Activity {
 	public void changeSettings(View view){
 		
 		Context context = getApplicationContext();
-		Toast toast = Toast.makeText(context, "Settings modified !", Toast.LENGTH_LONG);
-		toast.show();
-		
-		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
-		TextView name = (TextView) findViewById(R.id.monName);
-		TextView presence = (TextView) findViewById(R.id.maPresence);
-		
 		RadioGroup newStatus = (RadioGroup) findViewById(R.id.statusGroup);
 		EditText newName = (EditText) findViewById(R.id.editName);
 		EditText newPresence = (EditText) findViewById(R.id.editPresence);
+		RadioButton radioButton = (RadioButton) findViewById(newStatus.getCheckedRadioButtonId());
 		
-		name = newName;
-		presence = newPresence;
+		contact.setName("" +newName.getText());
+		Presence presence = Presence.AVAILABLE;
 		
-		image.setImageResource(Presence.values()[newStatus.getCheckedRadioButtonId()].getImage());
+		for(Presence pres : Presence.values())
+		{
+			if(getResources().getText(pres.getNameResource()).equals(radioButton.getText()))
+			{
+				presence = pres;
+				break;
+			}
+		}
 		
-			
-	
+		for(RawContact rawContact : contact.getRawContacts())
+		{
+			for(Im im : rawContact.getImByProtocol((new Typa()).getName()))
+			{
+				im.getStatus().setPresence(presence);
+				im.getStatus().setStatus("" + newPresence.getText());
+			}
+		}
+		try
+		{
+			contact.save();
+		}
+		catch (RemoteException e)
+		{
+			Log.e(getClass().getSimpleName(), "",  e);
+		}
+		catch (OperationApplicationException e)
+		{
+			Log.e(getClass().getSimpleName(), "",  e);
+		}
 		
-		Intent intent = new Intent(this, Main.class);
+		finish();
+		
+		/*Intent intent = new Intent(this, Main.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
+		startActivity(intent);*/
 		
 		
 	}
