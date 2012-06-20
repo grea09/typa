@@ -1,22 +1,15 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.util.Log;
+import fr.utbm.lo52.sodia.logic.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.util.Log;
-import fr.utbm.lo52.sodia.logic.Contact;
-import fr.utbm.lo52.sodia.logic.Im;
-import fr.utbm.lo52.sodia.logic.Message;
-import fr.utbm.lo52.sodia.logic.Mime;
-import fr.utbm.lo52.sodia.logic.Presence;
-import fr.utbm.lo52.sodia.logic.RawContact;
-import fr.utbm.lo52.sodia.logic.Status;
 
 public class Formater
 {
@@ -151,7 +144,7 @@ public class Formater
 		return value;
 	}
 	
-	public void parse() throws NumberFormatException, IOException
+	public void parse() throws NumberFormatException, IOException, IllegalArgumentException
 	{
 		operation = Operation.valueOf(get().toUpperCase());
 		size = Integer.decode(get());

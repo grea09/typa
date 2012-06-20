@@ -26,21 +26,7 @@ public class Typa extends Protocol
 		@Override
 		public void run()
 		{
-			WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(android.content.Context.WIFI_SERVICE);
-			int ip = wifi.getConnectionInfo().getIpAddress();
-			if(ip == 0)
-			{
-				hostName = "localhost";
-			}
-			else
-			{
-				hostName = String.format("%d.%d.%d.%d",
-						(ip       & 0xff),
-						(ip >>  8 & 0xff),
-						(ip >> 16 & 0xff),
-						(ip >> 24 & 0xff)
-				);
-			}
+			hostName = Bonjour.getLocalHostName(context);
 			Log.d(Typa.class.getSimpleName(), "localhost = " + hostName);
 		}
 	}
@@ -57,7 +43,7 @@ public class Typa extends Protocol
 	}
 	
 	public static final int PORT = 4242;
-	private Server server;
+	private AsyncService server;
 
 	@Override
 	public String getName()
@@ -87,10 +73,10 @@ public class Typa extends Protocol
 	@Override
 	public void connect()
 	{
-		if(!(server instanceof Server))
+		if(!(server instanceof AsyncService))
 		{
 			Log.i(getClass().getSimpleName(), "Connection ...");
-			Intent intent = new Intent(context, Server.class);
+			Intent intent = new Intent(context, AsyncService.class);
 			context.startService(intent);
 		}
 	}
@@ -123,7 +109,7 @@ public class Typa extends Protocol
 	@Override
 	public void disconnect()
 	{
-		if(server instanceof Server)
+		if(server instanceof AsyncService)
 		{
 			server.stopSelf();
 		}

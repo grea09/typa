@@ -1,5 +1,6 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
+import android.os.AsyncTask;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.util.Log;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Client
 {
@@ -22,13 +26,6 @@ class Client
 		clients.put(address, this);
 	}
 	
-	protected Client(InetAddress address, Socket serverSocket) throws IOException
-	{
-		this.address = address;
-		clientSocket = new Socket(address, Typa.PORT);
-		clients.put(address, this);
-	}
-	
 	public void send(Formater formater) throws Throwable
 	{
 		formater.output = clientSocket.getOutputStream();
@@ -36,12 +33,16 @@ class Client
 	}
 	
 	@Override
-	public void finalize()
+	public void finalize() throws Throwable
 	{
+		super.finalize();
 		try
 		{
 			clients.remove(address);
-			clientSocket.close();
+			if(clientSocket != null)
+			{
+				clientSocket.close();
+			}
 		} catch (IOException e)
 		{
 			Log.e(getClass().getName(), "", e);

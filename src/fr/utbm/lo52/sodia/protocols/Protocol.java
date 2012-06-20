@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.protocols;
 
 import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.os.AsyncTask;
@@ -37,6 +38,7 @@ public abstract class Protocol
 	{
 		listeners.add(listener);
 	}
+	
 	public static Protocol constructor(Account account)
 	{
 		Set<Class<? extends Protocol>> classes = getProtocolsClass();
@@ -95,6 +97,13 @@ public abstract class Protocol
 	{
 		return accounts.keySet();
 	}
+	
+	public Account[] getAccounts(Context context)
+	{
+		AccountManager accountManager = AccountManager.get(context);
+		return accountManager.getAccountsByType(getAccountType());
+	}
+	
 	public static Set<Account> getAccountsByType(String type)
 	{
 		Set<Account> accounts = new HashSet<Account>();

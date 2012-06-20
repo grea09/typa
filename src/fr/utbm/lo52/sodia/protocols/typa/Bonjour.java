@@ -14,6 +14,10 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Bonjour
 {
@@ -24,10 +28,31 @@ class Bonjour
 	private ServiceListener listener = null;
 	private ServiceInfo serviceInfo;
 	
+	private Context context;
 	private static WifiManager.MulticastLock lock;
+	
+	public static String getLocalHostName(Context context)
+	{
+		WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(android.content.Context.WIFI_SERVICE);
+		int ip = wifi.getConnectionInfo().getIpAddress();
+		if(ip == 0)
+		{
+			return "localhost";
+		}
+		else
+		{
+			return String.format("%d.%d.%d.%d",
+					(ip       & 0xff),
+					(ip >>  8 & 0xff),
+					(ip >> 16 & 0xff),
+					(ip >> 24 & 0xff)
+			);
+		}
+	}
 	
 	public Bonjour(Context context)
 	{
+		this.context = context;
 		WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(android.content.Context.WIFI_SERVICE);
 		lock = wifi.createMulticastLock("mylockthereturn");
 		lock.setReferenceCounted(true);
@@ -44,19 +69,27 @@ class Bonjour
 					public void serviceResolved(ServiceEvent event)
 					{
 						Log.i("Bonjour Discover", "Service resolved: "
-								+ event.getInfo().getQualifiedName() + " host:" + event.getInfo().getInet4Addresses() + " port:"
-								+ event.getInfo().getPort()); // TODO iterate through inet addresses
+								+ event.getInfo().getQualifiedName());
+						for(InetAddress host : event.getInfo().getInetAddresses())
+						{
+							Log.i("Bonjour Discover", "	host:" + host);
+						}
+						Log.i("Bonjour Discover", "	port:" + event.getInfo().getPort());
 						try
 						{
 							for(InetAddress host : event.getInfo().getInetAddresses())
 							{
-								Client client = Client.get(host);
-								if(host.equals(client.getClientSocket().getLocalAddress()))
+								if(host instanceof Inet6Address)
+								{
+									Log.i(getClass().getName(), "IPv6 ignored");
+									continue;
+								}
+								if(host.equals(InetAddress.getByName(getLocalHostName(context))))
 								{
 									Log.i(getClass().getName(), "Local service detected !");
 									break;
 								}
-								//TODO Wait 1 sec
+								Client client = Client.get(host);
 								Formater formater = new Formater();
 								formater.operation = Formater.Operation.GET;
 								formater.size = 0;
@@ -90,7 +123,7 @@ class Bonjour
 								Client client = Client.get(host);
 								client.finalize();
 							}
-						} catch (IOException e)
+						} catch (Throwable e)
 						{
 							Log.e(getClass().getName(), "", e);
 						}

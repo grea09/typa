@@ -69,7 +69,7 @@
 				android:resource="@xml/typa_contacts" />
 		</service>
 		<service
-            android:name=".protocols.typa.Server"
+            android:name=".protocols.typa.AsyncService"
             android:icon="@drawable/ic_protocol_typa"
             android:exported="false">
          </service>
