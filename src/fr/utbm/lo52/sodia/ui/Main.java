@@ -1,12 +1,9 @@
 package fr.utbm.lo52.sodia.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,19 +14,23 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.DataBaseObject;
 import fr.utbm.lo52.sodia.logic.Group;
+import fr.utbm.lo52.sodia.logic.Message;
+import fr.utbm.lo52.sodia.protocols.Authentificator;
+import fr.utbm.lo52.sodia.protocols.Protocol;
+import fr.utbm.lo52.sodia.protocols.ProtocolListener;
+import fr.utbm.lo52.sodia.protocols.typa.Typa;
+import java.util.*;
 
-public class Main extends SherlockActivity
+public class Main extends SherlockActivity implements ProtocolListener
 {
 	public static final Map<Integer, Class<? extends Activity>> intentMatch = new HashMap<Integer, Class<? extends Activity>>();
 	static
@@ -62,6 +63,25 @@ public class Main extends SherlockActivity
 		else
 		{
 			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
+		}
+		
+		AccountManager accountManager = AccountManager.get(this);
+		Typa protocol = new Typa();
+		Account[] accounts = accountManager.getAccountsByType(protocol.getAccountType());
+		if(accounts.length == 0)
+		{
+			final Intent intent = new Intent(this, Login.class);
+			intent.putExtra(Authentificator.KEY_PROTOCOL_CLASS, protocol.getClass());
+			intent.putExtra(Authentificator.KEY_PROTOCOL_NAME, protocol.getName());
+			intent.putExtra(Authentificator.KEY_PROTOCOL_ACCOUNT_TYPE, protocol.getAccountType());
+			intent.putExtra(Authentificator.KEY_PROTOCOL_HAS_PASSWORD, protocol.hasPassword());
+			intent.putExtra(Authentificator.KEY_PROTOCOL_LOGO, protocol.getLogoRessource());
+			startActivity(intent);
+		}
+		for(Account account : accounts)
+		{
+			ContentResolver.requestSync(account, "com.android.contacts", null);
+			Protocol.get(account).add(this);
 		}
 
 		
@@ -170,6 +190,16 @@ public class Main extends SherlockActivity
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		
+	}
+
+	public void receive(Message message, Account account)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public void contacts(Contact[] contacts, Account account)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 	
 }
