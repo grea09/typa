@@ -19,6 +19,7 @@
 	<string name="settingsNickname">Nickname :</string>
 	<string name="settingsPhoto">Photo :</string>
 	<string name="settingsStatus">Status : </string>
+	<string name="settingsPresence">Presence : </string>
 	<string name="settingsStatusOnline">Online</string>
 	<string name="settingsStatusOffline">Offline</string>
 	<string name="settingsStatusBusy">Busy</string>

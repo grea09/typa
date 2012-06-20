@@ -46,36 +46,20 @@ public class Main extends SherlockActivity implements ProtocolListener
 	}
 
 	private ExpandableListView expandableList = null;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	@SuppressWarnings("unused")
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		this.draw();
-				
+		this.draw();		
 
-		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
-		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
-		TextView textView = (TextView) findViewById(R.id.monName);
-		
-		textView.setText("Moi");
-		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
-		{
-			quickContactBadge.setImageToDefault();
-		}
-		else
-		{
-			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
-		}
-		
-		
 		DataBaseObject.context = getApplicationContext();
 		DataBaseObject.contentResolver = getContentResolver();
-		
+
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
-		
+
 		AccountManager accountManager = AccountManager.get(this);
 		Typa protocol = new Typa();
 		Account[] accounts = accountManager.getAccountsByType(protocol.getAccountType());
@@ -93,51 +77,41 @@ public class Main extends SherlockActivity implements ProtocolListener
 		{
 			ContentResolver.requestSync(account, ContactsContract.AUTHORITY, new Bundle());
 			Protocol.get(account).add(this);
-			contacts(Contact.getAll(account), account);
-			
+			//contacts(Contact.getAll(account), account);
 		}
 
-		
-		/*expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
-		registerForContextMenu(expandableList);
-		
-		
-		ArrayList<Group> groupes = new ArrayList<Group>();
-		
-		for (int i = 1; i < 3; i++) {
-			Group groupe = new Group("Friends " + i);
-			Set<Contact> contacts = new HashSet<Contact>();
-			for (int x = 1; x < 5; x++) {
-				//groupe.add(new Contact("Pierre Paul Jack" + x));
-				Contact contact = new Contact("Pierre"+x);
-				contacts.add(contact);
-				
-			}
-			groupe.add(contacts);
-			groupes.add(groupe);
-		}	
-		
-		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));*/
-		
-		//ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 
-		//wifiMultiCastLock();
+
+
+		Contact me = new Contact("Moi");
+
+		QuickContactBadge quickContactBadge = (QuickContactBadge) findViewById(R.id.monContactBadge);
+		ImageView image = (ImageView) findViewById(R.id.monStatusIcon);
+		TextView textView = (TextView) findViewById(R.id.monName);
+
+		for(Protocol prot : Protocol.getProtocolsByType(Typa.class))
+		{
+			me = prot.getMe();
+		}
+
+		textView.setText("me.getName()");
+		if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB)
+		{
+			quickContactBadge.setImageToDefault();
+		}
+		else
+		{
+			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
+		}
+
 	}
-
-//	private void wifiMultiCastLock()
-//	{
-//		android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) getSystemService(android.content.Context.WIFI_SERVICE);
-//		lock = wifi.createMulticastLock("mylockthereturn");
-//		lock.setReferenceCounted(true);
-//		lock.acquire();
-//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.main, menu);
-	        
+
 		// Calling super after populating the menu is necessary here to ensure
 		// that the
 		// action bar helpers have a chance to handle this event.
@@ -145,7 +119,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 	}
 
 
-	 
+
 	protected void draw()
 	{
 		@SuppressWarnings("unused")
@@ -160,7 +134,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 		// lock.release();
 		super.onStop();
 	}
-	
+
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
 		if(intentMatch.containsKey(item.getItemId()))
@@ -172,7 +146,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, 0, 0, "Locate");
@@ -183,20 +157,19 @@ public class Main extends SherlockActivity implements ProtocolListener
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
-			case 0:
-				return true;
-			case 1:
-				return true;
-			default:
-				return true;
+		case 0:
+			return true;
+		case 1:
+			return true;
+		default:
+			return true;
 		}
 	}
-	
-	public void goToSettings(View v){
+
+	public void setSetting(View v){
 		Intent intent = new Intent(this, Settings.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
-		
 	}
 
 	public void receive(Message message, Account account)
@@ -208,11 +181,11 @@ public class Main extends SherlockActivity implements ProtocolListener
 	{
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
 		registerForContextMenu(expandableList);
-		
-		
+
+
 		Group[] groupes = Group.getByAccount(account);
-		
+
 		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 	}
-	
+
 }

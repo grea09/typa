@@ -5,12 +5,18 @@ import fr.utbm.lo52.sodia.R;
 
 public enum Presence
 {
-	OFFLINE(R.string.presence_offline), INVISIBLE(R.string.presence_invisible), AWAY(
-			R.string.presence_away), IDLE(R.string.presence_idle), DO_NOT_DISTURB(
-			R.string.presence_do_not_disturb), AVAILABLE(
-			R.string.presence_avaible);
+	AVAILABLE(R.string.presence_avaible, R.drawable.ic_status_available),
+	AWAY(R.string.presence_away, R.drawable.ic_status_away), 
+	DO_NOT_DISTURB(R.string.presence_do_not_disturb, R.drawable.ic_status_busy),
+	INVISIBLE(R.string.presence_invisible, R.drawable.ic_status_invisible), 
+	OFFLINE(R.string.presence_offline, R.drawable.ic_status_offline);
+
+	public int getImage() {
+		return image;
+	}
 
 	private int resource;
+	private int image;
 
 	public static Presence get(long id)
 	{
@@ -22,9 +28,10 @@ public enum Presence
 		return Presence.values()[id];
 	}
 
-	private Presence(int resource)
+	private Presence(int resource, int image)
 	{
 		this.resource = resource;
+		this.image = image;
 	}
 
 	public int getNameResource()

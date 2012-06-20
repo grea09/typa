@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView1"
+          <TextView
+            android:id="@+id/settingsName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -14,7 +14,7 @@
             android:textSize="15dp" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -23,7 +23,7 @@
             <requestFocus />
         </EditText>
 
-        <TextView
+       <!--<TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,14 +35,33 @@
         <QuickContactBadge
             android:id="@+id/quickContactBadge1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content" />-->
+            
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/settingsPresence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/settingsStatus"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/editPresence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" >
+
+            <requestFocus />
+        </EditText>    
+
+        <TextView
+            android:id="@+id/settingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/settingsPresence"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="15dp" />
 
@@ -56,7 +75,7 @@
                 android:id="@+id/online"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settingsStatusOnline" />
+                android:text="@string/settingsStatusOnline"/>
 
             <RadioButton
                 android:id="@+id/busy"
@@ -75,6 +94,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settingsStatusOffline" />
+            
+            <RadioButton
+                android:id="@+id/invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invisible" />
         </RadioGroup>
 
         <Button

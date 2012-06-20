@@ -186,7 +186,7 @@ public class Typa extends Protocol
 		{
 			Contact.simpleCreate(account, names[i][0], 
 				new Im(names[i][1], 
-					new Status(Presence.IDLE,""), 
+					new Status(Presence.AWAY,""), 
 				ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, 
 				getName()
 				), "LAN"
