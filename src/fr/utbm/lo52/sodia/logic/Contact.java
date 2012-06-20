@@ -297,20 +297,16 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 	public static Contact getByIm(String im)
 	{
 		Contact contact = null;
-		final Cursor cursor = contentResolver.query(Data.CONTENT_URI, 
-				new String[] {Data.CONTACT_ID}, 
-				Data.MIMETYPE + "=? AND " + CommonDataKinds.Im.DATA + "=?" , 
-				new String[]{CommonDataKinds.Im.MIMETYPE, im}, 
-				null
-		);
-		if(cursor != null && cursor.moveToFirst())
-		{
-			contact = Contact.get(cursor.getLong(0));
-		}
-		if (cursor != null)
-		{
-			cursor.close();
-		}
+		String imWhere = ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.Im.DATA + " = ?"; 
+		String[] imWhereParams = new String[]{ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE, "test@localhost"}; 
+		Cursor imCur = contentResolver.query(ContactsContract.Data.CONTENT_URI, 
+				new String[]{Data.CONTACT_ID}, imWhere, imWhereParams, null); 
+		if (imCur.moveToFirst()) { 
+			long id = imCur.getLong(0);
+			Log.d(Contact.class.getSimpleName(), "id = " + id);
+			contact = Contact.get(id);
+		} 
+		imCur.close();
 		return contact;
 	}
 	
