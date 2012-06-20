@@ -26,10 +26,7 @@ import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ChatActivity extends SherlockActivity implements ProtocolListener
 {
@@ -126,7 +123,19 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			case (R.id.addcontacttochat):
 				Intent intent2 = new Intent(this, AddContactToChat.class);
 				intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			
+				Set<Contact> contacts = this.chat.getParticipants(); 
+				long[] ids = new long[contacts.size()];
+				Iterator<Contact> itcontacts = contacts.iterator();
+				int i = 0;
+				while(itcontacts.hasNext()){
+					ids[i] = itcontacts.next().getId();
+					i++;
+				}
+
+				intent2.putExtra("ids", ids);			
 				startActivity(intent2);
+				
 				break;
 			case (R.id.locate):
 				Intent intent3 = new Intent(this, LocateActivity.class);
