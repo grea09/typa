@@ -57,7 +57,6 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		}
 		
 	
-
 		if (contacts.size() > 1){
 			setTitle("Group");
 		}else{
@@ -72,10 +71,12 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		this.chat = Chat.get(contacts);
 		
 		// R�cup�ration des messages pr�c�dents
-		TextView t = (TextView)  findViewById(R.id.chatTextView);
 		List<Message> messages = this.chat.getMessages();
 		for (int i = 0 ; i < messages.size() ; i++){
-			t.append((CharSequence) messages.get(i).getFrom().getName()+" > "+(CharSequence) messages.get(i).data() + "\n");	
+			appendMessage((CharSequence) messages.get(i).getFrom().getName()+" > "+(CharSequence) messages.get(i).data());	
+			if (i < messages.size() - 1){
+			    appendMessage("\n");
+			}
 		}
 //		
 		
@@ -111,7 +112,7 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 		
-		appendMessage(smessage);
+		appendMessage("Me > "+smessage + "\n");
 
 	}
 	
@@ -227,11 +228,8 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 	
 	public void appendMessage(String m){
 		TextView t = (TextView)  findViewById(R.id.chatTextView);
-		Message message = new Message(Mime.PICTURE, "lol");
-
-		t.append("\nMe @"+Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" +
-				Calendar.getInstance().get(Calendar.MINUTE) + ":" +
-						Calendar.getInstance().get(Calendar.SECOND)+" > "+m);
+		
+		t.append(m);
 		Linkify.addLinks(t, Linkify.ALL);
 		
 		//SCROLL DOWN THE TEXTVIEW
