@@ -90,7 +90,7 @@ public abstract class Protocol
 	{
 		for(Account account: Protocol.accounts.keySet())
 		{
-			if(account.name == name)
+			if(account.name.equals(name))
 			{
 				return account;
 			}
