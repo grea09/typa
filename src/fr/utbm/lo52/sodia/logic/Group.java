@@ -7,10 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Group extends DataBaseObject implements InterGroup<Contact>
 {
@@ -191,6 +188,27 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		{ ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
 				ContactsContract.Groups.ACCOUNT_TYPE,
 				ContactsContract.Groups.ACCOUNT_NAME };
+	}
+	
+	public static Group[] getByAccount(Account account)
+	{
+		List<Group> groups = new ArrayList<Group>();
+		final Cursor cursor = contentResolver.query(ContactsContract.Groups.CONTENT_URI, 
+				new String[]{ContactsContract.Groups._ID}, 
+				ContactsContract.Groups.ACCOUNT_NAME + " =? AND " +
+				ContactsContract.Groups.ACCOUNT_TYPE + " =?", 
+				new String[]{account.name, account.type}, null);
+		while(cursor != null && cursor.moveToNext())
+		{
+			Group group = Group.get(cursor.getLong(0));
+			group.setAccount(account);
+			groups.add(group);
+		}
+		if (cursor != null)
+		{
+			cursor.close();
+		}
+		return groups.toArray(new Group[groups.size()]);
 	}
 
 }

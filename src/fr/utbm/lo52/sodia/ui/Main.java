@@ -5,7 +5,9 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -29,6 +31,8 @@ import fr.utbm.lo52.sodia.protocols.Protocol;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends SherlockActivity implements ProtocolListener
 {
@@ -65,6 +69,10 @@ public class Main extends SherlockActivity implements ProtocolListener
 			quickContactBadge.setImageResource(R.drawable.pic_contact_badge);
 		}
 		
+		
+		DataBaseObject.context = getApplicationContext();
+		DataBaseObject.contentResolver = getContentResolver();
+		
 		AccountManager accountManager = AccountManager.get(this);
 		Typa protocol = new Typa();
 		Account[] accounts = accountManager.getAccountsByType(protocol.getAccountType());
@@ -80,15 +88,13 @@ public class Main extends SherlockActivity implements ProtocolListener
 		}
 		for(Account account : accounts)
 		{
-			ContentResolver.requestSync(account, "com.android.contacts", null);
+			ContentResolver.requestSync(account, "com.android.contacts", new Bundle());
 			Protocol.get(account).add(this);
 		}
 
 		
 		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
 		registerForContextMenu(expandableList);
-		DataBaseObject.context = getApplicationContext();
-		DataBaseObject.contentResolver = getContentResolver();
 		
 		
 		ArrayList<Group> groupes = new ArrayList<Group>();
