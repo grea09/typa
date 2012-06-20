@@ -75,6 +75,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 		}
 		for(Account account : accounts)
 		{
+			ContentResolver.removePeriodicSync(account, ContactsContract.AUTHORITY, new Bundle());
 			ContentResolver.requestSync(account, ContactsContract.AUTHORITY, new Bundle());
 			Protocol.get(account).add(this);
 			//contacts(Contact.getAll(account), account);
