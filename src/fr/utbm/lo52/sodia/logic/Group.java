@@ -192,7 +192,7 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 	
 	public static Group[] getByAccount(Account account)
 	{
-		List<Group> groups = new ArrayList<Group>();
+		List<Group> dirtyGroups = new ArrayList<Group>();
 		final Cursor cursor = contentResolver.query(ContactsContract.Groups.CONTENT_URI, 
 				new String[]{ContactsContract.Groups._ID}, 
 				ContactsContract.Groups.ACCOUNT_NAME + " =? AND " +
@@ -202,12 +202,42 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		{
 			Group group = Group.get(cursor.getLong(0));
 			group.setAccount(account);
-			groups.add(group);
+			dirtyGroups.add(group);
 		}
 		if (cursor != null)
 		{
 			cursor.close();
 		}
+		Set<Set<Contact>> contacts = new HashSet<Set<Contact>>();
+		Map<String, Group> names = new HashMap<String, Group>();
+		List<Group> groups = new ArrayList<Group>();
+		for(Group group : dirtyGroups)
+		{
+			if(group.getContacts().isEmpty())
+			{
+				continue;
+			}
+			if(contacts.contains(group.getContacts()))
+			{
+				continue;
+			}
+			contacts.add(group.getContacts());
+			if(names.containsKey(group.name))
+			{
+				if(group.getContacts().size() > names.get(group.name).getContacts().size())
+				{
+					groups.remove(names.get(group.name));
+				}
+				else
+				{
+					continue;
+				}
+			}
+			names.put(group.name, group);
+			groups.add(group);
+			
+		}
+		
 		return groups.toArray(new Group[groups.size()]);
 	}
 	
@@ -216,8 +246,7 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		operations.add(
 			ContentProviderOperation.newDelete(ContactsContract.Groups.CONTENT_URI)
-				.withValue(ContactsContract.Groups.ACCOUNT_NAME, account.name)
-				.withValue(ContactsContract.Groups.ACCOUNT_TYPE, account.type).build()
+				.withSelection(ContactsContract.Groups.ACCOUNT_NAME + "=? AND " + ContactsContract.Groups.ACCOUNT_TYPE + "=?", new String[]{account.name,account.type}).build()
 		);
 		contentResolver.applyBatch(ContactsContract.AUTHORITY,
 				operations);

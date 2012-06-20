@@ -13,6 +13,7 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import fr.utbm.lo52.sodia.logic.DataBaseObject;
 
 /**
  * SyncAdapter implementation for syncing sample SyncAdapter contacts to the
@@ -48,6 +49,10 @@ public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 			ContentProviderClient provider, SyncResult syncResult)
 	{
 		Log.i(getClass().getSimpleName(), "Sync started.");
+		
+		DataBaseObject.context = context;
+		DataBaseObject.contentResolver = context.getContentResolver();
+		
 		protocol = (E) Protocol.get(account, context);
 		protocol.add(this);
 		protocol.connect();

@@ -93,16 +93,6 @@ public class Main extends SherlockActivity implements ProtocolListener
 		{
 			ContentResolver.requestSync(account, ContactsContract.AUTHORITY, new Bundle());
 			Protocol.get(account).add(this);
-			try {
-				((Typa)Protocol.get(account)).generateFalseContactList();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (OperationApplicationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			contacts(Contact.getAll(account), account);
 			
 		}

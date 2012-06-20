@@ -223,7 +223,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 				corrupted.add(group);
 				continue;
 			}
-			group.save();
+			//group.save();
 		}
 		groups.removeAll(corrupted);
 		
@@ -358,7 +358,24 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		{
 			cursor.close();
 		}
-		return allContacts.toArray(new Contact[allContacts.size()]);
+		List<Contact> contacts = new ArrayList<Contact>();
+		Map<String, Contact> names = new HashMap<String, Contact>();
+		for(Contact contact : allContacts)
+		{
+			if(contact.name == null)
+			{
+				continue;
+			}
+			if(names.containsKey(contact.name))
+			{
+				continue;
+			}
+			names.put(contact.name, contact);
+			contacts.add(contact);
+		}
+		
+		
+		return contacts.toArray(new Contact[contacts.size()]);
 	}
 	
 	public static void removeAll(Account account) throws RemoteException, OperationApplicationException
@@ -366,8 +383,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		operations.add(
 			ContentProviderOperation.newDelete(RawContacts.CONTENT_URI)
-				.withValue(RawContacts.ACCOUNT_NAME, account.name)
-				.withValue(RawContacts.ACCOUNT_TYPE, account.type).build()
+				.withSelection(RawContacts.ACCOUNT_NAME + "=? AND " + RawContacts.ACCOUNT_TYPE + "=?", new String[]{account.name, account.type}).build()
 		);
 		contentResolver.applyBatch(ContactsContract.AUTHORITY,
 				operations);
