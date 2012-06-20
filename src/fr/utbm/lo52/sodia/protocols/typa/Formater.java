@@ -82,22 +82,24 @@ public class Formater
 		String name = get();
 		if(contact == null)
 		{
-			Account account = Protocol.getAccountsByType((new Typa()).getAccountType()).iterator().next();
-			contact = new Contact(name);
-			RawContact rawContact = new RawContact(false, account, new Name(name, "", "", ""));
-			rawContact.addIm(new Im(id, new Status(Presence.AVAILABLE, ""), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, (new Typa()).getName()));
-			contact.addRawContact(rawContact);
-			try
+			for(Account account : Protocol.getAccountsByType((new Typa()).getAccountType()))
 			{
-				contact.add(Group.getByName("LAN", account));
-			}
-			catch (RemoteException ex)
-			{
-				Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
-			}
-			catch (OperationApplicationException ex)
-			{
-				Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+				contact = new Contact(name);
+				RawContact rawContact = new RawContact(false, account, new Name(name, "", "", ""));
+				rawContact.addIm(new Im(id, new Status(Presence.AVAILABLE, ""), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, (new Typa()).getName()));
+				contact.addRawContact(rawContact);
+				try
+				{
+					contact.add(Group.getByName("LAN", account));
+				}
+				catch (RemoteException ex)
+				{
+					Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				catch (OperationApplicationException ex)
+				{
+					Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+				}
 			}
 		}
 		contact.setName(name);
