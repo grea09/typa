@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.util.Log;
 import java.util.*;
 
 public class Group extends DataBaseObject implements InterGroup<Contact>
@@ -71,7 +72,23 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 
 	public Set<Contact> getContacts()
 	{
-		return contacts;
+		Set<Contact> cleanContacts = new HashSet<Contact>();
+		Map<String, Contact> names = new HashMap<String, Contact>();
+		for(Contact contact : contacts)
+		{
+			if(contact.getName() == null)
+			{
+				continue;
+			}
+			if(names.containsKey(contact.getName()))
+			{
+				continue;
+			}
+			names.put(contact.getName(), contact);
+			cleanContacts.add(contact);
+		}
+		
+		return cleanContacts;
 	}
 
 	@Override

@@ -212,21 +212,6 @@ public class Main extends SherlockActivity implements ProtocolListener
 		
 		Group[] groupes = Group.getByAccount(account);
 		
-		for(int i = 0; i < groupes.length; i++)
-		{
-		
-			for(int j = 0; j < contacts.length; j++)
-			{
-				if(contacts[j].getGroups().contains(groupes[i]))
-				{
-					groupes[i].add(contacts[j]);
-				}
-			}
-			
-		}
-		
-		
-		
 		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 	}
 	

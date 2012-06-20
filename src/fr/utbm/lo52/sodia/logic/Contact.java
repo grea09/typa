@@ -358,7 +358,7 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		{
 			cursor.close();
 		}
-		List<Contact> contacts = new ArrayList<Contact>();
+		List<Contact> cleanContacts = new ArrayList<Contact>();
 		Map<String, Contact> names = new HashMap<String, Contact>();
 		for(Contact contact : allContacts)
 		{
@@ -370,12 +370,12 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 			{
 				continue;
 			}
+			Log.v(Contact.class.getSimpleName(), " name = " + contact.name);
 			names.put(contact.name, contact);
-			contacts.add(contact);
+			cleanContacts.add(contact);
 		}
 		
-		
-		return contacts.toArray(new Contact[contacts.size()]);
+		return cleanContacts.toArray(new Contact[cleanContacts.size()]);
 	}
 	
 	public static void removeAll(Account account) throws RemoteException, OperationApplicationException
