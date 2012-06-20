@@ -77,12 +77,6 @@ public abstract class SherlockPreferenceActivity extends PreferenceActivity impl
     }
 
     @Override
-    protected void onDestroy() {
-        getSherlock().dispatchDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         getSherlock().dispatchPostCreate(savedInstanceState);
         super.onPostCreate(savedInstanceState);

@@ -140,8 +140,6 @@ public final class AnimatorProxy extends Animation {
             return;
         }
 
-        view.setAnimation(this);
-
         final RectF after = mAfter;
         computeRect(after, view);
         after.union(mBefore);
@@ -203,10 +201,5 @@ public final class AnimatorProxy extends Animation {
             t.setAlpha(mAlpha);
             transformMatrix(t.getMatrix(), view);
         }
-    }
-
-    @Override
-    public void reset() {
-        /* Do nothing. */
     }
 }
