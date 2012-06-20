@@ -98,6 +98,12 @@ public class Main extends SherlockActivity implements ProtocolListener
 		{
 			prot.setContext(this);
 			me = prot.getMe();
+			expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+			registerForContextMenu(expandableList);
+
+			Group[] groupes = Group.getByAccount(prot.account());
+
+			expandableList.setAdapter(new ExpandableListAdapter(Main.this, groupes));
 		}
 
 		textView.setText(me.getName());
@@ -192,18 +198,23 @@ public class Main extends SherlockActivity implements ProtocolListener
 
 	public void receive(Message message, Account account)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 
-	public void contacts(Contact[] contacts, Account account)
+	public void contacts(Contact[] contacts, final Account account)
 	{
-		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
-		registerForContextMenu(expandableList);
+		runOnUiThread(new Runnable() {
 
+			public void run()
+			{
+				expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+				registerForContextMenu(expandableList);
 
-		Group[] groupes = Group.getByAccount(account);
+				Group[] groupes = Group.getByAccount(account);
 
-		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
+				expandableList.setAdapter(new ExpandableListAdapter(Main.this, groupes));
+			}
+		});
 	}
 
 }

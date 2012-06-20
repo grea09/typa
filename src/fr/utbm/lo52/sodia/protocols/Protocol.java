@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author antoine
@@ -26,7 +29,7 @@ public abstract class Protocol
 	private static Map<Account, Protocol> accounts = new HashMap<Account, Protocol>();
 	
 	private static Set<ProtocolListener> listeners = new HashSet<ProtocolListener>();
-	
+
 	public static void add(Class<? extends Protocol> protocolClass)
 	{
 		protocols.add(protocolClass);
@@ -114,7 +117,7 @@ public abstract class Protocol
 		Set<Account> accounts = new HashSet<Account>();
 		for(Account account: Protocol.accounts.keySet())
 		{
-			if(account.type == type)
+			if(account.type.equals(type))
 			{
 				accounts.add(account);
 			}
@@ -215,18 +218,10 @@ public abstract class Protocol
 	
 	public void contacts(final Contact[] contacts)
 	{
-		AsyncTask.execute(new Runnable()
+		for(ProtocolListener listener : listeners)
 		{
-			
-			public void run()
-			{
-				for(ProtocolListener listener : listeners)
-				{
-					listener.contacts(contacts, account);
-				}
-				
-			}
-		});
+			listener.contacts(contacts, account);
+		}
 	}
 	
 	/**
@@ -261,18 +256,10 @@ public abstract class Protocol
 
 	public void receive(final Message message)
 	{
-		AsyncTask.execute(new Runnable()
-			{
-				
-				public void run()
-				{
-					for(ProtocolListener listener : listeners)
-					{
-						listener.receive(message, account);
-					}
-					
-				}
-			});
+		for(ProtocolListener listener : listeners)
+		{
+			listener.receive(message, account);
+		}
 	}
 
 	/**

@@ -55,9 +55,9 @@ public class Formater
 	
 	public OutputStream output;
 	
-	private ArrayList<Contact> contacts;
+	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 	
-	private ArrayList<Message> messages;
+	private ArrayList<Message> messages = new ArrayList<Message>();
 	
 	public Formater()
 	{
@@ -121,6 +121,7 @@ public class Formater
 		{
 			case TEXT :
 				message = new Message(mime, get());
+			break;
 			case PRESENCE :
 				message = new Message(mime, parseStatus());
 			break;
@@ -137,7 +138,7 @@ public class Formater
 			{
 				contacts.add(Contact.getByIm(im));
 			}
-			message.setTo((Contact[])contacts.toArray());
+			message.setTo(contacts.toArray(new Contact[contacts.size()]));
 			messages.add(message);
 		}
 		
