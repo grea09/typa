@@ -28,8 +28,6 @@ public class Chat
 	public void add(Message message)
 	{
 		this.messages.add(message);
-		// TODO for (AccountManager.get().contains(message.to));
-		// 
 	}
 
 	public void add(Contact contact)

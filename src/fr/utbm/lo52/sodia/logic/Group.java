@@ -210,5 +210,16 @@ public class Group extends DataBaseObject implements InterGroup<Contact>
 		}
 		return groups.toArray(new Group[groups.size()]);
 	}
-
+	
+	public static void removeAll(Account account) throws RemoteException, OperationApplicationException
+	{
+		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+		operations.add(
+			ContentProviderOperation.newDelete(ContactsContract.Groups.CONTENT_URI)
+				.withValue(ContactsContract.Groups.ACCOUNT_NAME, account.name)
+				.withValue(ContactsContract.Groups.ACCOUNT_TYPE, account.type).build()
+		);
+		contentResolver.applyBatch(ContactsContract.AUTHORITY,
+				operations);
+	}
 }

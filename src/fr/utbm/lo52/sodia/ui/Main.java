@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -88,7 +89,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 		}
 		for(Account account : accounts)
 		{
-			ContentResolver.requestSync(account, "com.android.contacts", new Bundle());
+			ContentResolver.requestSync(account, ContactsContract.AUTHORITY, new Bundle());
 			Protocol.get(account).add(this);
 		}
 

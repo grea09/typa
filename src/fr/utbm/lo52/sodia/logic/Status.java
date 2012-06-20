@@ -88,7 +88,6 @@ public class Status extends DataBaseObject
 	@Override
 	protected void get()
 	{
-		// TODO Auto-generated method stub
 		final Cursor cursor = query();
 		if (cursor != null && cursor.moveToFirst())
 		{

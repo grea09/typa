@@ -11,6 +11,8 @@ import fr.utbm.lo52.sodia.logic.*;
 import fr.utbm.lo52.sodia.protocols.Protocol;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Typa extends Protocol
 {
@@ -75,9 +77,22 @@ public class Typa extends Protocol
 	{
 		if(!(server instanceof AsyncService))
 		{
-			Log.i(getClass().getSimpleName(), "Connection ...");
-			Intent intent = new Intent(context, AsyncService.class);
-			context.startService(intent);
+			//try
+			//{
+				Log.i(getClass().getSimpleName(), "Connection ...");
+				//Contact.removeAll(account);
+				//Group.removeAll(account);
+				Intent intent = new Intent(context, AsyncService.class);
+				context.startService(intent);
+			/*}
+			catch (RemoteException e)
+			{
+				Log.e(getClass().getSimpleName(), "Can't delete", e);
+			}
+			catch (OperationApplicationException e)
+			{
+				Log.e(getClass().getSimpleName(), "Can't delete", e);
+			}*/
 		}
 	}
 

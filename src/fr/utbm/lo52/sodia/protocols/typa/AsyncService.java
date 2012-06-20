@@ -31,7 +31,7 @@ public class AsyncService extends Service
 		public void handleMessage(android.os.Message msg)
 		{
 			server = new Server();
-			server.execute((Void[])null);
+			server.execute(AsyncService.this);
 			bonjour = new Bonjour(AsyncService.this);
 			bonjour.connect();
 		}

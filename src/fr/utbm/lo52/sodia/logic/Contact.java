@@ -359,4 +359,16 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		}
 		return allContacts.toArray(new Contact[allContacts.size()]);
 	}
+	
+	public static void removeAll(Account account) throws RemoteException, OperationApplicationException
+	{
+		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+		operations.add(
+			ContentProviderOperation.newDelete(RawContacts.CONTENT_URI)
+				.withValue(RawContacts.ACCOUNT_NAME, account.name)
+				.withValue(RawContacts.ACCOUNT_TYPE, account.type).build()
+		);
+		contentResolver.applyBatch(ContactsContract.AUTHORITY,
+				operations);
+	}
 }

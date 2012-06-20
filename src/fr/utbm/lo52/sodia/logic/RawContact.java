@@ -207,8 +207,7 @@ public class RawContact extends DataBaseObject
 		}
 		catch (Exception e) 
 		{
-		// TODO: handle exception
-		Log.d("add group error :", ""+ e.getMessage().toString());
+			Log.e(getClass().getSimpleName(),"add group error :", e);
 		}
 	}
 	

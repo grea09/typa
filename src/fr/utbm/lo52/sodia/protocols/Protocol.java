@@ -289,14 +289,7 @@ public abstract class Protocol
 			if(me == null)
 			{
 				Log.i(getClass().getName(), "Create Me !!!");
-				me = new Contact(contactName);
-				Im im = new Im(account.name, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, getName()); // TODO Add label and icon
-				RawContact rawContact = new RawContact(false, account, new Name(contactName, null, null, null));
-				rawContact.addIm(im);
-				Group group = Group.getByName("Friends", account);
-				me.addRawContact(rawContact);
-				me.add(group);
-				me.save();
+				me = Contact.simpleCreate(account, contactName, new Im(account.name, new Status(Presence.AVAILABLE, "", System.currentTimeMillis(), null, null), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, getName()), "Friends");
 			}
 		} catch (RemoteException e)
 		{

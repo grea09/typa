@@ -5,7 +5,12 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
 import android.accounts.Account;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
@@ -24,13 +29,20 @@ import java.util.logging.Logger;
  *
  * @author antoine
  */
-public class Server extends AsyncTask<Void, Void, Void>
+public class Server extends AsyncTask<Context, Void, Void>
 {
 	private ServerSocket serverSocket;
+	private double[] position;
 
-	@Override
-	protected Void doInBackground(Void... params)
+	private void setPosition(double[] position)
 	{
+		this.position = position;
+	}
+	
+	@Override
+	protected Void doInBackground(Context... params)
+	{
+		assert params.length == 1;
 		try
 		{
 			serverSocket = new ServerSocket(Typa.PORT);
@@ -117,9 +129,42 @@ public class Server extends AsyncTask<Void, Void, Void>
 						switch (formater.getMessages().get(0).type())
 						{
 						case POSITION:
-							messages.add(new Message(Mime.POSITION,
-									new int[]
-										{ 0, 0 }));// TODO get Location
+							LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
+							LocationListener locationListener = new LocationListener() {
+								
+								@Override
+								public void onLocationChanged(Location location) {
+									if(location.getAccuracy() <= 10.0)
+									{
+										setPosition(new double[]{location.getLatitude(), location.getLongitude()});
+										synchronized(Server.this)
+										{
+											Server.this.notify();
+										}
+									}
+								}
+
+								public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+								public void onProviderEnabled(String provider) {}
+
+								public void onProviderDisabled(String provider) {}
+							};
+
+							// Register the listener with the Location Manager to receive location updates
+							locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+							synchronized(this)
+							{
+								try
+								{
+									this.wait();
+								}
+								catch (InterruptedException ex)
+								{
+									Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+								}
+							}
+							messages.add(new Message(Mime.POSITION,position));
 							break;
 
 						case PRESENCE:
