@@ -1,5 +1,6 @@
 package fr.utbm.lo52.sodia.ui;
 
+import android.accounts.Account;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
@@ -13,6 +14,10 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Contact;
+import fr.utbm.lo52.sodia.protocols.Protocol;
+import fr.utbm.lo52.sodia.protocols.typa.Typa;
+import java.util.Set;
 
 public class LocateActivity extends MapActivity {
 
@@ -30,7 +35,7 @@ public class LocateActivity extends MapActivity {
 	    MapView mapView = (MapView) findViewById(R.id.mapview);
 	    mapView.setBuiltInZoomControls(true);
 	    
-		MapController myMapController = mapView.getController();
+	    MapController myMapController = mapView.getController();
 	    myMapController.setCenter(new GeoPoint(48835797,2373047));
 	    
 	    
@@ -38,13 +43,17 @@ public class LocateActivity extends MapActivity {
 	    Drawable drawable = this.getResources().getDrawable(R.drawable.ic_locate);
 	    LocateItemizedOverlay itemizedoverlay = new LocateItemizedOverlay(drawable, this);
 	    
-	    GeoPoint point = new GeoPoint(48835797,2373047);
-	    OverlayItem overlayitem = new OverlayItem(point, "Antoine", "I'm here !");
-	    GeoPoint point2 = new GeoPoint(48830000, 2373000);
-	    OverlayItem overlayitem2 = new OverlayItem(point2, "Geoffrey", "I'm here !");
-	    itemizedoverlay.addOverlay(overlayitem2);
-	    itemizedoverlay.addOverlay(overlayitem);
-	    mapOverlays.add(itemizedoverlay);
+	    
+	    for (Account account : Protocol.getAccountsByType(new Typa().getAccountType())){
+		for (Contact contact : Contact.getAll(account)){
+		     int[] coord = contact.getPosition();
+		     GeoPoint point = new GeoPoint(coord[0],coord[1]);
+		     OverlayItem overlayitem = new OverlayItem(point,contact.getName(), "Distance : ");
+		     itemizedoverlay.addOverlay(overlayitem);
+		}
+	    }
+	    
+
 	}
 	
 }
