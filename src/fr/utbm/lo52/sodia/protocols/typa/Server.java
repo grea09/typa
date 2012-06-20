@@ -32,9 +32,9 @@ import java.util.logging.Logger;
 public class Server extends AsyncTask<Context, Void, Void>
 {
 	private ServerSocket serverSocket;
-	private double[] position;
+	private int[] position;
 
-	private void setPosition(double[] position)
+	private void setPosition(int[] position)
 	{
 		this.position = position;
 	}
@@ -135,7 +135,11 @@ public class Server extends AsyncTask<Context, Void, Void>
 								public void onLocationChanged(Location location) {
 									if(location.getAccuracy() <= 10.0)
 									{
-										setPosition(new double[]{location.getLatitude(), location.getLongitude()});
+										setPosition(new int[]
+										{
+											(int) (location.getLatitude() * 1000000), 
+											(int) (location.getLongitude() * 1000000)
+										});
 										synchronized(Server.this)
 										{
 											Server.this.notify();

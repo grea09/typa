@@ -1,15 +1,22 @@
 package fr.utbm.lo52.sodia.protocols.typa;
 
+import android.accounts.Account;
+import android.content.OperationApplicationException;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.util.Log;
 import fr.utbm.lo52.sodia.logic.*;
+import fr.utbm.lo52.sodia.protocols.Protocol;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Formater
 {
@@ -73,6 +80,26 @@ public class Formater
 		String id = get();
 		Contact contact = Contact.getByIm(id);
 		String name = get();
+		if(contact == null)
+		{
+			Account account = Protocol.getAccountsByType((new Typa()).getAccountType()).iterator().next();
+			contact = new Contact(name);
+			RawContact rawContact = new RawContact(false, account, new Name(name, "", "", ""));
+			rawContact.addIm(new Im(id, new Status(Presence.AVAILABLE, ""), ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM, (new Typa()).getName()));
+			contact.addRawContact(rawContact);
+			try
+			{
+				contact.add(Group.getByName("LAN", account));
+			}
+			catch (RemoteException ex)
+			{
+				Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			catch (OperationApplicationException ex)
+			{
+				Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 		contact.setName(name);
 		contacts.add(contact);
 	}

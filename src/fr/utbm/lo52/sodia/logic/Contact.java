@@ -20,6 +20,8 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
 {
