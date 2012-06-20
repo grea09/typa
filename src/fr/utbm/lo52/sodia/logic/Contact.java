@@ -18,6 +18,7 @@ import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
+import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.HashMap;
 
 public class Contact extends DataBaseObject implements InterGroup<Group>
@@ -370,5 +371,21 @@ public class Contact extends DataBaseObject implements InterGroup<Group>
 		);
 		contentResolver.applyBatch(ContactsContract.AUTHORITY,
 				operations);
+	}
+	
+	public Status getBest()
+	{
+		Status status = new Status(Presence.OFFLINE, "");
+		for(RawContact rawContact : rawContacts)
+		{
+			for(Im im: rawContact.getImByProtocol((new Typa()).getName()))
+			{
+				if(status.getPresence().ordinal() < im.getStatus().getPresence().ordinal())
+				{
+					status = im.getStatus();
+				}
+			}
+		}
+		return status;
 	}
 }

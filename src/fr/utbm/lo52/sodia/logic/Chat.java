@@ -47,15 +47,12 @@ public class Chat
 		return chats;
 	}
 
-/*
 	@Override
 	public boolean equals(Object object)
 	{
 		Chat chat = (Chat) object;
-		return chat.participants.containsAll(this.participants)
-				&& this.participants.containsAll(chat.participants);
+		return chat.participants.equals(this.participants);
 	}
-*/
 	
 	public List<Message> getMessages(){
 		return this.messages;
