@@ -23,6 +23,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import fr.utbm.lo52.sodia.R;
+import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.DataBaseObject;
 import fr.utbm.lo52.sodia.logic.Group;
@@ -57,7 +58,7 @@ public class Main extends SherlockActivity implements ProtocolListener
 
 		DataBaseObject.context = getApplicationContext();
 		DataBaseObject.contentResolver = getContentResolver();
-
+		  
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 		AccountManager accountManager = AccountManager.get(this);
@@ -196,9 +197,14 @@ public class Main extends SherlockActivity implements ProtocolListener
 		startActivity(intent);
 	}
 
-	public void receive(Message message, Account account)
-	{
-		
+	public void receive(Message message, Account account) {
+	    // TODO Auto-generated method stub
+	    Set<Contact> participants = new HashSet<Contact>();
+	    for (Contact contact : message.getTo()) {
+		participants.add(contact);
+
+	    }
+	    Chat.get(participants).add(message);
 	}
 
 	public void contacts(Contact[] contacts, final Account account)
