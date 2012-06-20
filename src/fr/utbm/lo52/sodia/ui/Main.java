@@ -74,6 +74,8 @@ public class Main extends SherlockActivity implements ProtocolListener
 		DataBaseObject.context = getApplicationContext();
 		DataBaseObject.contentResolver = getContentResolver();
 		
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		
 		AccountManager accountManager = AccountManager.get(this);
 		Typa protocol = new Typa();
 		Account[] accounts = accountManager.getAccountsByType(protocol.getAccountType());
@@ -91,10 +93,22 @@ public class Main extends SherlockActivity implements ProtocolListener
 		{
 			ContentResolver.requestSync(account, ContactsContract.AUTHORITY, new Bundle());
 			Protocol.get(account).add(this);
+			try {
+				((Typa)Protocol.get(account)).generateFalseContactList();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OperationApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			contacts(Contact.getAll(account), account);
+			
 		}
 
 		
-		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+		/*expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
 		registerForContextMenu(expandableList);
 		
 		
@@ -111,13 +125,9 @@ public class Main extends SherlockActivity implements ProtocolListener
 			}
 			groupe.add(contacts);
 			groupes.add(groupe);
-		}
+		}	
 		
-		
-
-		
-		
-		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
+		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));*/
 		
 		//ContactNotification.newContactNotification(this.getApplicationContext(), BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.ic_launcher), "Jean Jaques GRINGUEX", "long@gmiel.com", null);
 
@@ -206,7 +216,28 @@ public class Main extends SherlockActivity implements ProtocolListener
 
 	public void contacts(Contact[] contacts, Account account)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		expandableList = (ExpandableListView) findViewById(R.id.GroupsList);		 
+		registerForContextMenu(expandableList);
+		
+		
+		Group[] groupes = Group.getByAccount(account);
+		
+		for(int i = 0; i < groupes.length; i++)
+		{
+		
+			for(int j = 0; j < contacts.length; j++)
+			{
+				if(contacts[j].getGroups().contains(groupes[i]))
+				{
+					groupes[i].add(contacts[j]);
+				}
+			}
+			
+		}
+		
+		
+		
+		expandableList.setAdapter(new ExpandableListAdapter(this, groupes));
 	}
 	
 }

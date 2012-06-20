@@ -53,7 +53,6 @@ public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 		protocol.connect();
 	}
 
-	@Override
 	public void receive(Message message, Account account)
 	{
 		switch (message.type())
@@ -67,7 +66,6 @@ public class SyncAdapter<E extends Protocol> extends AbstractThreadedSyncAdapter
 		}
 	}
 
-	@Override
 	public void contacts(Contact[] contacts, Account account)
 	{
 		for(Contact contact : contacts)
