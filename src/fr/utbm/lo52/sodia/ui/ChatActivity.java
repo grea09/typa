@@ -75,8 +75,7 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		TextView t = (TextView)  findViewById(R.id.chatTextView);
 		List<Message> messages = this.chat.getMessages();
 		for (int i = 0 ; i < messages.size() ; i++){
-			Log.d("message", ""+i);
-			t.append((CharSequence) messages.get(i).data());	
+			t.append((CharSequence) messages.get(i).getFrom().getName()+" > "+(CharSequence) messages.get(i).data() + "\n");	
 		}
 //		
 		
@@ -102,6 +101,7 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		String smessage = editText.getText().toString();
 		
 		Message message = new Message(Mime.TEXT, smessage);
+		message.setFrom(new Contact("name"));
 		this.chat.add(message);
 		
 		//CLOSE KEYBOARD
