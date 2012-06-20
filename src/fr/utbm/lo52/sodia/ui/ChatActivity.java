@@ -28,6 +28,7 @@ import fr.utbm.lo52.sodia.logic.Mime;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ChatActivity extends SherlockActivity implements ProtocolListener
@@ -51,12 +52,11 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 		long[] ids = intent.getLongArrayExtra("ids");
 		Set<Contact> contacts = new HashSet<Contact>();
 		for (int i = 0 ; i < ids.length ; i++){
-			//contacts.add(Contact.get(ids[i]));
+			contacts.add(Contact.get(ids[i]));
 			Log.d("Chatting with [id]", ""+ids[i]);
 		}
 		
-		// R�cup�ration du chat ou cr�ation si non existant
-		this.chat = Chat.get(new Contact("Name"));
+	
 
 		if (contacts.size() > 1){
 			setTitle("Group");
@@ -68,18 +68,17 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 			}
 		}
 		
-//		if (false){
-//			// Cr�ation/R�cup�ration du chat
-//			this.chat = Chat.get(contacts);
-//			
-//			// R�cup�ration des messages pr�c�dents
-//			TextView t = (TextView)  findViewById(R.id.chatTextView);
-//			List<Message> messages = this.chat.getMessages();
-//			for (int i = 0 ; i < messages.size() ; i++){
-//				Log.d("message", ""+i);
-//				t.append((CharSequence) messages.get(i).data());	
-//			}
-//		}
+		// R�cup�ration du chat ou cr�ation si non existant
+		this.chat = Chat.get(contacts);
+		
+		// R�cup�ration des messages pr�c�dents
+		TextView t = (TextView)  findViewById(R.id.chatTextView);
+		List<Message> messages = this.chat.getMessages();
+		for (int i = 0 ; i < messages.size() ; i++){
+			Log.d("message", ""+i);
+			t.append((CharSequence) messages.get(i).data());	
+		}
+//		
 		
 		((TextView) findViewById(R.id.chatTextView)).setMovementMethod(new ScrollingMovementMethod());
 		ActionBar actionBar = getSupportActionBar();
