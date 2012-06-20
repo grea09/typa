@@ -213,7 +213,6 @@ public abstract class Protocol
 		AsyncTask.execute(new Runnable()
 		{
 			
-			@Override
 			public void run()
 			{
 				for(ProtocolListener listener : listeners)
@@ -256,7 +255,6 @@ public abstract class Protocol
 		AsyncTask.execute(new Runnable()
 			{
 				
-				@Override
 				public void run()
 				{
 					for(ProtocolListener listener : listeners)

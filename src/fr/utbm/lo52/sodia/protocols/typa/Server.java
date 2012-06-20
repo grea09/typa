@@ -132,7 +132,6 @@ public class Server extends AsyncTask<Context, Void, Void>
 							LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
 							LocationListener locationListener = new LocationListener() {
 								
-								@Override
 								public void onLocationChanged(Location location) {
 									if(location.getAccuracy() <= 10.0)
 									{

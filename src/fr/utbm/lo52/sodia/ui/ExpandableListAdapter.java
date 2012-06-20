@@ -21,10 +21,11 @@ import fr.utbm.lo52.sodia.logic.Group;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
-	private ArrayList<Group> groupes;
+	//private ArrayList<Group> groupes;
+	private Group[] groupes;
 	private LayoutInflater inflater;
 
-	public ExpandableListAdapter(Context context, ArrayList<Group> groupes) {
+	public ExpandableListAdapter(Context context, Group[] groupes) {
 		this.context = context;
 		this.groupes = groupes;
 		inflater = LayoutInflater.from(context);
@@ -36,7 +37,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 
 	public Object getChild(int gPosition, int cPosition) {
-		return groupes.get(gPosition).getContacts().toArray()[cPosition];
+		return groupes[gPosition].getContacts().toArray()[cPosition];
 	}
 
 	public long getChildId(int gPosition, int cPosition) {
@@ -87,7 +88,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		
 		convertView.setOnLongClickListener(new OnLongClickListener(){
 
-			@Override
 			public boolean onLongClick(View v) {
 				// TODO Auto-generated method stub
 				return false;
@@ -101,15 +101,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 
 	public int getChildrenCount(int gPosition) {
-		return groupes.get(gPosition).getContacts().size();
+		return groupes[gPosition].getContacts().size();
 	}
 
 	public Object getGroup(int gPosition) {
-		return groupes.get(gPosition);
+		return groupes[gPosition];
 	}
 
 	public int getGroupCount() {
-		return groupes.size();
+		return groupes.length;
 	}
 
 	public long getGroupId(int gPosition) {

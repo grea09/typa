@@ -159,14 +159,12 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener
 
 	}
 
-	@Override
 	public void receive(Message message, Account account)
 	{
 		// TODO Auto-generated method stub
 		this.chat.add(message);
 	}
 
-	@Override
 	public void contacts(Contact[] contacts, Account account)
 	{
 		// TODO Auto-generated method stub
