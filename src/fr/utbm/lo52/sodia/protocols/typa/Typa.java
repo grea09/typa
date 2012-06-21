@@ -9,6 +9,7 @@ import android.util.Log;
 import fr.utbm.lo52.sodia.R;
 import fr.utbm.lo52.sodia.logic.*;
 import fr.utbm.lo52.sodia.protocols.Protocol;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -79,7 +80,6 @@ public class Typa extends Protocol
 		{
 			//try
 			//{
-				Log.i(getClass().getSimpleName(), "Connection ...");
 				//Contact.removeAll(account);
 				//Group.removeAll(account);
 				Intent intent = new Intent(context, AsyncService.class);
@@ -97,22 +97,37 @@ public class Typa extends Protocol
 	}
 
 	@Override
-	public void send(Message message) throws Throwable
+	public void send(final Message message) throws Throwable
 	{
-		message.setFrom(me);
-		ArrayList<Message> messages = new ArrayList<Message>();
-		messages.add(message);
-		Formater formater = new Formater();
-		formater.operation = Formater.Operation.RET;
-		formater.type = Formater.Type.MESSAGE;
-		formater.setMessages(messages);
-		for(Contact contact : message.getTo())
-		{
-			for(Im im :contact.getImByProtocol((new Typa()).getName()))
+		Thread thread = new Thread(new Runnable() {
+
+			public void run()
 			{
-				Client.get(InetAddress.getByName(im.getUserId().split("" +Im.USER_ID_SEPARATOR)[1])).send(formater);
+				message.setFrom(me);
+				ArrayList<Message> messages = new ArrayList<Message>();
+				messages.add(message);
+				Formater formater = new Formater();
+				formater.operation = Formater.Operation.RET;
+				formater.type = Formater.Type.MESSAGE;
+				formater.setMessages(messages);
+				for(Contact contact : message.getTo())
+				{
+					for(Im im :contact.getImByProtocol((new Typa()).getName()))
+					{
+						try
+						{
+							Client.get(InetAddress.getByName(im.getUserId().split("" +Im.USER_ID_SEPARATOR)[1])).send(formater);
+						}
+						catch (Throwable ex)
+						{
+							Logger.getLogger(Typa.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+				}
 			}
-		}
+		});
+		thread.start();
+		
 	}
 
 	@Override

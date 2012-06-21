@@ -106,7 +106,10 @@ public class Server extends AsyncTask<Context, Void, Void>
 				case GET:
 					if(Client.isConnected(socket.getInetAddress()))
 					{
-						Client.get(socket.getInetAddress());
+						Log.d(Server.class.getSimpleName(), "Rejected !");
+						break;
+						/*Client.get(socket.getInetAddress());
+						Log.d(Server.class.getSimpleName(), "Address = " + socket.getInetAddress());
 						try
 						{
 							Bonjour.discover(socket.getInetAddress());
@@ -114,7 +117,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 						catch (Throwable e)
 						{
 							Log.e(Server.class.getSimpleName(), "Discover fail : ", e);
-						}
+						}*/
 					}
 					Formater response = new Formater();
 					response.operation = Formater.Operation.RET;
