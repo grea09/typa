@@ -5,12 +5,8 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -35,8 +31,6 @@ import fr.utbm.lo52.sodia.protocols.Protocol;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends SherlockActivity implements ProtocolListener
 {
