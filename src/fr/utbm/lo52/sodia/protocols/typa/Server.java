@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.Message;
@@ -105,8 +106,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 				case GET:
 					if(Client.isConnected(socket.getInetAddress()))
 					{
-						Log.w(getClass().getSimpleName(), "Request from non discovered client ! Rejected");
-						break;
+						Client.get(socket.getInetAddress());
 					}
 					Formater response = new Formater();
 					response.operation = Formater.Operation.RET;
