@@ -203,6 +203,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 					}
 					if (send)
 					{
+						socket.getOutputStream().write(" ".getBytes());
 						response.output = Client.get(socket.getInetAddress()).getClientSocket().getOutputStream();
 						try
 						{
