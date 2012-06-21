@@ -32,18 +32,12 @@ public class AsyncService extends Service
 		@Override
 		public void handleMessage(android.os.Message msg)
 		{
-			synchronized(this)
+			server = new Server();
+			server.execute(AsyncService.this);
+			
+			while(server.getAcceptState())
 			{
-				server = new Server();
-				server.execute(AsyncService.this);
-				try
-				{
-					this.wait();
-				}
-				catch (InterruptedException ex)
-				{
-					Logger.getLogger(AsyncService.class.getName()).log(Level.SEVERE, null, ex);
-				}
+				Thread.yield();
 			}
 			
 			bonjour = new Bonjour(AsyncService.this);

@@ -33,7 +33,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 {
 	private ServerSocket serverSocket;
 	private int[] position;
-	private boolean first;
+	private boolean state = false;
 
 	private void setPosition(int[] position)
 	{
@@ -44,7 +44,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 	protected Void doInBackground(Context... params)
 	{
 		assert params.length == 1;
-		first = true;
+		first = false;
 		try
 		{
 			serverSocket = new ServerSocket(Typa.PORT);
@@ -57,13 +57,10 @@ public class Server extends AsyncTask<Context, Void, Void>
 		{
 			try
 			{
-				if(first)
-				{
-					params[0].notify();
-					first = false;
-				}
+				state = true;
 				Log.i(getClass().getSimpleName(), "Waiting for connection ...");
 				Socket socket = serverSocket.accept();
+				state = false;
 				Log.i(getClass().getSimpleName(), "Connection !");
 				Formater formater = new Formater(socket.getInputStream());
 				Log.d(getClass().getSimpleName(), "Message :");
@@ -241,5 +238,10 @@ public class Server extends AsyncTask<Context, Void, Void>
 		{
 			Log.e(getClass().getName(), "Can't close socket", e);
 		}
+	}
+	
+	public boolean getAcceptedState()
+	{
+		return state;
 	}
 }
