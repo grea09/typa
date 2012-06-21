@@ -240,7 +240,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 		}
 	}
 	
-	public boolean getAcceptedState()
+	public boolean getAcceptState()
 	{
 		return state;
 	}
