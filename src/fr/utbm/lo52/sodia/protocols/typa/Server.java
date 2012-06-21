@@ -104,9 +104,9 @@ public class Server extends AsyncTask<Context, Void, Void>
 					}
 					break;
 				case GET:
-					if(Client.isConnected(socket.getInetAddress()))
+					if(!(Client.isConnected(socket.getInetAddress())))
 					{
-						Log.d(Server.class.getSimpleName(), "Rejected !");
+						Log.d(Server.class.getSimpleName(), "Rejected !" + socket.getInetAddress());
 						break;
 						/*Client.get(socket.getInetAddress());
 						Log.d(Server.class.getSimpleName(), "Address = " + socket.getInetAddress());
