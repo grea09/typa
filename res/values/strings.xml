@@ -38,7 +38,7 @@
 	<string name="presence_away">Away</string>
 	<string name="presence_idle">Idle</string>
 	<string name="presence_do_not_disturb">Do not disturb</string>
-	<string name="presence_avaible">Avaible</string>
+	<string name="presence_available">Available</string>
 	
 	<string name="requestDeclineButtonLabel">Decline</string>
 	<string name="requestAcceptButtonLabel">Accept</string>

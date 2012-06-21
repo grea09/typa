@@ -12,14 +12,13 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.actionbarsherlock.app.SherlockActivity;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.RawContact;
 import fr.utbm.lo52.sodia.protocols.typa.Typa;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Settings extends Activity {
+public class Settings extends SherlockActivity {
 
 	public static final String CONTACT_KEY = "contact";
 	private Contact contact;
@@ -29,7 +28,15 @@ public class Settings extends Activity {
 	{
 		super.onCreate(icicle);
 		setContentView(R.layout.settings);
+		
+		EditText newName = (EditText) findViewById(R.id.editName);
+		
 		contact = Contact.get(getIntent().getLongExtra(CONTACT_KEY, MODE_PRIVATE));
+		newName.setText(contact.getName());
+		
+				EditText newPresence = (EditText) findViewById(R.id.editPresence);
+		newPresence.setText("Available");
+
 	}
 	
 	public void OnCheckedChangeListener(RadioGroup group, int checkedId){

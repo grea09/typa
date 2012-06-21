@@ -30,13 +30,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/presence_online"
-                android:contentDescription="@string/presence_avaible" />
+                android:contentDescription="@string/presence_available" />
             
             <TextView
 	        android:id="@+id/statusText"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/presence_avaible"
+	        android:text="@string/presence_available"
 	        android:singleLine="true"
 	        android:textAppearance="?android:attr/textAppearanceSmall" />
 

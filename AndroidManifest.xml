@@ -97,8 +97,7 @@
 				android:theme="@style/DialogHoloDark">
 		</activity>
 		<activity android:name=".ui.Settings"
-		    	android:label="Settings"
-				android:theme="@style/DialogHoloDark">
+		    	android:label="Settings">
 		</activity>
 		<activity android:name=".ui.AddContactToChat"
 		    	android:label="Invite contact to chat"
