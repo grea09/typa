@@ -78,13 +78,13 @@ public class Typa extends Protocol
 	{
 		if(!(server instanceof AsyncService))
 		{
-			try
-			{
-				Contact.removeAll(account);
-				Group.removeAll(account);
+			//try
+			//{
+				//Contact.removeAll(account);
+				//Group.removeAll(account);
 				Intent intent = new Intent(context, AsyncService.class);
 				context.startService(intent);
-			}
+			/*}
 			catch (RemoteException e)
 			{
 				Log.e(getClass().getSimpleName(), "Can't delete", e);
@@ -92,7 +92,7 @@ public class Typa extends Protocol
 			catch (OperationApplicationException e)
 			{
 				Log.e(getClass().getSimpleName(), "Can't delete", e);
-			}
+			}*/
 		}
 	}
 
