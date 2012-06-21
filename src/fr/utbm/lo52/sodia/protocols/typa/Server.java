@@ -44,7 +44,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 	protected Void doInBackground(Context... params)
 	{
 		assert params.length == 1;
-		first = false;
+		state = false;
 		try
 		{
 			serverSocket = new ServerSocket(Typa.PORT);
