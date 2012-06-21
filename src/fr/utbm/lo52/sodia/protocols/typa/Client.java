@@ -22,7 +22,7 @@ class Client
 	protected Client(InetAddress address) throws IOException
 	{
 		this.address = address;
-		clientSocket = new Socket(address, Typa.PORT);
+		clientSocket = new Socket(address, Typa.PORT, InetAddress.getLocalHost(), Typa.PORT);
 		clients.put(address, this);
 	}
 	
