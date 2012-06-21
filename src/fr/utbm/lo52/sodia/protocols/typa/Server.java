@@ -6,15 +6,12 @@ package fr.utbm.lo52.sodia.protocols.typa;
 
 import android.accounts.Account;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Im;
 import fr.utbm.lo52.sodia.logic.Message;

@@ -32,10 +32,10 @@ public class AsyncService extends Service
 		@Override
 		public void handleMessage(android.os.Message msg)
 		{
-			server = new Server();
-			server.execute(AsyncService.this);
 			synchronized(this)
 			{
+				server = new Server();
+				server.execute(AsyncService.this);
 				try
 				{
 					this.wait();
