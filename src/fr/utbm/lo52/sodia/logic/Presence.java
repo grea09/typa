@@ -5,7 +5,7 @@ import fr.utbm.lo52.sodia.R;
 
 public enum Presence
 {
-	AVAILABLE(R.string.presence_avaible, R.drawable.ic_status_available),
+	AVAILABLE(R.string.presence_available, R.drawable.ic_status_available),
 	AWAY(R.string.presence_away, R.drawable.ic_status_away), 
 	DO_NOT_DISTURB(R.string.presence_do_not_disturb, R.drawable.ic_status_busy),
 	INVISIBLE(R.string.presence_invisible, R.drawable.ic_status_invisible), 
