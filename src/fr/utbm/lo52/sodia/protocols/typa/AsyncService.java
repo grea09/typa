@@ -7,6 +7,8 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AsyncService extends Service
 {
@@ -32,6 +34,18 @@ public class AsyncService extends Service
 		{
 			server = new Server();
 			server.execute(AsyncService.this);
+			synchronized(this)
+			{
+				try
+				{
+					this.wait();
+				}
+				catch (InterruptedException ex)
+				{
+					Logger.getLogger(AsyncService.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			
 			bonjour = new Bonjour(AsyncService.this);
 			bonjour.connect();
 		}

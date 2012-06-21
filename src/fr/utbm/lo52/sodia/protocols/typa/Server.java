@@ -36,6 +36,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 {
 	private ServerSocket serverSocket;
 	private int[] position;
+	private boolean first;
 
 	private void setPosition(int[] position)
 	{
@@ -46,6 +47,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 	protected Void doInBackground(Context... params)
 	{
 		assert params.length == 1;
+		first = true;
 		try
 		{
 			serverSocket = new ServerSocket(Typa.PORT);
@@ -58,6 +60,11 @@ public class Server extends AsyncTask<Context, Void, Void>
 		{
 			try
 			{
+				if(first)
+				{
+					params[0].notify();
+					first = false;
+				}
 				Log.i(getClass().getSimpleName(), "Waiting for connection ...");
 				Socket socket = serverSocket.accept();
 				Log.i(getClass().getSimpleName(), "Connection !");
@@ -106,7 +113,10 @@ public class Server extends AsyncTask<Context, Void, Void>
 				case GET:
 					if(!(Client.isConnected(socket.getInetAddress())))
 					{
-						Client.get(socket.getInetAddress());
+						Log.d(Server.class.getSimpleName(), "Rejected ! " + socket.getInetAddress());
+						break;
+						/*
+						 Client.get(socket.getInetAddress());
 						Log.d(Server.class.getSimpleName(), "Address = " + socket.getInetAddress());
 						try
 						{
@@ -116,6 +126,7 @@ public class Server extends AsyncTask<Context, Void, Void>
 						{
 							Log.e(Server.class.getSimpleName(), "Discover fail : ", e);
 						}
+						* */
 					}
 					Formater response = new Formater();
 					response.operation = Formater.Operation.RET;
