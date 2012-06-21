@@ -107,6 +107,14 @@ public class Server extends AsyncTask<Context, Void, Void>
 					if(Client.isConnected(socket.getInetAddress()))
 					{
 						Client.get(socket.getInetAddress());
+						try
+						{
+							Bonjour.discover(socket.getInetAddress());
+						}
+						catch (Throwable e)
+						{
+							Log.e(Server.class.getSimpleName(), "Discover fail : ", e);
+						}
 					}
 					Formater response = new Formater();
 					response.operation = Formater.Operation.RET;

@@ -89,19 +89,7 @@ class Bonjour
 									Log.i(getClass().getName(), "Local service detected !");
 									break;
 								}
-								Client client = Client.get(host);
-								Formater formater = new Formater();
-								formater.operation = Formater.Operation.GET;
-								formater.size = 0;
-								formater.type = Formater.Type.CONTACT;
-								client.send(formater);
-								
-								formater.type = Formater.Type.MESSAGE;
-								ArrayList<Message> presence = new ArrayList<Message>();
-								presence.add(new Message(Mime.PRESENCE, null));
-								formater.setMessages(presence);
-								client.send(formater);
-								
+								discover(host);
 							}
 						} catch (IOException e)
 						{
@@ -173,5 +161,21 @@ class Bonjour
 		{
 			lock.release();
 		}
+	}
+	
+	public static void discover(InetAddress host) throws IOException, Throwable
+	{
+		Client client = Client.get(host);
+		Formater formater = new Formater();
+		formater.operation = Formater.Operation.GET;
+		formater.size = 0;
+		formater.type = Formater.Type.CONTACT;
+		client.send(formater);
+
+		formater.type = Formater.Type.MESSAGE;
+		ArrayList<Message> presence = new ArrayList<Message>();
+		presence.add(new Message(Mime.PRESENCE, null));
+		formater.setMessages(presence);
+		client.send(formater);
 	}
 }
