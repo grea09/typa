@@ -45,7 +45,6 @@ public class AddContactToChat extends Activity{
 		ArrayList<String> listeContactStrings = new ArrayList<String>();
 		listeContacts = new ArrayList<Contact>();
 		
-		listeContactStrings.add("lol");
 		for (Account account : Protocol.getAccountsByType(new Typa().getAccountType())){
 		    for (Contact contact : Contact.getAll(account)){
 			if (!participants.contains(contact.getId())){
@@ -71,6 +70,8 @@ public class AddContactToChat extends Activity{
 		}
 	    }
 	    Chat.get(participants).add(new Message(Mime.TEXT,"Contact added to chat"));
+	    
+	    finish();
 		
 	}
 }

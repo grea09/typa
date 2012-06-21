@@ -1,6 +1,7 @@
 package fr.utbm.lo52.sodia.ui;
 
 import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,8 +26,12 @@ import fr.utbm.lo52.sodia.logic.Chat;
 import fr.utbm.lo52.sodia.logic.Contact;
 import fr.utbm.lo52.sodia.logic.Message;
 import fr.utbm.lo52.sodia.logic.Mime;
+import fr.utbm.lo52.sodia.protocols.Protocol;
 import fr.utbm.lo52.sodia.protocols.ProtocolListener;
+import fr.utbm.lo52.sodia.protocols.typa.Typa;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChatActivity extends SherlockActivity implements ProtocolListener {
 
@@ -118,17 +123,29 @@ public class ChatActivity extends SherlockActivity implements ProtocolListener {
 	String smessage = editText.getText().toString();
 
 	Message message = new Message(Mime.TEXT, smessage);
-	message.setFrom(new Contact("name"));
-	this.chat.add(message);
+	
+	AccountManager accountManager = AccountManager.get(this);
+	Typa protocol = new Typa();
+	Account[] accounts = accountManager.getAccountsByType(protocol.getAccountType());
+	Protocol p = Protocol.get(accounts[accounts.length-1]);
+	try {
+	    message.setTo(this.chat.getParticipants().toArray(new Contact[0]));
+	    p.send(message);
+	    this.chat.add(message);
 
-	//CLOSE KEYBOARD
-	editText.setText("");
-	if (this.getCurrentFocus() != null) {
-	    InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	    //CLOSE KEYBOARD
+	    editText.setText("");
+	    if (this.getCurrentFocus() != null) {
+		InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	    }
+
+	    appendMessage("Me > " + smessage + "\n");
+	    
+	} catch (Throwable ex) {
+	    Logger.getLogger(ChatActivity.class.getName()).log(Level.SEVERE, null, ex);
 	}
-
-	appendMessage("Me > " + smessage + "\n");
+	
 
     }
 
