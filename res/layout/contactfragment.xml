@@ -4,49 +4,49 @@
 	android:layout_height="match_parent"
 	android:orientation="horizontal" >
 
-    <QuickContactBadge
-        android:id="@+id/contactBadge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+	<QuickContactBadge
+		android:id="@+id/contactBadge"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-        <!--TODO Change value dynamically when it'll works. -->
-         <TextView
-                android:id="@+id/Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical" >
+		<!--TODO Change value dynamically when it'll works. -->
+		 <TextView
+				android:id="@+id/Name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
 		<!--TODO Understand what eclipse try to say  -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" >
 
-            <ImageView
-                android:id="@+id/statusIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_online"
-                android:contentDescription="@string/presence_available" />
-            
-            <TextView
-	        android:id="@+id/statusText"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/presence_available"
-	        android:singleLine="true"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
+			<ImageView
+				android:id="@+id/statusIcon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@android:drawable/presence_online"
+				android:contentDescription="@string/presence_available" />
+			
+			<TextView
+			android:id="@+id/statusText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/presence_available"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall" />
 
-           
-        </LinearLayout>
-        
-        
+		   
+		</LinearLayout>
 		
-    </LinearLayout>
+		
+		
+	</LinearLayout>
 
-    
+	
 
 </LinearLayout>
